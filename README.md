@@ -31,6 +31,8 @@ Then, at the command line enter:
 Windows & Mac OS X
 ------------------
 	$ npm -g install handbraker
+	
+*some older Mac operating systems may require the above is run with `sudo`* 
 
 Ubuntu Linux
 ------------
@@ -76,16 +78,6 @@ Handbrake Options
 All non handbraker-specific options (those listed by `handbraker --help`) are passed directly to Handbrake. To view the [full range of Handbrake options](https://trac.handbrake.fr/wiki/CLIGuide), use:
 
 	$ handbraker --hbhelp
-
-Presets
--------
-Handbrake comes with a collection of [built-in presets](https://trac.handbrake.fr/wiki/BuiltInPresets), optimised for common scenarios and specific devices. View the list using: 
-
-	$ handbraker --preset-list
-	
-To encode video optimised for iPod, you might use: 
-
-	$ handbraker --preset iPod video1.mov video2.mov
 
 Output Extension
 ----------------	
@@ -192,6 +184,7 @@ If videos in your batch have external SRT subtitle files, you can embed them aut
 
 *Known Issue*: Handbrake does not accept SRT filenames containing a comma (the comma is a reserved delimiter character for the `--srt-file` option). 
 
+
 Configuration
 =============
 The Handbraker configuration file is stored at `~/.handbraker` on Mac and Linux, `%USERPROFILE%\Application Data` on Windows XP and `%USERPROFILE%\AppData\Roaming` on Windows Vista and later. It must remain [valid JSON](http://jsonlint.com). 
@@ -218,6 +211,7 @@ Handbraker ships with the "Normal" Handbrake preset set as default. This preset 
 Ignore List
 -----------
 Manage the list of files Handbraker should ignore, e.g. "Thumbs.db", ".DS_Store" etc.
+
 
 More Examples
 =============
@@ -251,6 +245,17 @@ Use `--quality` to adjust the compression quality of the output. 20 is the optim
 
 	$ handbraker campaign.mov --quality 35
 
+Presets
+-------
+Handbrake comes with a collection of [built-in presets](https://trac.handbrake.fr/wiki/BuiltInPresets), optimised for common scenarios and specific devices. View the list using: 
+
+	$ handbraker --preset-list
+	
+To encode video optimised for iPod, you might use: 
+
+	$ handbraker --preset iPod video1.mov video2.mov
+
+
 Contributing
 ============
 Patches welcome. There are a few features that would be nice to have, if you fancy implementing them: 
@@ -265,7 +270,6 @@ Developer install
 -----------------
 	$ git clone https://github.com/75lb/handbraker.git
 	$ cd handbraker
-	$ npm install
 	$ npm link
 	
 From there, the `handbraker` command will point to your checkout. If you make some changes, check everything still works by running the test suite: 
