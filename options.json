@@ -1,0 +1,12 @@
+{
+	"ignoreList": [".DS_Store"],
+	"archiveDirectory": "handbraker-originals",
+	"defaults": {
+		"ext": "m4v",
+		"preset": "Normal",
+		"optimize": true,
+		"preserve-dates": true,
+		"srt-codeset": "UTF-8", 
+		"srt-lang": "eng"
+	}
+}
