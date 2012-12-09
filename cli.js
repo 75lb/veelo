@@ -5,7 +5,7 @@ var	util = require("util"),
 	colours = require("colors"),
 	_ = require("underscore"),
 	Handbraker = require("./lib/handbraker"),
-	args = require("./lib/args"),
+	args = require("./lib/cli-args"),
 	config = require("./lib/config");
 
 // setup

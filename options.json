@@ -1,7 +1,7 @@
 {
 	"ignoreList": [".DS_Store"],
 	"archiveDirectory": "handbraker-originals",
-	"defaults": {
+	"defaultOptions": {
 		"ext": "m4v",
 		"preset": "Normal",
 		"optimize": true,

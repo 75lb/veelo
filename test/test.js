@@ -421,6 +421,7 @@ describe("config file", function(){
 // --info option
 // add option to analyse each input file on --dry-run (run --info on each file too)
 // completed hook, notification, alert, email etc.
+// --defaults option, list defaults
 
 // note: preserve-dates acts differently on SMB and AFP
 // move console writing out of Job?
