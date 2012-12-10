@@ -95,10 +95,80 @@ function l(msg){
 }
 
 describe("unit", function(){
-	var config = new Config();
 	
 	describe("Job", function(){
+		var config = new Config();
 		
+		it("should instantiate with sensible paths if no supplied config", function(){
+			var job = new Job(config, "test.mov");
+			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
+			assert.ok(job.archivePath == "", JSON.stringify(job));
+			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+		});
+		
+		it("should instantiate default archive path", function(){
+			config = {
+				options: {
+					handbraker: {
+						archive: true
+					}
+				}
+			};
+			var job = new Job(config, "test.mov");
+			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
+			assert.ok(job.archivePath == path.join("handbraker-originals", "test.mov"), JSON.stringify(job));
+			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+		});
+
+		it("should instantiate custom archive path", function(){
+			config = {
+				archiveDirectory: "archive",
+				options: {
+					handbraker: {
+						archive: true
+					}
+				}
+			};
+			var job = new Job(config, "test.mov");
+			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
+			assert.ok(job.archivePath == path.join("archive", "test.mov"), JSON.stringify(job));
+			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+		});
+
+		it("should instantiate deep custom archive path", function(){
+			config = {
+				archiveDirectory: path.join("sub", "archive"),
+				options: {
+					handbraker: {
+						archive: true
+					}
+				}
+			};
+			var job = new Job(config, "test.mov");
+			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
+			assert.ok(job.archivePath == path.join("sub", "archive", "test.mov"), JSON.stringify(job));
+			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+		});
+
+		it("should instantiate correct nested output-dir", function(){
+			config = {
+				options: {
+					handbraker: {
+						"output-dir": "output"
+					}
+				}
+			};
+			var job = new Job(config, "test.mov");
+			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
+			assert.ok(job.archivePath == "", JSON.stringify(job));
+			assert.ok(job.outputPath == path.join("output", "test.m4v"), JSON.stringify(job));
+			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+		});
+
 		function eventText(evt){
 			return evt ? util.format("code: %d, msg: %s", evt.code, evt.msg) : "event not fired";
 		}
