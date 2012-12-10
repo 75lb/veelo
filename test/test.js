@@ -94,7 +94,7 @@ function l(msg){
 	console.log(msg);
 }
 
-describe("unit", function(){
+describe("Unit Test", function(){
 	
 	describe("Job", function(){
 		var config = new Config();
@@ -211,7 +211,7 @@ describe("unit", function(){
 	});
 });
 
-describe("integration", function(){
+describe("Integration Test", function(){
 	describe("operations which don't encode files", function(){
 		it("should print help when called without options", function(done){
 			run("", function(output){
