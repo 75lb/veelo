@@ -126,9 +126,9 @@ describe("unit", function(){
 		});
 		
 		it("should fire 'invalid' event if file is ignored", function(){
-			config.ignoreList = ["clive.mov"];
+			config.ignoreList = ["test.js"];
 			
-			var job = new Job(config, "clive.mov"), evt;
+			var job = new Job(config, __filename), evt;
 			
 			job.on("invalid", function(e){
 				evt = e;

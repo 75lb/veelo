@@ -5,7 +5,7 @@ var	util = require("util"),
 	colours = require("colors"),
 	_ = require("underscore"),
 	Handbraker = require("./lib/handbraker"),
-	config = require("./lib/config");
+	Config = require("./lib/config");
 
 // setup
 colours.setTheme({
@@ -25,6 +25,7 @@ function log(){
 }
 
 // instantiate Handbraker and attach listeners
+var config = new Config();
 var handbraker = new Handbraker(config);
 
 handbraker.on("error", function(err){
