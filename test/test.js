@@ -15,7 +15,8 @@ var assert = require("assert"),
 	SUB_DIR = path.join(FIXTURE_DIR, "subdir"),
 	SUB_DIR2 = path.join(SUB_DIR, "subdir2"),
 	ORIGINALS_DIR = "handbraker-originals",
-	PRESET_DIR = "handbraker - iPod";
+	PRESET_DIR = "handbraker - iPod",
+	Job = require("../lib/job");
 
 function run(){
 	var args = Array.prototype.slice.call(arguments),
@@ -90,6 +91,22 @@ function setupDeepFileFixture(done){
 function l(msg){
 	console.log(msg);
 }
+
+describe("unit", function(){
+	describe("Job", function(){
+		
+		it("should fire 'invalid' event if not a file", function(){
+			var config = new ConfigMock(),
+				job = new Job(config, __dirname),
+				evt;
+			job.on("invalid", function(e){
+				evt = e;
+			});
+			job.init();
+			assert.ok(evt.code == Job.e.NOT_FILE, evt.code + ", " + evt.msg);
+		});
+	});
+});
 
 describe("operations which don't encode files", function(){
 	it("should print help when called without options", function(done){
@@ -407,7 +424,7 @@ describe("config file", function(){
 // test config default options
 // test invalid config file
 // test 'does not overwrite files' on output and archiving
-// test incorrect options like --clive
+// test incorrect options like --exlude
 // test output-dir on different drive
 // test `--recurse * --exclude` on *nix.. ensure all non-directories passed in are filtered
 // test for 'numeric directory' bug regression
@@ -427,9 +444,9 @@ describe("config file", function(){
 // move console writing out of Job?
 // improve colouring, test on different terminal colour schemes
 // remove identical options between Handbraker and Handbrake help, e.g. -v -h
-// report if invalid option passed (e.g. a typo like "--exlude")
 // print "additional Handbrake options" on dry-run, e.g. Also: start-at 60 etc
 // add option to set your own HandbrakeCLI bin path
 // move arg processing and Handbrake work from handbrake.js to job.js
 // catch CTRL+C and clean up tmp files
 // process 'cancel' signal, via `kill` or CTRL-C 
+
