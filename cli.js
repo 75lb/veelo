@@ -37,12 +37,12 @@ handbraker.on("message", function(msg){
 	log(false, msg);
 });
 
-handbraker.queue.on("report", function(report){
+handbraker.on("report", function(report){
 	log(false, report);
-})
+});
 
 handbraker.queue.on("message", function(msg){
-	if(!handbraker.options.args.handbraker["dry-run"]) log(true, msg);
+	if(!args["dry-run"]) log(true, msg);
 });
 
 handbraker.queue.on("begin", function(){
