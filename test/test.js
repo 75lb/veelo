@@ -99,6 +99,10 @@ describe("Unit Test", function(){
 	describe("Job", function(){
 		var config = new Config();
 		
+		function eventText(evt){
+			return evt ? util.format("code: %d, msg: %s", evt.code, evt.msg) : "event not fired";
+		}
+		
 		it("should instantiate with sensible paths if no supplied config", function(){
 			var job = new Job(config, "test.mov");
 			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
@@ -169,10 +173,21 @@ describe("Unit Test", function(){
 			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
 		});
 
-		function eventText(evt){
-			return evt ? util.format("code: %d, msg: %s", evt.code, evt.msg) : "event not fired";
-		}
-		
+		it("should instantiate correct absolute output-dir", function(){
+			config = {
+				options: {
+					handbraker: {
+						"output-dir": "../output"
+					}
+				}
+			};
+			var job = new Job(config, "test.mov");
+			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
+			assert.ok(job.archivePath == "", JSON.stringify(job));
+			assert.ok(job.outputPath == path.join("..", "output", "test.m4v"), JSON.stringify(job));
+			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+		});
+
 		it("should fire 'invalid' event if not a file", function(){
 			var job = new Job(config, path.join(__dirname, "mock/")), evt;
 			
@@ -525,15 +540,14 @@ describe("Integration Test", function(){
 	});
 });
 
-// test --ext mp4 --format mkv
 // test config default options
-// test invalid config file
-// test 'does not overwrite files' on output and archiving
+// test invalid config file - offer to fix
 // test incorrect options like --exlude
 // test output-dir on different drive
 // test `--recurse * --exclude` on *nix.. ensure all non-directories passed in are filtered
 // test for 'numeric directory' bug regression
 // test using mock config 
+// test correct cleanup on CTRL+C
 
 // feature: pass multiple presets to output multiple versions
 // user-defined presets
@@ -544,6 +558,7 @@ describe("Integration Test", function(){
 // add option to analyse each input file on --dry-run (run --info on each file too)
 // completed hook, notification, alert, email etc.
 // --defaults option, list defaults
+// --scan should default to verbose
 
 // note: preserve-dates acts differently on SMB and AFP
 // move console writing out of Job?
@@ -552,5 +567,3 @@ describe("Integration Test", function(){
 // print "additional Handbrake options" on dry-run, e.g. Also: start-at 60 etc
 // add option to set your own HandbrakeCLI bin path
 // move arg processing and Handbrake work from handbrake.js to job.js
-// catch CTRL+C and clean up tmp files
-// process 'cancel' signal, via `kill` or CTRL-C 
