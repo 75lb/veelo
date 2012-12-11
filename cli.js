@@ -7,14 +7,18 @@ var	util = require("util"),
 	Handbraker = require("./lib/handbraker"),
 	Config = require("./lib/config");
 
-// setup
-colours.setTheme({
-	fileName: "bold",
-	hbOutput: "grey",
-	em: "italic",
-	error: "red",
-	strong: "bold"
-});
+// // setup
+// colours.setTheme({
+// 	fileName: "bold",
+// 	hbOutput: "grey",
+// 	em: "italic",
+// 	error: "red",
+// 	strong: "bold"
+// });
+
+var config = new Config();
+console.log(util.inspect(config, true, null, true));
+process.exit(0);
 
 // standard console writing method
 function log(){
@@ -25,7 +29,6 @@ function log(){
 }
 
 // instantiate Handbraker and attach listeners
-var config = new Config();
 var handbraker = new Handbraker(config);
 
 handbraker.on("error", function(err){

@@ -556,6 +556,10 @@ describe("Integration Test", function(){
 // completed hook, notification, alert, email etc.
 // --defaults option, list defaults
 // --scan should default to verbose
+// make config.options show only passed-in options.. everything in defaultOptions.
+// config: set a default config if configFile doesn't exist
+// config: move h, help, hbhelp to defaultOptions
+// move FlattenArgsHash to HandbrakeCLI
 
 // note: preserve-dates acts differently on SMB and AFP
 // move console writing out of Job?
