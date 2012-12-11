@@ -4,6 +4,7 @@ var assert = require("assert"),
 	util = require("util"),
 	exec = require("child_process").exec,
 	Job = require("../lib/job"),
+	HandbrakeCLI = require("../lib/handbrakeCli"),
 	Config = require("./mock/config");
 
 var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
@@ -94,14 +95,10 @@ function l(msg){
 	console.log(msg);
 }
 
-describe("Unit Test", function(){
+describe.only("Unit Test", function(){
 	
 	describe("Job", function(){
 		var config = new Config();
-		
-		function eventText(evt){
-			return evt ? util.format("code: %d, msg: %s", evt.code, evt.msg) : "event not fired";
-		}
 		
 		it("should instantiate with sensible paths if no supplied config", function(){
 			var job = new Job(config, "test.mov");
@@ -189,40 +186,39 @@ describe("Unit Test", function(){
 		});
 
 		it("should fire 'invalid' event if not a file", function(){
-			var job = new Job(config, path.join(__dirname, "mock/")), evt;
+			var job = new Job(config, path.join(__dirname, "mock/")), 
+				message;
 			
-			job.on("invalid", function(e){
-				evt = e;
+			job.on("invalid", function(msg){
+				message = msg; 
 			});
 			job.init();
 			
-			assert.ok(evt && evt.code == Job.e.NOT_FILE, eventText(evt));
+			assert.ok(message, message || "event not fired");
 		});
 
 		it("should fire 'invalid' event if file doesn't exist", function(){
-			var job = new Job(config, "kjhkjhjkgb"), evt;
+			var job = new Job(config, "kjhkjhjkgb"), message;
 			
-			job.on("invalid", function(e){
-				evt = e;
+			job.on("invalid", function(msg){
+				message = msg; 
 			});
 			job.init();
 			
-			assert.ok(evt && evt.code == Job.e.FILE_NOT_EXIST, eventText(evt));
+			assert.ok(message, message || "event not fired");
 		});
+				
+		// it("should spawn a process, fire 'processing' event", function(done){
+		// 	// needs DI solution
+		// });
 		
-		it("should fire 'invalid' event if file is ignored", function(){
-			config.ignoreList = ["test.js"];
-			
-			var job = new Job(config, __filename), evt;
-			
-			job.on("invalid", function(e){
-				evt = e;
-			});
-			job.init();
-			
-			assert.ok(evt && evt.code == Job.e.FILE_IGNORED, eventText(evt));
+	});
+	
+	describe("HandbrakeCLI", function(){
+		it("should spawn HandbrakeCLI with no args", function(done){
+			var handbrakeCLI = new HandbrakeCLI();
+			handbrakeCLI.spawn();
 		});
-		
 	});
 });
 
@@ -550,6 +546,7 @@ describe("Integration Test", function(){
 // test correct cleanup on CTRL+C
 
 // feature: pass multiple presets to output multiple versions
+// file globbing on windows
 // user-defined presets
 // add presets for Blackberry
 // preset repo server
