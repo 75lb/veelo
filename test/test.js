@@ -95,7 +95,7 @@ function l(msg){
 	console.log(msg);
 }
 
-describe.only("Unit Test", function(){
+describe("Unit Test", function(){
 	
 	describe("Job", function(){
 		var config = new Config();
@@ -214,12 +214,12 @@ describe.only("Unit Test", function(){
 		
 	});
 	
-	describe("HandbrakeCLI", function(){
-		it("should spawn HandbrakeCLI with no args", function(done){
-			var handbrakeCLI = new HandbrakeCLI();
-			handbrakeCLI.spawn();
-		});
-	});
+	// describe("HandbrakeCLI", function(){
+	// 	it("should spawn HandbrakeCLI with no args", function(done){
+	// 		var handbrakeCLI = new HandbrakeCLI();
+	// 		handbrakeCLI.spawn();
+	// 	});
+	// });
 });
 
 describe("Integration Test", function(){
