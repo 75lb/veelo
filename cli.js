@@ -18,6 +18,7 @@ var	util = require("util"),
 
 var config = new Config();
 console.log(util.inspect(config, true, null, true));
+console.log(util.inspect(config.options.get("h"), true, null, true));
 process.exit(0);
 
 // standard console writing method

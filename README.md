@@ -32,7 +32,7 @@ Windows & Mac OS X
 ------------------
 	$ npm -g install handbraker
 	
-*some older Mac operating systems may require the above is run with `sudo`* 
+*some older Mac operating systems may require running the above with `sudo`* 
 
 Ubuntu Linux
 ------------
