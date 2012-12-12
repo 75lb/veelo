@@ -553,7 +553,7 @@ describe("Integration Test", function(){
 // tidy up HandBrakeCLI command output, once completed
 // --info option
 // add option to analyse each input file on --dry-run (run --info on each file too)
-// completed hook, notification, alert, email etc.
+// completed hook, notification, alert, email etc.. a hook after each file to make copy, etc.
 // --defaults option, list defaults
 // --scan should default to verbose
 // make config.options show only passed-in options.. everything in defaultOptions.

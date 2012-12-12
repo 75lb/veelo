@@ -282,4 +282,5 @@ You can use handbraker to rip DVDs but it *does not crack DVD copy protection*. 
 
 License
 =======
-Do what you like. 
+(c) 2012, Lloyd Brookes <75pound@gmail.com>
+(MIT License)
