@@ -16,8 +16,6 @@ colours.setTheme({
 	strong: "bold"
 });
 
-// process.exit(0);
-
 // standard console writing method
 function log(){
 	var args = Array.prototype.slice.call(arguments)
