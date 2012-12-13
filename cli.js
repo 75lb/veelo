@@ -16,7 +16,6 @@ colours.setTheme({
 	strong: "bold"
 });
 
-var config = new Config();
 // process.exit(0);
 
 // standard console writing method
@@ -28,6 +27,7 @@ function log(){
 }
 
 // instantiate Handbraker and attach listeners
+var config = new Config(Handbraker.configDefinition);
 var handbraker = new Handbraker(config);
 
 handbraker.on("error", function(err){

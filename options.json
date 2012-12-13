@@ -1,15 +1,16 @@
 {
-	"handbrake": {
-		"preset": "Normal",
-		"optimize": true,
-		"srt-codeset": "UTF-8", 
-		"srt-lang": "eng"
-	},
-	"handbraker": {
-		"ext": "m4v",
-		"preserve-dates": true,
-		"ignoreList": [".DS_Store"],
-		"archive": true,
-		"archiveDirectory": "handbraker-originals"
+	"defaults": {
+		"handbrake": {
+			"preset": "Normal",
+			"optimize": true,
+			"srt-codeset": "UTF-8", 
+			"srt-lang": "eng"
+		},
+		"handbraker": {
+			"ext": "m4v",
+			"preserve-dates": true,
+			"ignoreList": [".DS_Store"],
+			"archiveDirectory": "handbraker-originals"
+		}
 	}
 }

@@ -568,3 +568,4 @@ describe("Integration Test", function(){
 // print "additional Handbrake options" on dry-run, e.g. Also: start-at 60 etc
 // add option to set your own HandbrakeCLI bin path
 // move arg processing and Handbrake work from handbrake.js to job.js
+// mention improved anti-aliasing in Quicktime ,hardward acceleration 
