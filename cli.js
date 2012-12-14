@@ -13,7 +13,8 @@ colours.setTheme({
 	hbOutput: "grey",
 	em: "italic",
 	error: "red",
-	strong: "bold"
+	strong: "bold",
+	warning: "red"
 });
 
 // standard console writing method
