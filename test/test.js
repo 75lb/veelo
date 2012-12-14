@@ -542,7 +542,6 @@ describe("Integration Test", function(){
 // test output-dir on different drive
 // test `--recurse * --exclude` on *nix.. ensure all non-directories passed in are filtered
 // test for 'numeric directory' bug regression
-// test using mock config 
 // test correct cleanup on CTRL+C
 
 // feature: pass multiple presets to output multiple versions
@@ -556,7 +555,6 @@ describe("Integration Test", function(){
 // completed hook, notification, alert, email etc.. a hook after each file to make copy, etc.
 // --defaults option, list defaults
 // --scan should default to verbose
-// make config.options show only passed-in options.. everything in defaultOptions.
 // config: set a default config if configFile doesn't exist
 // config: move h, help, hbhelp to defaultOptions
 // move FlattenArgsHash to HandbrakeCLI
