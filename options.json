@@ -1,12 +1,16 @@
 {
-	"ignoreList": [".DS_Store"],
-	"archiveDirectory": "handbraker-originals",
 	"defaults": {
-		"ext": "m4v",
-		"preset": "Normal",
-		"optimize": true,
-		"preserve-dates": true,
-		"srt-codeset": "UTF-8", 
-		"srt-lang": "eng"
+		"handbrake": {
+			"preset": "Normal",
+			"optimize": true,
+			"srt-codeset": "UTF-8", 
+			"srt-lang": "eng"
+		},
+		"handbraker": {
+			"ext": "m4v",
+			"preserve-dates": true,
+			"ignoreList": [".DS_Store"],
+			"archiveDirectory": "handbraker-originals"
+		}
 	}
 }

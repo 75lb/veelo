@@ -1,6 +1,6 @@
 {
   "name": "handbraker",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Optimise your video library using Handbrake",
   "homepage": "http://75lb.github.com/handbraker/",
   "bugs": "https://github.com/75lb/handbraker/issues",
@@ -19,12 +19,18 @@
     "url": "git://github.com/75lb/handbraker.git"
   },
   "keywords": [
-    "handbrake", "batch",
-    "encode", "transcode",
-    "video", "mp4",
-    "m4v", "mkv",
-	"avi", "mpg", 
-	"divx", "xvid"
+    "handbrake",
+    "batch",
+    "encode",
+    "transcode",
+    "video",
+    "mp4",
+    "m4v",
+    "mkv",
+    "avi",
+    "mpg",
+    "divx",
+    "xvid"
   ],
   "author": "Lloyd Brookes",
   "license": "MIT",

@@ -5,8 +5,7 @@ var	util = require("util"),
 	colours = require("colors"),
 	_ = require("underscore"),
 	Handbraker = require("./lib/handbraker"),
-	args = require("./lib/args"),
-	config = require("./lib/config");
+	Config = require("./lib/config");
 
 // setup
 colours.setTheme({
@@ -14,7 +13,8 @@ colours.setTheme({
 	hbOutput: "grey",
 	em: "italic",
 	error: "red",
-	strong: "bold"
+	strong: "bold",
+	warning: "red"
 });
 
 // standard console writing method
@@ -26,7 +26,8 @@ function log(){
 }
 
 // instantiate Handbraker and attach listeners
-var handbraker = new Handbraker(args, config);
+var config = new Config(Handbraker.configDefinition);
+var handbraker = new Handbraker(config);
 
 handbraker.on("error", function(err){
 	log(true, err);
@@ -37,12 +38,12 @@ handbraker.on("message", function(msg){
 	log(false, msg);
 });
 
-handbraker.queue.on("report", function(report){
+handbraker.on("report", function(report){
 	log(false, report);
-})
+});
 
 handbraker.queue.on("message", function(msg){
-	if(!handbraker.options.args.handbraker["dry-run"]) log(true, msg);
+	if(!config.options.handbraker["dry-run"]) log(true, msg);
 });
 
 handbraker.queue.on("begin", function(){
