@@ -524,8 +524,8 @@ describe("Integration Test", function(){
 
 	describe("config file", function(){
 		var configPath = process.platform == "win32"
-			? path.join(process.env.APPDATA, ".handbraker")
-			: path.join(process.env.HOME, ".handbraker");
+			? path.join(process.env.APPDATA, ".handbraker.json")
+			: path.join(process.env.HOME, ".handbraker.json");
 	
 		it("should be created in the correct place", function(done){
 			run("", function(output){
