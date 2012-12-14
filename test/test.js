@@ -560,6 +560,7 @@ describe("Integration Test", function(){
 // config: set a default config if configFile doesn't exist
 // config: move h, help, hbhelp to defaultOptions
 // move FlattenArgsHash to HandbrakeCLI
+// --defaults option
 
 // note: preserve-dates acts differently on SMB and AFP
 // move console writing out of Job?
@@ -569,3 +570,16 @@ describe("Integration Test", function(){
 // add option to set your own HandbrakeCLI bin path
 // move arg processing and Handbrake work from handbrake.js to job.js
 // mention improved anti-aliasing in Quicktime ,hardward acceleration 
+
+// validate all options set
+// get passed in options
+// apply external defaults
+// apply internal defaults
+// group options
+
+// validate passed in options, e.g. isNumber, RegEx
+// validate passed in files, e.g. file exists
+// custom validate - e.g. video file has a valid title
+// Kong Fig Master
+// grouped options, to separate options passed to child_process
+// test all defaults against 'invalid option', e.g. from cli, external default, internal defaults 
