@@ -1,362 +1,88 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    <title>Handbraker by 75lb</title>
-  </head>
-
-  <body>
-    <div id="container">
-      <div class="inner">
-
-        <header>
-          <h1>Handbraker</h1>
-          <h2>Optimise your video library using Handbrake</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/75lb/handbraker/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/75lb/handbraker/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/75lb/handbraker" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <p><a href="https://travis-ci.org/75lb/handbraker"><img src="https://travis-ci.org/75lb/handbraker.png" alt="Build Status"></a></p>
-
-<h1>Handbraker</h1>
-
-<p>Consolidate your video library from a mixture of formats to a single, modern format which works everywhere (<a href="http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264/MPEG-4 AVC</a>). With a single command.</p>
-
-<p>Handbraker, a scripting layer for the excellent <a href="http://handbrake.fr">Handbrake</a>, is built for this task. </p>
-
-<p>Works on <strong>Windows</strong>, <strong>Linux</strong> and <strong>Mac OSX</strong>.</p>
-
-<h1>Synopsis</h1>
-
-<pre><code>$ handbraker --recurse Boxing --exclude Tyson
-[18:34:43] queue length: 158
-[18:34:43] file types: .m4v(16) .avi(91) .wmv(2) .mp4(7) .mpg(23) .mkv(18) .m2ts(1)
-[18:34:43] processing: <strong>Boxing/Eubank/Chris Eubank vs Nigel Benn.avi</strong>
-Encoding: 0.71 % (70.07 fps, avg 78.30 fps, ETA 00h22m37s)</code></pre>
-
-<h2>What is Handbrake? </h2>
-
-<p>In their words: </p>
-
-<blockquote>
-<p>HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video transcoder, available for MacOS X, Linux and Windows. It converts video from nearly any format to a handful of modern ones.</p>
-</blockquote>
-
-<h1>Install</h1>
-
-<p>On all platforms, first ensure <a href="http://nodejs.org">node.js</a> is installed. Visit <a href="http://nodejs.org/download/">their download page</a> to find the correct installer for your system.</p>
-
-<p>Then, at the command line enter: </p>
-
-<h2>Windows &amp; Mac OS X</h2>
-
-<pre><code>$ npm -g install handbraker
-</code></pre>
-
-<h2>Ubuntu Linux</h2>
-
-<pre><code>$ sudo npm -g install handbraker
-$ sudo npm -g run-script handbraker ubuntu-setup
-</code></pre>
-
-<p>(the second step above installs the <a href="https://launchpad.net/%7Estebbins/+archive/handbrake-releases">official Ubuntu Handbrake package</a>).</p>
-
-<h2>Other Platforms</h2>
-
-<p>Other platform users must manually ensure <code>HandbrakeCLI</code> is installed on their PATH. Check the <a href="http://handbrake.fr/downloads2.php">official website</a> to see if a release is available for your system. </p>
-
-<h2>Update</h2>
-
-<p>If you already have handbraker installed, double-check you have the latest version: </p>
-
-<pre><code>$ sudo npm update -g handbraker
-</code></pre>
-
-<h1>Usage</h1>
-
-<p>A quick summary of the options can be displayed with the <code>--help</code> option:</p>
-
-<pre><code>$ handbraker --help
-
-Usage: handbraker [options] [HandbrakeCLI options] [files]
-
-### Handbraker Options-------------------------------------------------------
-        --ext                  Output file extension. Choose 'mp4', 'm4v' or 'mkv' (default: m4v)
-        --archive              Archive the original file in a 'handbraker-originals' directory
-        --output-dir           Outputs to the specified directory
-        --preserve-dates       Preserve input's 'modified' and 'accessed' times on the output file
-        --recurse              Traverse into directories
-        --include              Regex include filter, for use with --recurse
-        --exclude              Regex exclude filter, for use with --recurse
-        --dry-run              Describe the outcome without performing the actual work
-        --embed-srt            If a matching .srt file exists, embed subtitles into the output video
-    -v, --verbose              Show detailed output
-    -h, --help                 Show this help
-        --hbhelp               Show this help plus all HandbrakeCLI options
-</code></pre>
-
-<h2>Handbrake Options</h2>
-
-<p>All non handbraker-specific options (those listed by <code>handbraker --help</code>) are passed directly to Handbrake. To view the <a href="https://trac.handbrake.fr/wiki/CLIGuide">full range of Handbrake options</a>, use:</p>
-
-<pre><code>$ handbraker --hbhelp
-</code></pre>
-
-<h2>Presets</h2>
-
-<p>Handbrake comes with a collection of <a href="https://trac.handbrake.fr/wiki/BuiltInPresets">built-in presets</a>, optimised for common scenarios and specific devices. View the list using: </p>
-
-<pre><code>$ handbraker --preset-list
-</code></pre>
-
-<p>To encode video optimised for iPod, you might use: </p>
-
-<pre><code>$ handbraker --preset iPod video1.mov video2.mov
-</code></pre>
-
-<h2>Output Extension</h2>
-
-<p>By default, handbraker will output media in a MP4 container using the ".m4v" file extension (plays well with all media players, particularly iTunes). If you prefer to output the MKV container format, use <code>--ext mkv</code>.</p>
-
-<h2>Archive your originals</h2>
-
-<p>Handbraker does not delete or modify your original files, it leaves them where they are. If you would like to move your original files into a directory (convenient for archiving or discarding) set the <code>--archive</code> flag:</p>
-
-<pre><code>$ tree
-.
-├── rain.mov
-└── video.mov 
-    
-$ handbraker --archive *.mov
-[18:44:01] queue length: 2
-[18:44:01] file types: .mov(2)
-[18:44:01] processing <strong>rain.m4v</strong>
-[18:44:39] processing <strong>video.m4v</strong>
-[18:45:22] all encodes complete.
-    
-$ tree
-.
-├── handbraker-originals
-│   ├── rain.mov
-│   └── video.mov
-├── rain.m4v
-└── video.m4v</code></pre>
-
-<h2>Output Directory</h2>
-
-<p>By default, handbraker outputs in the same directory as the input file. You can output to a sub-directory of each input file by passing <code>--output-dir &lt;directory&gt;</code>. For example,</p>
-
-<pre><code>$ tree
-.
-├── Jan
-│   └── Manchester.mov
-└── Feb
-    └── Liverpool.mov
-    
-$ handbraker */*.mov --output-dir optimised
-[18:44:01] queue length: 2
-[18:44:01] file types: .mov(2)
-[18:44:01] processing <strong>Jan/Manchester.mov</strong>
-[18:44:39] processing <strong>Feb/Liverpool.mov</strong>
-[18:45:22] all encodes complete.
-    
-$ tree
-.
-├── Jan
-│   ├── Manchester.mov
-│   └── optimised
-│       └── Manchester.m4v
-└── Feb
-    ├── Liverpool.mov
-    └── optimised
-        └── Liverpool.m4v</code></pre>
-
-<p>If you specify an absolute <code>--output-dir</code> path, or a path beginning with <code>.</code> or <code>..</code>, output will be directed to a single, specific directory: </p>
-
-<pre><code>$ tree
-.
-├── Jan
-│   └── Manchester.mov
-└── Feb
-    └── Liverpool.mov
-    
-$ handbraker */*.mov --output-dir ./optimised
-[18:44:01] queue length: 2
-[18:44:01] file types: .mov(2)
-[18:44:01] processing <strong>Jan/Manchester.mov</strong>
-[18:44:39] processing <strong>Feb/Liverpool.mov</strong>
-[18:45:22] all encodes complete.
-
-$ tree
-.
-├── Jan
-│   └── Manchester.mov
-├── Feb
-│   └── Liverpool.mov
-└── optimised
-    ├── Jan
-    │   └── Manchester.m4v
-    └── Feb
-        └── Liverpool.m4v</code></pre>
-
-<h2>Recurse</h2>
-
-<p>By default, Handbraker ignore directories. If you wish to traverse into directories, processing the entire tree, use <code>--recurse</code>. </p>
-
-<p>With large directory trees, control which files are processed using <code>--include</code> and <code>--exclude</code> filters. Both these options accept Regular Expressions. For example, to only process <code>wmv</code> and <code>avi</code> files:</p>
-
-<pre><code>$ handbraker --recurse Sport --include "\.wmv|\.avi"
-</code></pre>
-
-<h2>Dry Run</h2>
-
-<p>To see a report of what will or will not be processed, <em>without</em> performing any work, pass <code>--dry-run</code>. This is a useful verification step before processing a large batch.</p>
-
-<h2>Embedding Subtitles</h2>
-
-<p>If videos in your batch have external SRT subtitle files, you can embed them automatically by passing <code>--embed-srt</code>.</p>
-
-<pre><code>$ handbraker Film/World/* --embed-srt
-</code></pre>
-
-<p><em>Known Issue</em>: Handbrake does not accept SRT filenames containing a comma (the comma is a reserved delimiter character for the <code>--srt-file</code> option). </p>
-
-<h1>Configuration</h1>
-
-<p>The Handbraker configuration file is stored at <code>~/.handbraker</code> on Mac and Linux, <code>%USERPROFILE%\Application Data</code> on Windows XP and <code>%USERPROFILE%\AppData\Roaming</code> on Windows Vista and later. It must remain <a href="http://jsonlint.com">valid JSON</a>. </p>
-
-<p>The initial config file looks like this: </p>
-
-<pre><code>{
-    "ignoreList": [".DS_Store"],
-    "archiveDirectory": "handbraker-originals",
-    "defaults": {
-        "ext": "m4v",
-        "preset": "Normal",
-        "optimize": true,
-        "preserve-dates": true,
-        "srt-codeset": "UTF-8", 
-        "srt-lang": "eng"
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Veelo - Video Library Optimisation with Handbrake</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width">
+
+	<!-- <link rel="stylesheet" href="css/bootstrap.min.css">
+	<style>
+/*	  body {
+	    padding-top: 60px;
+	    padding-bottom: 40px;
+	  }
+*/	</style>
+	<link rel="stylesheet" href="css/bootstrap-responsive.min.css"> -->
+
+	<link rel="stylesheet" href="css/prettify.css" />
+	<link rel="stylesheet" href="css/main.css">
+
+	<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+<body>
+	<article>
+		<header>
+			<hgroup>
+				<h1>Veelo</h1>
+				<h2>Video Library Optimisation with Handbrake</h2>
+			</hgroup>
+		</header>
+		
+		<h1>Synopsis</h1>
+		
+		<code class="prettyprint">$ handbraker dowork.wmv</code>
+		
+		<pre class="prettyprint">$ handbraker --recurse Boxing --exclude Tyson
+		[18:34:43] queue length: 158
+		[18:34:43] file types: .m4v(16) .avi(91) .wmv(2) .mp4(7) .mpg(23) .mkv(18) .m2ts(1)
+		[18:34:43] processing: <strong>Boxing/Eubank/Chris Eubank vs Nigel Benn.avi</strong>
+		Encoding: 0.71 % (70.07 fps, avg 78.30 fps, ETA 00h22m37s)</pre>
+		
+		<pre class="prettyprint">// Avoid `console` errors in browsers that lack a console.
+(function() {
+    var method;
+    var noop = function noop() {};
+    var methods = [
+        'assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error',
+        'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log',
+        'markTimeline', 'profile', 'profileEnd', 'table', 'time', 'timeEnd',
+        'timeStamp', 'trace', 'warn'
+    ];
+    var length = methods.length;
+    var console = (window.console = window.console || {});
+
+    while (length--) {
+        method = methods[length];
+
+        // Only stub undefined methods.
+        if (!console[method]) {
+            console[method] = noop;
+        }
     }
-}
-</code></pre>
+}());
 
-<h2>Defaults</h2>
+// Place any jQuery/helper plugins in here.
+</pre>
+	</article>
 
-<p>Handbraker ships with the "Normal" Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.</p>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
+	<!-- // <script src="js/vendor/bootstrap.min.js"></script> -->
+	<script src="js/vendor/prettify.js"></script>
 
-<h2>Ignore List</h2>
+	<script src="js/plugins.js"></script>
+	<script src="js/main.js"></script>
 
-<p>Manage the list of files Handbraker should ignore, e.g. "Thumbs.db", ".DS_Store" etc.</p>
-
-<h1>More Examples</h1>
-
-<p>To test the water, you want to encode a small sample of each video in the "Comedy" directory. Use the Handbrake options <code>--start-at</code> and <code>--stop-at</code>. For example, create samples beginning at the 60th second lasting for 120 seconds, outputing each into a <code>samples</code> sub-directory:</p>
-
-<pre><code>$ handbraker Comedy/* --start-at duration:60 --stop-at duration:120 --output-dir samples
-</code></pre>
-
-<p>If sound quality is important, encode with a higher audio bitrate (e.g. 256kb/s):</p>
-
-<pre><code>$ handbraker Concert.wmv --ab 256
-</code></pre>
-
-<p>Say your source media contains audio and subtitle tracks in several languages. You are interested in keeping just the Japanese audio and English subtitles. First scan the source media to find the ID numbers of the audio/subtitle tracks you wish to keep:</p>
-
-<pre><code>$ handbraker -t 0 TokyoStory.mkv
-</code></pre>
-
-<p>In the output you'll see something like this: </p>
-
-<pre><code>+ audio tracks:
-  + 1, Russian (AC3) (2.0 ch) (iso639-2: rus), 48000Hz, 192000bps
-  + 2, Russian (AC3) (2.0 ch) (iso639-2: rus), 48000Hz, 192000bps
-  + 3, Japanese (AC3) (2.0 ch) (iso639-2: jpn), 48000Hz, 192000bps
-+ subtitle tracks:
-  + 1, Russian (iso639-2: rus) (Text)(UTF-8)
-  + 2, English (iso639-2: eng) (Text)(UTF-8)
-</code></pre>
-
-<p>So, we'll transcode taking audio track 3 and subtitle track 2:</p>
-
-<pre><code>$ handbraker TokyoStory.mkv --audio 3 --subtitle 2
-</code></pre>
-
-<p>Use <code>--quality</code> to adjust the compression quality of the output. 20 is the optimum value, between 35 and 40 will give a conveniently small output file whilst remaining watchable - useful for email attachment:</p>
-
-<pre><code>$ handbraker campaign.mov --quality 35
-</code></pre>
-
-<h1>Contributing</h1>
-
-<p>Patches welcome. There are a few features that would be nice to have, if you fancy implementing them: </p>
-
-<ul>
-<li>a web frontend</li>
-<li>live queue management</li>
-<li>user-defined presets </li>
-</ul><p>Please file bugs or feature requests on the <a href="https://github.com/75lb/handbraker/issues?state=open">Issue List</a>.</p>
-
-<h2>Developer install</h2>
-
-<pre><code>$ git clone https://github.com/75lb/handbraker.git
-$ cd handbraker
-$ npm install
-$ npm link
-</code></pre>
-
-<p>From there, the <code>handbraker</code> command will point to your checkout. If you make some changes, check everything still works by running the test suite: </p>
-
-<pre><code>$ npm test
-</code></pre>
-
-<h1>DVD Copy Protection</h1>
-
-<p>You can use handbraker to rip DVDs but it <em>does not crack DVD copy protection</em>. Use a specialised DVD ripper for this. </p>
-
-<h1>License</h1>
-
-<p>Copyright (C) 2012 Lloyd Brookes <a href="mailto:75pound@gmail.com">75pound@gmail.com</a></p>
-
-<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
-
-<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
-
-<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
-        </section>
-
-        <footer>
-          Handbraker is maintained by <a href="https://github.com/75lb">75lb</a><br>
-          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
-
-                  <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-27725889-5");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
-
-      </div>
-    </div>
-  </body>
+	<script>
+		var _gaq=[['_setAccount','UA-27725889-5'],['_trackPageview']];
+		(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+		g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+		s.parentNode.insertBefore(g,s)}(document,'script'));
+	</script>
+</body>
 </html>
