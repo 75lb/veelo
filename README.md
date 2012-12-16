@@ -75,7 +75,8 @@ A quick summary of the options can be displayed with the `--help` option:
 	    -h, --help                 Show this help
 	        --hbhelp               Show this help plus all HandbrakeCLI options
 
-Specifiy Handbrake Options
+<span id="usage-handbrake"></span>
+Specifiy HandbrakeCLI Options
 --------------------------
 If you are fimilar with Handbrake, and/or want more control over the encoder settings, run this command to view the [full range of Handbrake options](https://trac.handbrake.fr/wiki/CLIGuide):
 
@@ -83,10 +84,12 @@ If you are fimilar with Handbrake, and/or want more control over the encoder set
  
 Where specified, these options are passed directly to the underlying Handbrake encoder.
 
+<span id="usage-ext"></span>
 Set Output File Extension
 -------------------------
 By default, handbraker will output media in a MP4 container using the ".m4v" file extension (plays well with all media players, particularly iTunes/Quicktime). If you prefer to output the MKV container format, use `--ext mkv`.
 
+<span id="usage-archive"></span>
 Archive your originals
 ----------------------
 Handbraker does not delete or modify your original files, it leaves them where they are. After processing, if you would like the original files moved into a directory convenient for archiving or discarding set the `--archive` flag. For example, the following files: 
@@ -104,26 +107,20 @@ after processing would be arranged like so:
 ├── rain.m4v
 └── video.m4v</code></pre>
 
+<span id="usage-output-dir"></span>
 Specify an Output Directory
 ---------------------------
-By default, handbraker outputs in the same directory as the input file. You can output to a sub-directory of each input file by passing `--output-dir <directory>`. For example,
+By default, handbraker outputs in the same directory as the input file. You can output to a sub-directory of each input file by passing `--output-dir <directory>`. For example, with this directory structure:
 
-<pre><code>$ tree
-.
+<pre><code>.
 ├── Jan
 │   └── Manchester.mov
 └── Feb
-    └── Liverpool.mov
+    └── Liverpool.mov</code></pre>
+    
+running `$ handbraker */*.mov --output-dir optimised` would output: 
 	
-$ handbraker */*.mov --output-dir optimised
-[18:44:01] queue length: 2
-[18:44:01] file types: .mov(2)
-[18:44:01] processing <strong>Jan/Manchester.mov</strong>
-[18:44:39] processing <strong>Feb/Liverpool.mov</strong>
-[18:45:22] all encodes complete.
-	
-$ tree
-.
+<pre><code>.
 ├── Jan
 │   ├── Manchester.mov
 │   └── optimised
@@ -133,24 +130,9 @@ $ tree
     └── optimised
         └── Liverpool.m4v</code></pre>
 
-If you specify an absolute `--output-dir` path, or a path beginning with `.` or `..`, output will be directed to a single, specific directory: 
+If you specify an absolute `--output-dir` path, or a path beginning with "." or "..", output will be directed to a single, specific directory. So, running `$ handbraker */*.mov --output-dir ./optimised` would output: 
 
-<pre><code>$ tree
-.
-├── Jan
-│   └── Manchester.mov
-└── Feb
-    └── Liverpool.mov
-	
-$ handbraker */*.mov --output-dir ./optimised
-[18:44:01] queue length: 2
-[18:44:01] file types: .mov(2)
-[18:44:01] processing <strong>Jan/Manchester.mov</strong>
-[18:44:39] processing <strong>Feb/Liverpool.mov</strong>
-[18:45:22] all encodes complete.
-
-$ tree
-.
+<pre><code>.
 ├── Jan
 │   └── Manchester.mov
 ├── Feb
@@ -161,6 +143,7 @@ $ tree
     └── Feb
         └── Liverpool.m4v</code></pre>
 
+<span id="usage-recurse"></span>
 Recurse
 -------
 By default, Handbraker ignore directories. If you wish to traverse into directories, processing the entire tree, use `--recurse`. 
@@ -169,10 +152,12 @@ With large directory trees, control which files are processed using `--include` 
 
 	$ handbraker --recurse Sport --include "\.wmv|\.avi"
 
+<span id="usage-dry-run"></span>
 Dry Run
 -------
 To see a report of what will or will not be processed, _without_ performing any work, pass `--dry-run`. This is a useful verification step before processing a large batch.
 
+<span id="usage-embed-srt"></span>
 Embedding Subtitles
 -------------------
 If videos in your batch have external SRT subtitle files, you can embed them automatically by passing `--embed-srt`.
@@ -181,26 +166,31 @@ If videos in your batch have external SRT subtitle files, you can embed them aut
 
 *Known Issue*: Handbrake does not accept SRT filenames containing a comma (the comma is a reserved delimiter character for the `--srt-file` option). 
 
-
+<span id="config"></span>
 Configuration
 =============
 The Handbraker configuration file is stored at `~/.handbraker` on Mac and Linux, `%USERPROFILE%\Application Data` on Windows XP and `%USERPROFILE%\AppData\Roaming` on Windows Vista and later. It must remain [valid JSON](http://jsonlint.com). 
 
 The initial config file looks like this: 
 
-	{
-		"ignoreList": [".DS_Store"],
-		"archiveDirectory": "handbraker-originals",
-		"defaults": {
-			"ext": "m4v",
-			"preset": "Normal",
-			"optimize": true,
-			"preserve-dates": true,
-			"srt-codeset": "UTF-8", 
-			"srt-lang": "eng"
-		}
-	}
+    {
+    	"defaults": {
+    		"handbrake": {
+    			"preset": "Normal",
+    			"optimize": true,
+    			"srt-codeset": "UTF-8", 
+    			"srt-lang": "eng"
+    		},
+    		"handbraker": {
+    			"ext": "m4v",
+    			"preserve-dates": true,
+    			"ignoreList": [".DS_Store"],
+    			"archiveDirectory": "handbraker-originals"
+    		}
+    	}
+    }
 
+<span id="config-defaults"></span>
 Defaults
 --------
 Handbraker ships with the "Normal" Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.
@@ -209,9 +199,14 @@ Ignore List
 -----------
 Manage the list of files Handbraker should ignore, e.g. "Thumbs.db", ".DS_Store" etc.
 
-
+<span id="examples"></span>
 More Examples
 =============
+More usage examples 
+
+<span id="examples-samples"></span>
+Make Samples
+------------
 To test the water, you want to encode a small sample of each video in the "Comedy" directory. Use the Handbrake options `--start-at` and `--stop-at`. For example, create samples beginning at the 60th second lasting for 120 seconds, outputing each into a `samples` sub-directory:
 
 	$ handbraker Comedy/* --start-at duration:60 --stop-at duration:120 --output-dir samples
