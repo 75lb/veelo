@@ -559,7 +559,7 @@ describe("Integration Test", function(){
 // config: move h, help, hbhelp to defaultOptions
 // move FlattenArgsHash to HandbrakeCLI
 // fix --output-dir ../dir/file.mov from outputting to output-dir/..
-// more efficient to write working file at output location (particularly when a remote disk)
+// improve dry-run report, more stats.
 
 // note: preserve-dates acts differently on SMB and AFP
 // move console writing out of Job?
@@ -591,3 +591,6 @@ describe("Integration Test", function(){
 
 // example: preparing 10sec samples of 3 different presets to test on tablet
 // handbraker * --preset none  -e x264 -q 25 -r 29.97 --ab 128 -6 stereo -X 480 cabac=0:ref=2:me=umh:bframes=0:weightp=0:subme=6:8x8dct=0:trellis=0 -v --start-at duration:200 --stop-at duration:10 --output-dir samples/lloyd
+// queue together handbraker commands? 
+// Video Library Optimisation tool Veelo. 
+// web gui, live graph showing fps speed and data-throughput over time
