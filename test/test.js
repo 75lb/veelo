@@ -558,7 +558,8 @@ describe("Integration Test", function(){
 // config: set a default config if configFile doesn't exist
 // config: move h, help, hbhelp to defaultOptions
 // move FlattenArgsHash to HandbrakeCLI
-// --defaults option
+// fix --output-dir ../dir/file.mov from outputting to output-dir/..
+// more efficient to write working file at output location (particularly when a remote disk)
 
 // note: preserve-dates acts differently on SMB and AFP
 // move console writing out of Job?
@@ -574,10 +575,19 @@ describe("Integration Test", function(){
 // apply external defaults
 // apply internal defaults
 // group options
-
 // validate passed in options, e.g. isNumber, RegEx
 // validate passed in files, e.g. file exists
 // custom validate - e.g. video file has a valid title
 // Kong Fig Master
 // grouped options, to separate options passed to child_process
 // test all defaults against 'invalid option', e.g. from cli, external default, internal defaults 
+
+// move documentation to site
+// progress bar
+// --default
+// --default-set "preset:iPhone and iPod Touch"
+// --default-rm "preset"
+// 'to encode' watch directory
+
+// example: preparing 10sec samples of 3 different presets to test on tablet
+// handbraker * --preset none  -e x264 -q 25 -r 29.97 --ab 128 -6 stereo -X 480 cabac=0:ref=2:me=umh:bframes=0:weightp=0:subme=6:8x8dct=0:trellis=0 -v --start-at duration:200 --stop-at duration:10 --output-dir samples/lloyd
