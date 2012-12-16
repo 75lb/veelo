@@ -1,0 +1,7 @@
+{
+  "name": "handbraker-gh-pages",
+  "dependencies": {
+    "marked": "~0.2.6"
+  },
+  "private": true
+}
