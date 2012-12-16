@@ -5,4 +5,13 @@ pre {
 pre > code {
   display: block;
   min-width: 900px;
+  font-size: 1.1em;
+}
+
+body {
+  font-size: 1.1em;
+}
+
+h2 {
+  font-size: 24px;
 }

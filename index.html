@@ -14,42 +14,37 @@
   <div class="container">
     <div class="row">
       <div class="span10">
-      	<article id="documentation"><h1>Handbraker</h1>
+      	<article id="documentation"><p><span id="handbraker"></span>
+</p>
+<h1>Handbraker</h1>
 <p><a href="https://travis-ci.org/75lb/handbraker"><img src="https://travis-ci.org/75lb/handbraker.png" alt="Build Status"></a>
 
 </p>
-<p>Handbraker is a Video Library Optimisation tool. Consolidate your video library from a mixture of formats to a single, modern format which works everywhere (<a href="http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264/MPEG-4 AVC</a>). With a single command.
+<p>Requiring properiatary media players or plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices is aggravating. Well, optimise your video library - consolidate the mixture of legacy and proprietary formats down to a single, modern format which works everywhere (<a href="http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264/MPEG-4 AVC</a>).
 
 </p>
-<p>Handbraker, a scripting layer for the excellent <a href="http://handbrake.fr">Handbrake</a>, is built for this task. 
+<p>Handbraker, a command-line Video Library Optimisation tool built on top of the outstanding encoder Handbrake, was built for this task.
 
 </p>
 <p>Works on <strong>Windows</strong>, <strong>Linux</strong> and <strong>Mac OSX</strong>.
 
 </p>
-<h1>Synopsis</h1>
+<p><span id="synopsis"></span>
+</p>
+<h2>Synopsis</h2>
 <pre><code>$ handbraker --recurse Boxing --exclude Tyson
 [18:34:43] queue length: 158
 [18:34:43] file types: .m4v(16) .avi(91) .wmv(2) .mp4(7) .mpg(23) .mkv(18) .m2ts(1)
 [18:34:43] processing: <strong>Boxing/Eubank/Chris Eubank vs Nigel Benn.avi</strong>
 Encoding: 0.71 % (70.07 fps, avg 78.30 fps, ETA 00h22m37s)</code></pre>
 
-<h2>What is Handbrake? </h2>
-<p>In their words: 
-
-</p>
-<blockquote>
-<p>HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video transcoder, available for MacOS X, Linux and Windows. It converts video from nearly any format to a handful of modern ones.
-
-</p>
-</blockquote>
 <p><span id="install"></span>
 </p>
 <h1>Install</h1>
-<p>On all platforms, first ensure <a href="http://nodejs.org">node.js</a> is installed. Visit <a href="http://nodejs.org/download/">their download page</a> to find the correct installer for your system.
+<p>First ensure <a href="http://nodejs.org">node.js</a> is installed. Visit <a href="http://nodejs.org/download/">their download page</a> to find the correct installer for your system.
 
 </p>
-<p>Then, at the command line enter: 
+<p>Then, at the command line enter:
 
 </p>
 <p><span id="install-winmac"></span>
@@ -67,15 +62,21 @@ $ sudo npm -g run-script handbraker ubuntu-setup</code></pre>
 <p>(the second step above installs the <a href="https://launchpad.net/~stebbins/+archive/handbrake-releases">official Ubuntu Handbrake package</a>).
 
 </p>
+<p><span id="install-other"></span>
+</p>
 <h2>Other Platforms</h2>
 <p>Other platform users must manually ensure <code>HandbrakeCLI</code> is installed on their PATH. Check the <a href="http://handbrake.fr/downloads2.php">official website</a> to see if a release is available for your system. 
 
+</p>
+<p><span id="update"></span>
 </p>
 <h2>Update</h2>
 <p>If you already have handbraker installed, double-check you have the latest version: 
 
 </p>
 <pre><code>$ sudo npm update -g handbraker</code></pre>
+<p><span id="usage"></span>
+</p>
 <h1>Usage</h1>
 <p>A quick summary of the options can be displayed with the <code>--help</code> option:
 
@@ -97,40 +98,37 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
     -v, --verbose              Show detailed output
     -h, --help                 Show this help
         --hbhelp               Show this help plus all HandbrakeCLI options</code></pre>
-<h2>Handbrake Options</h2>
-<p>All non handbraker-specific options (those listed by <code>handbraker --help</code>) are passed directly to Handbrake. To view the <a href="https://trac.handbrake.fr/wiki/CLIGuide">full range of Handbrake options</a>, use:
+<h2>Specifiy Handbrake Options</h2>
+<p>If you are fimilar with Handbrake, and/or want more control over the encoder settings, run this command to view the <a href="https://trac.handbrake.fr/wiki/CLIGuide">full range of Handbrake options</a>:
 
 </p>
 <pre><code>$ handbraker --hbhelp</code></pre>
-<h2>Output Extension</h2>
-<p>By default, handbraker will output media in a MP4 container using the &quot;.m4v&quot; file extension (plays well with all media players, particularly iTunes). If you prefer to output the MKV container format, use <code>--ext mkv</code>.
+<p>Where specified, these options are passed directly to the underlying Handbrake encoder.
+
+</p>
+<h2>Set Output File Extension</h2>
+<p>By default, handbraker will output media in a MP4 container using the &quot;.m4v&quot; file extension (plays well with all media players, particularly iTunes/Quicktime). If you prefer to output the MKV container format, use <code>--ext mkv</code>.
 
 </p>
 <h2>Archive your originals</h2>
-<p>Handbraker does not delete or modify your original files, it leaves them where they are. If you would like to move your original files into a directory (convenient for archiving or discarding) set the <code>--archive</code> flag:
+<p>Handbraker does not delete or modify your original files, it leaves them where they are. After processing, if you would like the original files moved into a directory convenient for archiving or discarding set the <code>--archive</code> flag. For example, the following files: 
 
 </p>
-<pre><code>$ tree
-.
+<pre><code>.
 ├── rain.mov
-└── video.mov    
+└── video.mov</code></pre>
 
-$ handbraker --archive *.mov
-[18:44:01] queue length: 2
-[18:44:01] file types: .mov(2)
-[18:44:01] processing <strong>rain.m4v</strong>
-[18:44:39] processing <strong>video.m4v</strong>
-[18:45:22] all encodes complete.
+<p>would be arranged like so after processing: 
 
-$ tree
-.
+</p>
+<pre><code>.
 ├── handbraker-originals
 │   ├── rain.mov
 │   └── video.mov
 ├── rain.m4v
 └── video.m4v</code></pre>
 
-<h2>Output Directory</h2>
+<h2>Specify an Output Directory</h2>
 <p>By default, handbraker outputs in the same directory as the input file. You can output to a sub-directory of each input file by passing <code>--output-dir &lt;directory&gt;</code>. For example,
 
 </p>
@@ -302,17 +300,24 @@ $ npm link</code></pre>
 
 </p>
 <h1>License</h1>
-<p>(c) 2012, Lloyd Brookes <a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x37;&#x35;&#112;&#111;&#117;&#110;&#x64;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;">&#x37;&#x35;&#112;&#111;&#117;&#110;&#x64;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#109;</a>
+<p>(c) 2012, Lloyd Brookes <a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#x3a;&#x37;&#53;&#112;&#111;&#117;&#110;&#100;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#x6d;">&#x37;&#53;&#112;&#111;&#117;&#110;&#100;&#x40;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#99;&#111;&#x6d;</a>
 (MIT License)</p>
 </article>
       </div>
       <div class="span2 toc">
         <ul class="nav nav-list" data-spy="affix">
           <li class="nav-header">
+            <a href="#handbraker">Handbraker</a>
+          </li>
+          <li><a href="#synopsis">Synopsis</a></li>
+          <li class="nav-header">
             <a href="#install">Install</a>
           </li>
           <li><a href="#install-winmac">Windows / Mac</a></li>
           <li><a href="#install-ubuntu">Ubuntu Linux</a></li>
+          <li><a href="#install-other">Other</a></li>
+          <li><a href="#update">Update</a></li>
+          
           <li class="nav-header">
             <a href="#">Usage</a>
           </li>

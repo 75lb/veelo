@@ -1,33 +1,29 @@
+<span id="handbraker"></span>
 Handbraker
 =====
 [![Build Status](https://travis-ci.org/75lb/handbraker.png)](https://travis-ci.org/75lb/handbraker)
 
-Handbraker is a Video Library Optimisation tool. Consolidate your video library from a mixture of formats to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)). With a single command.
+Requiring properiatary media players or plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices is aggravating. Well, optimise your video library - consolidate the mixture of legacy and proprietary formats down to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)).
 
-Handbraker, a scripting layer for the excellent [Handbrake](http://handbrake.fr), is built for this task. 
+Handbraker, a command-line Video Library Optimisation tool built on top of the outstanding encoder Handbrake, was built for this task.
 
 Works on __Windows__, __Linux__ and __Mac OSX__.
 
+<span id="synopsis"></span>
 Synopsis
-========
+--------
 <pre><code>$ handbraker --recurse Boxing --exclude Tyson
 [18:34:43] queue length: 158
 [18:34:43] file types: .m4v(16) .avi(91) .wmv(2) .mp4(7) .mpg(23) .mkv(18) .m2ts(1)
 [18:34:43] processing: <strong>Boxing/Eubank/Chris Eubank vs Nigel Benn.avi</strong>
 Encoding: 0.71 % (70.07 fps, avg 78.30 fps, ETA 00h22m37s)</code></pre>
 
-What is Handbrake? 
-------------------
-In their words: 
-
-> HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video transcoder, available for MacOS X, Linux and Windows. It converts video from nearly any format to a handful of modern ones.
-
 <span id="install"></span>
 Install
 =======
-On all platforms, first ensure [node.js](http://nodejs.org) is installed. Visit [their download page](http://nodejs.org/download/) to find the correct installer for your system.
+First ensure [node.js](http://nodejs.org) is installed. Visit [their download page](http://nodejs.org/download/) to find the correct installer for your system.
 
-Then, at the command line enter: 
+Then, at the command line enter:
 
 <span id="install-winmac"></span>
 Windows & Mac OS X
@@ -44,16 +40,19 @@ Ubuntu Linux
 
 (the second step above installs the [official Ubuntu Handbrake package](https://launchpad.net/~stebbins/+archive/handbrake-releases)).
 
+<span id="install-other"></span>
 Other Platforms
 ---------------
 Other platform users must manually ensure `HandbrakeCLI` is installed on their PATH. Check the [official website](http://handbrake.fr/downloads2.php) to see if a release is available for your system. 
 
+<span id="update"></span>
 Update
 ------
 If you already have handbraker installed, double-check you have the latest version: 
 
 	$ sudo npm update -g handbraker
 
+<span id="usage"></span>
 Usage
 =====
 A quick summary of the options can be displayed with the `--help` option:
@@ -76,42 +75,37 @@ A quick summary of the options can be displayed with the `--help` option:
 	    -h, --help                 Show this help
 	        --hbhelp               Show this help plus all HandbrakeCLI options
 
-Handbrake Options
------------------
-All non handbraker-specific options (those listed by `handbraker --help`) are passed directly to Handbrake. To view the [full range of Handbrake options](https://trac.handbrake.fr/wiki/CLIGuide), use:
+Specifiy Handbrake Options
+--------------------------
+If you are fimilar with Handbrake, and/or want more control over the encoder settings, run this command to view the [full range of Handbrake options](https://trac.handbrake.fr/wiki/CLIGuide):
 
-	$ handbraker --hbhelp
+    $ handbraker --hbhelp
+ 
+Where specified, these options are passed directly to the underlying Handbrake encoder.
 
-Output Extension
-----------------	
-By default, handbraker will output media in a MP4 container using the ".m4v" file extension (plays well with all media players, particularly iTunes). If you prefer to output the MKV container format, use `--ext mkv`.
+Set Output File Extension
+-------------------------
+By default, handbraker will output media in a MP4 container using the ".m4v" file extension (plays well with all media players, particularly iTunes/Quicktime). If you prefer to output the MKV container format, use `--ext mkv`.
 
 Archive your originals
 ----------------------
-Handbraker does not delete or modify your original files, it leaves them where they are. If you would like to move your original files into a directory (convenient for archiving or discarding) set the `--archive` flag:
+Handbraker does not delete or modify your original files, it leaves them where they are. After processing, if you would like the original files moved into a directory convenient for archiving or discarding set the `--archive` flag. For example, the following files: 
 
-<pre><code>$ tree
-.
+<pre><code>.
 ├── rain.mov
-└── video.mov	
+└── video.mov</code></pre>
+
+after processing would be arranged like so: 
 	
-$ handbraker --archive *.mov
-[18:44:01] queue length: 2
-[18:44:01] file types: .mov(2)
-[18:44:01] processing <strong>rain.m4v</strong>
-[18:44:39] processing <strong>video.m4v</strong>
-[18:45:22] all encodes complete.
-	
-$ tree
-.
+<pre><code>.
 ├── handbraker-originals
 │   ├── rain.mov
 │   └── video.mov
 ├── rain.m4v
 └── video.m4v</code></pre>
 
-Output Directory
-----------------
+Specify an Output Directory
+---------------------------
 By default, handbraker outputs in the same directory as the input file. You can output to a sub-directory of each input file by passing `--output-dir <directory>`. For example,
 
 <pre><code>$ tree
