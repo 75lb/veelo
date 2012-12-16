@@ -1,10 +1,10 @@
+Handbraker
+=====
 [![Build Status](https://travis-ci.org/75lb/handbraker.png)](https://travis-ci.org/75lb/handbraker)
 
-Veelo
-=====
-Veelo is a Video Library Optimisation tool. Consolidate your video library from a mixture of formats to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)). With a single command.
+Handbraker is a Video Library Optimisation tool. Consolidate your video library from a mixture of formats to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)). With a single command.
 
-Veelo, a scripting layer for the excellent [Handbrake](http://handbrake.fr), is built for this task. 
+Handbraker, a scripting layer for the excellent [Handbrake](http://handbrake.fr), is built for this task. 
 
 Works on __Windows__, __Linux__ and __Mac OSX__.
 
@@ -59,7 +59,7 @@ A quick summary of the options can be displayed with the `--help` option:
 	
 	Usage: handbraker [options] [HandbrakeCLI options] [files]
 
-	### Veelo Options-------------------------------------------------------
+	### Handbraker Options-------------------------------------------------------
 	        --ext                  Output file extension. Choose 'mp4', 'm4v' or 'mkv' (default: m4v)
 	        --archive              Archive the original file in a 'handbraker-originals' directory
 	        --output-dir           Outputs to the specified directory
@@ -85,7 +85,7 @@ By default, handbraker will output media in a MP4 container using the ".m4v" fil
 
 Archive your originals
 ----------------------
-Veelo does not delete or modify your original files, it leaves them where they are. If you would like to move your original files into a directory (convenient for archiving or discarding) set the `--archive` flag:
+Handbraker does not delete or modify your original files, it leaves them where they are. If you would like to move your original files into a directory (convenient for archiving or discarding) set the `--archive` flag:
 
 <pre><code>$ tree
 .
@@ -166,7 +166,7 @@ $ tree
 
 Recurse
 -------
-By default, Veelo ignore directories. If you wish to traverse into directories, processing the entire tree, use `--recurse`. 
+By default, Handbraker ignore directories. If you wish to traverse into directories, processing the entire tree, use `--recurse`. 
 
 With large directory trees, control which files are processed using `--include` and `--exclude` filters. Both these options accept Regular Expressions. For example, to only process `wmv` and `avi` files:
 
@@ -187,7 +187,7 @@ If videos in your batch have external SRT subtitle files, you can embed them aut
 
 Configuration
 =============
-The Veelo configuration file is stored at `~/.handbraker` on Mac and Linux, `%USERPROFILE%\Application Data` on Windows XP and `%USERPROFILE%\AppData\Roaming` on Windows Vista and later. It must remain [valid JSON](http://jsonlint.com). 
+The Handbraker configuration file is stored at `~/.handbraker` on Mac and Linux, `%USERPROFILE%\Application Data` on Windows XP and `%USERPROFILE%\AppData\Roaming` on Windows Vista and later. It must remain [valid JSON](http://jsonlint.com). 
 
 The initial config file looks like this: 
 
@@ -206,11 +206,11 @@ The initial config file looks like this:
 
 Defaults
 --------
-Veelo ships with the "Normal" Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.
+Handbraker ships with the "Normal" Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.
 
 Ignore List
 -----------
-Manage the list of files Veelo should ignore, e.g. "Thumbs.db", ".DS_Store" etc.
+Manage the list of files Handbraker should ignore, e.g. "Thumbs.db", ".DS_Store" etc.
 
 
 More Examples

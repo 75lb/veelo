@@ -17,14 +17,14 @@
 </head>
 <body>
   <div class="container">
-  	<article id="documentation"><p><a href="https://travis-ci.org/75lb/handbraker"><img src="https://travis-ci.org/75lb/handbraker.png" alt="Build Status"></a>
+  	<article id="documentation"><h1>Handbraker</h1>
+<p><a href="https://travis-ci.org/75lb/handbraker"><img src="https://travis-ci.org/75lb/handbraker.png" alt="Build Status"></a>
 
 </p>
-<h1>Veelo</h1>
-<p>Consolidate your video library from a mixture of formats to a single, modern format which works everywhere (<a href="http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264/MPEG-4 AVC</a>). With a single command.
+<p>Handbraker is a Video Library Optimisation tool. Consolidate your video library from a mixture of formats to a single, modern format which works everywhere (<a href="http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264/MPEG-4 AVC</a>). With a single command.
 
 </p>
-<p>Veelo, a scripting layer for the excellent <a href="http://handbrake.fr">Handbrake</a>, is built for this task. 
+<p>Handbraker, a scripting layer for the excellent <a href="http://handbrake.fr">Handbrake</a>, is built for this task. 
 
 </p>
 <p>Works on <strong>Windows</strong>, <strong>Linux</strong> and <strong>Mac OSX</strong>.
@@ -81,7 +81,7 @@ $ sudo npm -g run-script handbraker ubuntu-setup</code></pre>
 
 Usage: handbraker [options] [HandbrakeCLI options] [files]
 
-### Veelo Options-------------------------------------------------------
+### Handbraker Options-------------------------------------------------------
         --ext                  Output file extension. Choose &#39;mp4&#39;, &#39;m4v&#39; or &#39;mkv&#39; (default: m4v)
         --archive              Archive the original file in a &#39;handbraker-originals&#39; directory
         --output-dir           Outputs to the specified directory
@@ -104,7 +104,7 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
 
 </p>
 <h2>Archive your originals</h2>
-<p>Veelo does not delete or modify your original files, it leaves them where they are. If you would like to move your original files into a directory (convenient for archiving or discarding) set the <code>--archive</code> flag:
+<p>Handbraker does not delete or modify your original files, it leaves them where they are. If you would like to move your original files into a directory (convenient for archiving or discarding) set the <code>--archive</code> flag:
 
 </p>
 <pre><code>$ tree
@@ -186,7 +186,7 @@ $ tree
         └── Liverpool.m4v</code></pre>
 
 <h2>Recurse</h2>
-<p>By default, Veelo ignore directories. If you wish to traverse into directories, processing the entire tree, use <code>--recurse</code>. 
+<p>By default, Handbraker ignore directories. If you wish to traverse into directories, processing the entire tree, use <code>--recurse</code>. 
 
 </p>
 <p>With large directory trees, control which files are processed using <code>--include</code> and <code>--exclude</code> filters. Both these options accept Regular Expressions. For example, to only process <code>wmv</code> and <code>avi</code> files:
@@ -207,7 +207,7 @@ $ tree
 
 </p>
 <h1>Configuration</h1>
-<p>The Veelo configuration file is stored at <code>~/.handbraker</code> on Mac and Linux, <code>%USERPROFILE%\Application Data</code> on Windows XP and <code>%USERPROFILE%\AppData\Roaming</code> on Windows Vista and later. It must remain <a href="http://jsonlint.com">valid JSON</a>. 
+<p>The Handbraker configuration file is stored at <code>~/.handbraker</code> on Mac and Linux, <code>%USERPROFILE%\Application Data</code> on Windows XP and <code>%USERPROFILE%\AppData\Roaming</code> on Windows Vista and later. It must remain <a href="http://jsonlint.com">valid JSON</a>. 
 
 </p>
 <p>The initial config file looks like this: 
@@ -226,11 +226,11 @@ $ tree
     }
 }</code></pre>
 <h2>Defaults</h2>
-<p>Veelo ships with the &quot;Normal&quot; Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.
+<p>Handbraker ships with the &quot;Normal&quot; Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.
 
 </p>
 <h2>Ignore List</h2>
-<p>Manage the list of files Veelo should ignore, e.g. &quot;Thumbs.db&quot;, &quot;.DS_Store&quot; etc.
+<p>Manage the list of files Handbraker should ignore, e.g. &quot;Thumbs.db&quot;, &quot;.DS_Store&quot; etc.
 
 
 </p>
@@ -299,7 +299,7 @@ $ npm link</code></pre>
 
 </p>
 <h1>License</h1>
-<p>(c) 2012, Lloyd Brookes <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#55;&#53;&#x70;&#x6f;&#x75;&#110;&#x64;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;">&#55;&#53;&#x70;&#x6f;&#x75;&#110;&#x64;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>
+<p>(c) 2012, Lloyd Brookes <a href="&#109;&#97;&#x69;&#x6c;&#116;&#111;&#x3a;&#55;&#53;&#112;&#111;&#x75;&#110;&#100;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#x63;&#111;&#109;">&#55;&#53;&#112;&#111;&#x75;&#110;&#100;&#64;&#103;&#x6d;&#x61;&#105;&#108;&#46;&#x63;&#111;&#109;</a>
 (MIT License)</p>
 </article>
   </div>
