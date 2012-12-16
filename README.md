@@ -16,7 +16,9 @@ Synopsis
 [18:34:43] processing: <strong>Boxing/Eubank/Chris Eubank vs Nigel Benn.avi</strong>
 Encoding: 0.71 % (70.07 fps, avg 78.30 fps, ETA 00h22m37s)</code></pre>
 
-[Full Documentation](http://75lb.github.com/handbraker/).
+Documentation
+=============
+[Click here to view the documentation in full](http://75lb.github.com/handbraker/).
 
 License
 =======

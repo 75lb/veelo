@@ -1,6 +1,6 @@
 {
   "name": "handbraker",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "description": "Optimise your video library using Handbrake",
   "homepage": "http://75lb.github.com/handbraker/",
   "bugs": "https://github.com/75lb/handbraker/issues",
