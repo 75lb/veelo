@@ -3,7 +3,7 @@ Handbraker
 =====
 [![Build Status](https://travis-ci.org/75lb/handbraker.png)](https://travis-ci.org/75lb/handbraker)
 
-Requiring properiatary media players or plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices is aggravating. Well, optimise your video library - consolidate the mixture of legacy and proprietary formats down to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)).
+Requiring proprietary media players or plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices is aggravating. Well, optimise your video library - consolidate the mixture of legacy and proprietary formats down to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)).
 
 Handbraker, a command-line Video Library Optimisation tool built on top of the outstanding encoder Handbrake, was built for this task.
 
