@@ -5,35 +5,312 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<title>Veelo - Video Library Optimisation with Handbrake</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width">
 
-	<!-- <link rel="stylesheet" href="css/bootstrap.min.css">
-	<style>
-/*	  body {
-	    padding-top: 60px;
-	    padding-bottom: 40px;
-	  }
-*/	</style>
-	<link rel="stylesheet" href="css/bootstrap-responsive.min.css"> -->
-
-	<link rel="stylesheet" href="css/prettify.css" />
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="css/main.css">
 
 	<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
 <body>
-	<article id="documentation"></article>
+  <div class="container">
+  	<article id="documentation"><p><a href="https://travis-ci.org/75lb/handbraker"><img src="https://travis-ci.org/75lb/handbraker.png" alt="Build Status"></a>
 
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
-	<!-- // <script src="js/vendor/bootstrap.min.js"></script> -->
-	<script src="js/vendor/prettify.js"></script>
+</p>
+<h1>Veelo</h1>
+<p>Consolidate your video library from a mixture of formats to a single, modern format which works everywhere (<a href="http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264/MPEG-4 AVC</a>). With a single command.
 
-	<script src="js/plugins.js"></script>
-	<script src="js/main.js"></script>
+</p>
+<p>Veelo, a scripting layer for the excellent <a href="http://handbrake.fr">Handbrake</a>, is built for this task. 
+
+</p>
+<p>Works on <strong>Windows</strong>, <strong>Linux</strong> and <strong>Mac OSX</strong>.
+
+</p>
+<h1>Synopsis</h1>
+<pre><code>$ handbraker --recurse Boxing --exclude Tyson
+[18:34:43] queue length: 158
+[18:34:43] file types: .m4v(16) .avi(91) .wmv(2) .mp4(7) .mpg(23) .mkv(18) .m2ts(1)
+[18:34:43] processing: <strong>Boxing/Eubank/Chris Eubank vs Nigel Benn.avi</strong>
+Encoding: 0.71 % (70.07 fps, avg 78.30 fps, ETA 00h22m37s)</code></pre>
+
+<h2>What is Handbrake? </h2>
+<p>In their words: 
+
+</p>
+<blockquote>
+<p>HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video transcoder, available for MacOS X, Linux and Windows. It converts video from nearly any format to a handful of modern ones.
+
+</p>
+</blockquote>
+<h1>Install</h1>
+<p>On all platforms, first ensure <a href="http://nodejs.org">node.js</a> is installed. Visit <a href="http://nodejs.org/download/">their download page</a> to find the correct installer for your system.
+
+</p>
+<p>Then, at the command line enter: 
+
+</p>
+<h2>Windows &amp; Mac OS X</h2>
+<pre><code>$ npm -g install handbraker</code></pre>
+<p><em>some older Mac operating systems may require running the above with <code>sudo</code></em> 
+
+</p>
+<h2>Ubuntu Linux</h2>
+<pre><code>$ sudo npm -g install handbraker
+$ sudo npm -g run-script handbraker ubuntu-setup</code></pre>
+<p>(the second step above installs the <a href="https://launchpad.net/~stebbins/+archive/handbrake-releases">official Ubuntu Handbrake package</a>).
+
+</p>
+<h2>Other Platforms</h2>
+<p>Other platform users must manually ensure <code>HandbrakeCLI</code> is installed on their PATH. Check the <a href="http://handbrake.fr/downloads2.php">official website</a> to see if a release is available for your system. 
+
+</p>
+<h2>Update</h2>
+<p>If you already have handbraker installed, double-check you have the latest version: 
+
+</p>
+<pre><code>$ sudo npm update -g handbraker</code></pre>
+<h1>Usage</h1>
+<p>A quick summary of the options can be displayed with the <code>--help</code> option:
+
+</p>
+<pre><code>$ handbraker --help
+
+Usage: handbraker [options] [HandbrakeCLI options] [files]
+
+### Veelo Options-------------------------------------------------------
+        --ext                  Output file extension. Choose &#39;mp4&#39;, &#39;m4v&#39; or &#39;mkv&#39; (default: m4v)
+        --archive              Archive the original file in a &#39;handbraker-originals&#39; directory
+        --output-dir           Outputs to the specified directory
+        --preserve-dates       Preserve input&#39;s &#39;modified&#39; and &#39;accessed&#39; times on the output file
+        --recurse              Traverse into directories
+        --include              Regex include filter, for use with --recurse
+        --exclude              Regex exclude filter, for use with --recurse
+        --dry-run              Describe the outcome without performing the actual work
+        --embed-srt            If a matching .srt file exists, embed subtitles into the output video
+    -v, --verbose              Show detailed output
+    -h, --help                 Show this help
+        --hbhelp               Show this help plus all HandbrakeCLI options</code></pre>
+<h2>Handbrake Options</h2>
+<p>All non handbraker-specific options (those listed by <code>handbraker --help</code>) are passed directly to Handbrake. To view the <a href="https://trac.handbrake.fr/wiki/CLIGuide">full range of Handbrake options</a>, use:
+
+</p>
+<pre><code>$ handbraker --hbhelp</code></pre>
+<h2>Output Extension</h2>
+<p>By default, handbraker will output media in a MP4 container using the &quot;.m4v&quot; file extension (plays well with all media players, particularly iTunes). If you prefer to output the MKV container format, use <code>--ext mkv</code>.
+
+</p>
+<h2>Archive your originals</h2>
+<p>Veelo does not delete or modify your original files, it leaves them where they are. If you would like to move your original files into a directory (convenient for archiving or discarding) set the <code>--archive</code> flag:
+
+</p>
+<pre><code>$ tree
+.
+├── rain.mov
+└── video.mov    
+
+$ handbraker --archive *.mov
+[18:44:01] queue length: 2
+[18:44:01] file types: .mov(2)
+[18:44:01] processing <strong>rain.m4v</strong>
+[18:44:39] processing <strong>video.m4v</strong>
+[18:45:22] all encodes complete.
+
+$ tree
+.
+├── handbraker-originals
+│   ├── rain.mov
+│   └── video.mov
+├── rain.m4v
+└── video.m4v</code></pre>
+
+<h2>Output Directory</h2>
+<p>By default, handbraker outputs in the same directory as the input file. You can output to a sub-directory of each input file by passing <code>--output-dir &lt;directory&gt;</code>. For example,
+
+</p>
+<pre><code>$ tree
+.
+├── Jan
+│   └── Manchester.mov
+└── Feb
+    └── Liverpool.mov
+
+$ handbraker */*.mov --output-dir optimised
+[18:44:01] queue length: 2
+[18:44:01] file types: .mov(2)
+[18:44:01] processing <strong>Jan/Manchester.mov</strong>
+[18:44:39] processing <strong>Feb/Liverpool.mov</strong>
+[18:45:22] all encodes complete.
+
+$ tree
+.
+├── Jan
+│   ├── Manchester.mov
+│   └── optimised
+│       └── Manchester.m4v
+└── Feb
+    ├── Liverpool.mov
+    └── optimised
+        └── Liverpool.m4v</code></pre>
+
+<p>If you specify an absolute <code>--output-dir</code> path, or a path beginning with <code>.</code> or <code>..</code>, output will be directed to a single, specific directory: 
+
+</p>
+<pre><code>$ tree
+.
+├── Jan
+│   └── Manchester.mov
+└── Feb
+    └── Liverpool.mov
+
+$ handbraker */*.mov --output-dir ./optimised
+[18:44:01] queue length: 2
+[18:44:01] file types: .mov(2)
+[18:44:01] processing <strong>Jan/Manchester.mov</strong>
+[18:44:39] processing <strong>Feb/Liverpool.mov</strong>
+[18:45:22] all encodes complete.
+
+$ tree
+.
+├── Jan
+│   └── Manchester.mov
+├── Feb
+│   └── Liverpool.mov
+└── optimised
+    ├── Jan
+    │   └── Manchester.m4v
+    └── Feb
+        └── Liverpool.m4v</code></pre>
+
+<h2>Recurse</h2>
+<p>By default, Veelo ignore directories. If you wish to traverse into directories, processing the entire tree, use <code>--recurse</code>. 
+
+</p>
+<p>With large directory trees, control which files are processed using <code>--include</code> and <code>--exclude</code> filters. Both these options accept Regular Expressions. For example, to only process <code>wmv</code> and <code>avi</code> files:
+
+</p>
+<pre><code>$ handbraker --recurse Sport --include &quot;\.wmv|\.avi&quot;</code></pre>
+<h2>Dry Run</h2>
+<p>To see a report of what will or will not be processed, <em>without</em> performing any work, pass <code>--dry-run</code>. This is a useful verification step before processing a large batch.
+
+</p>
+<h2>Embedding Subtitles</h2>
+<p>If videos in your batch have external SRT subtitle files, you can embed them automatically by passing <code>--embed-srt</code>.
+
+</p>
+<pre><code>$ handbraker Film/World/* --embed-srt</code></pre>
+<p><em>Known Issue</em>: Handbrake does not accept SRT filenames containing a comma (the comma is a reserved delimiter character for the <code>--srt-file</code> option). 
+
+
+</p>
+<h1>Configuration</h1>
+<p>The Veelo configuration file is stored at <code>~/.handbraker</code> on Mac and Linux, <code>%USERPROFILE%\Application Data</code> on Windows XP and <code>%USERPROFILE%\AppData\Roaming</code> on Windows Vista and later. It must remain <a href="http://jsonlint.com">valid JSON</a>. 
+
+</p>
+<p>The initial config file looks like this: 
+
+</p>
+<pre><code>{
+    &quot;ignoreList&quot;: [&quot;.DS_Store&quot;],
+    &quot;archiveDirectory&quot;: &quot;handbraker-originals&quot;,
+    &quot;defaults&quot;: {
+        &quot;ext&quot;: &quot;m4v&quot;,
+        &quot;preset&quot;: &quot;Normal&quot;,
+        &quot;optimize&quot;: true,
+        &quot;preserve-dates&quot;: true,
+        &quot;srt-codeset&quot;: &quot;UTF-8&quot;, 
+        &quot;srt-lang&quot;: &quot;eng&quot;
+    }
+}</code></pre>
+<h2>Defaults</h2>
+<p>Veelo ships with the &quot;Normal&quot; Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.
+
+</p>
+<h2>Ignore List</h2>
+<p>Manage the list of files Veelo should ignore, e.g. &quot;Thumbs.db&quot;, &quot;.DS_Store&quot; etc.
+
+
+</p>
+<h1>More Examples</h1>
+<p>To test the water, you want to encode a small sample of each video in the &quot;Comedy&quot; directory. Use the Handbrake options <code>--start-at</code> and <code>--stop-at</code>. For example, create samples beginning at the 60th second lasting for 120 seconds, outputing each into a <code>samples</code> sub-directory:
+
+</p>
+<pre><code>$ handbraker Comedy/* --start-at duration:60 --stop-at duration:120 --output-dir samples</code></pre>
+<p>If sound quality is important, encode with a higher audio bitrate (e.g. 256kb/s):
+
+</p>
+<pre><code>$ handbraker Concert.wmv --ab 256</code></pre>
+<p>Say your source media contains audio and subtitle tracks in several languages. You are interested in keeping just the Japanese audio and English subtitles. First scan the source media to find the ID numbers of the audio/subtitle tracks you wish to keep:
+
+</p>
+<pre><code>$ handbraker -t 0 TokyoStory.mkv</code></pre>
+<p>In the output you&#39;ll see something like this: 
+
+</p>
+<pre><code>+ audio tracks:
+  + 1, Russian (AC3) (2.0 ch) (iso639-2: rus), 48000Hz, 192000bps
+  + 2, Russian (AC3) (2.0 ch) (iso639-2: rus), 48000Hz, 192000bps
+  + 3, Japanese (AC3) (2.0 ch) (iso639-2: jpn), 48000Hz, 192000bps
++ subtitle tracks:
+  + 1, Russian (iso639-2: rus) (Text)(UTF-8)
+  + 2, English (iso639-2: eng) (Text)(UTF-8)</code></pre>
+<p>So, we&#39;ll transcode taking audio track 3 and subtitle track 2:
+
+</p>
+<pre><code>$ handbraker TokyoStory.mkv --audio 3 --subtitle 2</code></pre>
+<p>Use <code>--quality</code> to adjust the compression quality of the output. 20 is the optimum value, between 35 and 40 will give a conveniently small output file whilst remaining watchable - useful for email attachment:
+
+</p>
+<pre><code>$ handbraker campaign.mov --quality 35</code></pre>
+<h2>Presets</h2>
+<p>Handbrake comes with a collection of <a href="https://trac.handbrake.fr/wiki/BuiltInPresets">built-in presets</a>, optimised for common scenarios and specific devices. View the list using: 
+
+</p>
+<pre><code>$ handbraker --preset-list</code></pre>
+<p>To encode video optimised for iPod, you might use: 
+
+</p>
+<pre><code>$ handbraker --preset iPod video1.mov video2.mov</code></pre>
+<h1>Contributing</h1>
+<p>Patches welcome. There are a few features that would be nice to have, if you fancy implementing them: 
+
+</p>
+<ul>
+<li>a web frontend</li>
+<li>live queue management</li>
+<li>user-defined presets </li>
+</ul>
+<p>Please file bugs or feature requests on the <a href="https://github.com/75lb/handbraker/issues?state=open">Issue List</a>.
+
+</p>
+<h2>Developer install</h2>
+<pre><code>$ git clone https://github.com/75lb/handbraker.git
+$ cd handbraker
+$ npm link</code></pre>
+<p>From there, the <code>handbraker</code> command will point to your checkout. If you make some changes, check everything still works by running the test suite: 
+
+</p>
+<pre><code>$ npm test</code></pre>
+<h1>DVD Copy Protection</h1>
+<p>You can use handbraker to rip DVDs but it <em>does not crack DVD copy protection</em>. Use a specialised DVD ripper for this. 
+
+</p>
+<h1>License</h1>
+<p>(c) 2012, Lloyd Brookes <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#58;&#55;&#53;&#x70;&#x6f;&#x75;&#110;&#x64;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;">&#55;&#53;&#x70;&#x6f;&#x75;&#110;&#x64;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>
+(MIT License)</p>
+</article>
+  </div>
+
+  <!-- // <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  // <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.3.min.js"><\/script>')</script>
+  //   <script src="js/vendor/bootstrap.min.js"></script>
+  // <script src="js/vendor/prettify.js"></script>
+  // 
+  // <script src="js/plugins.js"></script>
+  // <script src="js/main.js"></script> -->
 
 	<script>
 		var _gaq=[['_setAccount','UA-27725889-5'],['_trackPageview']];
@@ -43,3 +320,4 @@
 	</script>
 </body>
 </html>
+
