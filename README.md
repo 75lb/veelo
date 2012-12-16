@@ -22,18 +22,21 @@ In their words:
 
 > HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video transcoder, available for MacOS X, Linux and Windows. It converts video from nearly any format to a handful of modern ones.
 
+<span id="install"></span>
 Install
 =======
 On all platforms, first ensure [node.js](http://nodejs.org) is installed. Visit [their download page](http://nodejs.org/download/) to find the correct installer for your system.
 
 Then, at the command line enter: 
 
+<span id="install-winmac"></span>
 Windows & Mac OS X
 ------------------
 	$ npm -g install handbraker
 	
 *some older Mac operating systems may require running the above with `sudo`* 
 
+<span id="install-ubuntu"></span>
 Ubuntu Linux
 ------------
 	$ sudo npm -g install handbraker
