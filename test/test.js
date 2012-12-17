@@ -18,8 +18,8 @@ var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
 	FIXTURE_DIR = path.resolve(__dirname, "fixture"),
 	SUB_DIR = path.join(FIXTURE_DIR, "subdir"),
 	SUB_DIR2 = path.join(SUB_DIR, "subdir2"),
-	ORIGINALS_DIR = "handbraker-originals",
-	PRESET_DIR = "handbraker - iPod";
+	ORIGINALS_DIR = "veelo-originals",
+	PRESET_DIR = "veelo - iPod";
 
 function run(){
 	var args = Array.prototype.slice.call(arguments),
@@ -111,14 +111,14 @@ describe("Unit Test", function(){
 		it("should instantiate default archive path", function(){
 			config = {
 				options: {
-					handbraker: {
+					veelo: {
 						archive: true
 					}
 				}
 			};
 			var job = new Job(config, "test.mov");
 			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
-			assert.ok(job.archivePath == path.join("handbraker-originals", "test.mov"), JSON.stringify(job));
+			assert.ok(job.archivePath == path.join("veelo-originals", "test.mov"), JSON.stringify(job));
 			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
 			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
 		});
@@ -127,7 +127,7 @@ describe("Unit Test", function(){
 			config = {
 				archiveDirectory: "archive",
 				options: {
-					handbraker: {
+					veelo: {
 						archive: true
 					}
 				}
@@ -143,7 +143,7 @@ describe("Unit Test", function(){
 			config = {
 				archiveDirectory: path.join("sub", "archive"),
 				options: {
-					handbraker: {
+					veelo: {
 						archive: true
 					}
 				}
@@ -158,7 +158,7 @@ describe("Unit Test", function(){
 		it("should instantiate correct nested output-dir", function(){
 			config = {
 				options: {
-					handbraker: {
+					veelo: {
 						"output-dir": "output"
 					}
 				}
@@ -173,7 +173,7 @@ describe("Unit Test", function(){
 		it("should instantiate correct absolute output-dir", function(){
 			config = {
 				options: {
-					handbraker: {
+					veelo: {
 						"output-dir": "../output"
 					}
 				}
@@ -524,8 +524,8 @@ describe("Integration Test", function(){
 
 	describe("config file", function(){
 		var configPath = process.platform == "win32"
-			? path.join(process.env.APPDATA, ".handbraker.json")
-			: path.join(process.env.HOME, ".handbraker.json");
+			? path.join(process.env.APPDATA, ".veelo.json")
+			: path.join(process.env.HOME, ".veelo.json");
 	
 		it("should be created in the correct place", function(done){
 			run("", function(output){
@@ -559,7 +559,7 @@ describe("Integration Test", function(){
 //   --default-rm "preset"
 // 'to encode' watch directory
 // --config 
-//   handbraker blah blah blah --save Lloyd
+//   veelo blah blah blah --save Lloyd
 //   add option to set your own HandbrakeCLI bin path
 //   validate all options, e.g. is Number, RegEx
 //   validate passed in files, e.g. file exists
@@ -574,4 +574,4 @@ describe("Integration Test", function(){
 // passing ignoreList on cli
 // when working on a remote drive, use local disk as scratch
 
-// handbraker * --preset none  -e x264 -q 25 -r 29.97 --ab 128 -6 stereo -X 480 cabac=0:ref=2:me=umh:bframes=0:weightp=0:subme=6:8x8dct=0:trellis=0 -v --start-at duration:200 --stop-at duration:10 --output-dir samples/lloyd
+// veelo * --preset none  -e x264 -q 25 -r 29.97 --ab 128 -6 stereo -X 480 cabac=0:ref=2:me=umh:bframes=0:weightp=0:subme=6:8x8dct=0:trellis=0 -v --start-at duration:200 --stop-at duration:10 --output-dir samples/lloyd

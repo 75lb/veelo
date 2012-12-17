@@ -3,7 +3,7 @@ module.exports = function Config(){
 	this.ignoreList = [];
 	this.archiveDirectory = "mock-originals";
 	this.options = {
-		handbraker: {},
+		veelo: {},
 		handbrake: {}
 	};
 	this.inputFiles = [];

@@ -4,7 +4,7 @@
 var	util = require("util"),
 	colours = require("colors"),
 	_ = require("underscore"),
-	Handbraker = require("./lib/handbraker"),
+	Veelo = require("./lib/veelo"),
 	Config = require("./lib/config");
 
 // setup
@@ -25,35 +25,35 @@ function log(){
 	console.log.apply(this, args);
 }
 
-// instantiate Handbraker and attach listeners
-var config = new Config(Handbraker.configDefinition);
-var handbraker = new Handbraker(config);
+// instantiate Veelo and attach listeners
+var config = new Config(Veelo.configDefinition);
+var veelo = new Veelo(config);
 
-handbraker.on("error", function(err){
+veelo.on("error", function(err){
 	log(true, err);
 	process.exit(1);	
 });
 
-handbraker.on("message", function(msg){
+veelo.on("message", function(msg){
 	log(false, msg);
 });
 
-handbraker.on("report", function(report){
+veelo.on("report", function(report){
 	log(false, report);
 });
 
-handbraker.queue.on("message", function(msg){
-	if(!config.options.handbraker["dry-run"]) log(true, msg);
+veelo.queue.on("message", function(msg){
+	if(!config.options.veelo["dry-run"]) log(true, msg);
 });
 
-handbraker.queue.on("begin", function(){
+veelo.queue.on("begin", function(){
 	log(true, "queue length: %d", this.stats.valid);
 	log(true, "file types: %s", _.map(this.stats.ext, function(value, key){
 		return util.format("%s(%d)", key, value);
 	}).join(" "));
 });
 
-handbraker.queue.on("complete", function(){
+veelo.queue.on("complete", function(){
 	var stats = this.stats;
 
 	log(true, "%d jobs processed in %s (%d successful, %d failed).", stats.valid, stats.elapsed, stats.successful, stats.failed);
@@ -65,15 +65,15 @@ handbraker.queue.on("complete", function(){
 	}
 });
 
-handbraker.queue.on("processing", function(file){
+veelo.queue.on("processing", function(file){
 	log(true, "processing: %s", file.fileName);
 });
 
-handbraker.queue.on("error", function(err){
+veelo.queue.on("error", function(err){
 	log(true, "Error: ".error + err);
 	log(false, "Please check your regular expression syntax and try again.".strong);
 	process.exit(0);
 });
 
 // start work
-handbraker.start();
+veelo.start();
