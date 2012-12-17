@@ -536,61 +536,39 @@ describe("Integration Test", function(){
 	});
 });
 
-// test config default options
-// test invalid config file - offer to fix
-// test incorrect options like --exlude
-// test output-dir on different drive
-// test `--recurse * --exclude` on *nix.. ensure all non-directories passed in are filtered
-// test for 'numeric directory' bug regression
-// test correct cleanup on CTRL+C
+// To test: 
+// config defaults apply
+// invalid config syntax (offer to fix)
+// incorrect options like --exlude
+// output-dir on different drive
+// for 'numeric directory' optimist bug regression
+// correct cleanup on CTRL+C
 
-// feature: pass multiple presets to output multiple versions
+// To implement:
+// pass multiple --preset vals to output multiple versions
 // file globbing on windows
 // user-defined presets
-// add presets for Blackberry
-// preset repo server
-// tidy up HandBrakeCLI command output, once completed
-// --info option
-// add option to analyse each input file on --dry-run (run --info on each file too)
-// completed hook, notification, alert, email etc.. a hook after each file to make copy, etc.
-// --defaults option, list defaults
-// --scan should default to verbose
-// config: set a default config if configFile doesn't exist
-// config: move h, help, hbhelp to defaultOptions
-// move FlattenArgsHash to HandbrakeCLI
+//   presets for Blackberry
+//   preset repo server
+// tidier HandBrakeCLI output, progress bar
+// --info option, parse --scan and display
+// --dry-run with --info ammends the report
+// hooks.. insert notification, alert, email, script etc.. e.g. a hook onStart to make backups, etc.
+// --default option, list defaults
+//   --default-set "preset:iPhone and iPod Touch"
+//   --default-rm "preset"
+// 'to encode' watch directory
+// --config 
+//   handbraker blah blah blah --save Lloyd
+//   add option to set your own HandbrakeCLI bin path
+//   validate all options, e.g. is Number, RegEx
+//   validate passed in files, e.g. file exists
+//   custom validate - e.g. video file has a valid title
+// web gui, live graph showing fps speed and data-throughput over time
+// man page
+
+// To Fix: 
 // fix --output-dir ../dir/file.mov from outputting to output-dir/..
 // improve dry-run report, more stats.
 
-// note: preserve-dates acts differently on SMB and AFP
-// move console writing out of Job?
-// improve colouring, test on different terminal colour schemes
-// remove identical options between Handbraker and Handbrake help, e.g. -v -h
-// print "additional Handbrake options" on dry-run, e.g. Also: start-at 60 etc
-// add option to set your own HandbrakeCLI bin path
-// move arg processing and Handbrake work from handbrake.js to job.js
-// mention improved anti-aliasing in Quicktime ,hardward acceleration 
-
-// validate all options set
-// get passed in options
-// apply external defaults
-// apply internal defaults
-// group options
-// validate passed in options, e.g. isNumber, RegEx
-// validate passed in files, e.g. file exists
-// custom validate - e.g. video file has a valid title
-// Kong Fig Master
-// grouped options, to separate options passed to child_process
-// test all defaults against 'invalid option', e.g. from cli, external default, internal defaults 
-
-// move documentation to site
-// progress bar
-// --default
-// --default-set "preset:iPhone and iPod Touch"
-// --default-rm "preset"
-// 'to encode' watch directory
-
-// example: preparing 10sec samples of 3 different presets to test on tablet
 // handbraker * --preset none  -e x264 -q 25 -r 29.97 --ab 128 -6 stereo -X 480 cabac=0:ref=2:me=umh:bframes=0:weightp=0:subme=6:8x8dct=0:trellis=0 -v --start-at duration:200 --stop-at duration:10 --output-dir samples/lloyd
-// queue together handbraker commands? 
-// Video Library Optimisation tool Veelo. 
-// web gui, live graph showing fps speed and data-throughput over time
