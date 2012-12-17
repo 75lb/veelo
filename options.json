@@ -1,16 +1,30 @@
 {
-	"defaults": {
-		"handbrake": {
-			"preset": "Normal",
-			"optimize": true,
-			"srt-codeset": "UTF-8", 
-			"srt-lang": "eng"
-		},
-		"handbraker": {
-			"ext": "m4v",
-			"preserve-dates": true,
-			"ignoreList": [".DS_Store"],
-			"archiveDirectory": "handbraker-originals"
-		}
-	}
+    "defaults": {
+        "handbrake": {
+            "preset": "Normal",
+            "optimize": true,
+            "srt-codeset": "UTF-8", 
+            "srt-lang": "eng"
+        },
+        "handbraker": {
+            "ext": "m4v",
+            "preserve-dates": true,
+            "ignoreList": [".DS_Store"],
+            "archiveDirectory": "handbraker-originals"
+        }
+    },
+    "presets": {
+        "android-compact": {
+            "handbrake": {
+                "e": "x264",
+                "q": 25,
+                "r": 29.97,
+                "ab": 128,
+                "6": "stereo",
+                "X": 410,
+                "x": "cabac=0:ref=2:me=umh:bframes=0:weightp=0:subme=6:8x8dct=0:trellis=0"
+            },
+            "handbraker": {}
+        }
+    }
 }

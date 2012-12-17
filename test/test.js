@@ -566,9 +566,12 @@ describe("Integration Test", function(){
 //   custom validate - e.g. video file has a valid title
 // web gui, live graph showing fps speed and data-throughput over time
 // man page
+// --split, divide video into e.g. 15 minute pieces
 
 // To Fix: 
 // fix --output-dir ../dir/file.mov from outputting to output-dir/..
 // improve dry-run report, more stats.
+// passing ignoreList on cli
+// when working on a remote drive, use local disk as scratch
 
 // handbraker * --preset none  -e x264 -q 25 -r 29.97 --ab 128 -6 stereo -X 480 cabac=0:ref=2:me=umh:bframes=0:weightp=0:subme=6:8x8dct=0:trellis=0 -v --start-at duration:200 --stop-at duration:10 --output-dir samples/lloyd
