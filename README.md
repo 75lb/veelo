@@ -1,18 +1,18 @@
-<span id="handbraker"></span>
-Handbraker
+<span id="veelo"></span>
+Veelo
 ==========
-[![Build Status](https://travis-ci.org/75lb/handbraker.png)](https://travis-ci.org/75lb/handbraker)
+[![Build Status](https://travis-ci.org/75lb/veelo.png)](https://travis-ci.org/75lb/veelo)
 
 Requiring multiple media players and plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices even more so. Well, you could optimise your video library - consolidate from a mixture of legacy and proprietary formats to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)).
 
-Handbraker, a command-line Video Library Optimisation tool built on top of the outstanding encoder Handbrake, was built for this task.
+Veelo, a command-line Video Library Optimisation tool built on top of the outstanding encoder Handbrake, was built for this task.
 
 Works on __Windows__, __Linux__ and __Mac OSX__.
 
 <span id="synopsis"></span>
 Synopsis
 --------
-<pre><code>$ handbraker --recurse Boxing --exclude Tyson
+<pre><code>$ veelo --recurse Boxing --exclude Tyson
 [18:34:43] queue length: 158
 [18:34:43] file types: .m4v(16) .avi(91) .wmv(2) .mp4(7) .mpg(23) .mkv(18) .m2ts(1)
 [18:34:43] processing: <strong>Boxing/Eubank/Chris Eubank vs Nigel Benn.avi</strong>
@@ -28,15 +28,15 @@ Then, at the command line enter:
 <span id="install-winmac"></span>
 Windows & Mac OS X
 ------------------
-    $ npm -g install handbraker
+    $ npm -g install veelo
     
 *some older Mac operating systems may require running the above with `sudo`* 
 
 <span id="install-ubuntu"></span>
 Ubuntu Linux
 ------------
-    $ sudo npm -g install handbraker
-    $ sudo npm -g run-script handbraker ubuntu-setup
+    $ sudo npm -g install veelo
+    $ sudo npm -g run-script veelo ubuntu-setup
 
 (the second step above installs the [official Ubuntu Handbrake package](https://launchpad.net/~stebbins/+archive/handbrake-releases)).
 
@@ -48,22 +48,22 @@ Other platform users must manually ensure `HandbrakeCLI` is installed on their P
 <span id="update"></span>
 Update
 ------
-If you already have handbraker installed, double-check you have the latest version: 
+If you already have veelo installed, double-check you have the latest version: 
 
-    $ sudo npm update -g handbraker
+    $ sudo npm update -g veelo
 
 <span id="usage"></span>
 Usage
 =====
 A quick summary of the options can be displayed with the `--help` option:
 
-    $ handbraker --help
+    $ veelo --help
     
-    Usage: handbraker [options] [HandbrakeCLI options] [files]
+    Usage: veelo [options] [HandbrakeCLI options] [files]
 
-    ### Handbraker Options-------------------------------------------------------
+    ### Veelo Options-------------------------------------------------------
             --ext <string>         Output file extension (implicitly sets container format). Choose 'mp4', 'm4v' or 'mkv'.
-            --archive              Archive the original file to a specified directory (default: 'handbraker-originals')
+            --archive              Archive the original file to a specified directory (default: 'veelo-originals')
             --output-dir <string>  Outputs to the specified directory
             --preserve-dates       Preserve input's 'modified' and 'accessed' times on the output file
             --recurse              Traverse into directories
@@ -81,21 +81,21 @@ Specifiy HandbrakeCLI Options
 --------------------------
 If you are fimilar with Handbrake, and/or want more control over the encoder settings, run this command to view the [full range of Handbrake options](https://trac.handbrake.fr/wiki/CLIGuide):
 
-    $ handbraker --hbhelp
+    $ veelo --hbhelp
  
 When specified, these options are passed directly to the underlying Handbrake encoder. The following options set a [constant quality](https://trac.handbrake.fr/wiki/ConstantQuality) of 25 with 64kb/s, mono audio: 
 
-    $ handbraker --quality 25 --ab 64 --mixdown mono video.mov
+    $ veelo --quality 25 --ab 64 --mixdown mono video.mov
 
 <span id="usage-ext"></span>
 Set Output File Extension
 -------------------------
-By default, handbraker will output media in a MP4 container using the ".m4v" file extension (plays well with all media players, particularly iTunes/Quicktime). If you prefer to output the MKV container format, use `--ext mkv`.
+By default, veelo will output media in a MP4 container using the ".m4v" file extension (plays well with all media players, particularly iTunes/Quicktime). If you prefer to output the MKV container format, use `--ext mkv`.
 
 <span id="usage-archive"></span>
 Archive your originals
 ----------------------
-Handbraker does not delete or modify your original files, it leaves them where they are. After processing, if you would like the original files moved into a directory convenient for archiving or discarding set the `--archive` flag. For example, the following files: 
+Veelo does not delete or modify your original files, it leaves them where they are. After processing, if you would like the original files moved into a directory convenient for archiving or discarding set the `--archive` flag. For example, the following files: 
 
 <pre><code>.
 ├── rain.mov
@@ -104,7 +104,7 @@ Handbraker does not delete or modify your original files, it leaves them where t
 after processing would be arranged like so: 
     
 <pre><code>.
-├── handbraker-originals
+├── veelo-originals
 │   ├── rain.mov
 │   └── video.mov
 ├── rain.m4v
@@ -113,7 +113,7 @@ after processing would be arranged like so:
 <span id="usage-output-dir"></span>
 Specify an Output Directory
 ---------------------------
-By default, handbraker outputs in the same directory as the input file. You can output to a sub-directory of each input file by passing `--output-dir <directory>`. For example, with this directory structure:
+By default, veelo outputs in the same directory as the input file. You can output to a sub-directory of each input file by passing `--output-dir <directory>`. For example, with this directory structure:
 
 <pre><code>.
 ├── Jan
@@ -121,7 +121,7 @@ By default, handbraker outputs in the same directory as the input file. You can 
 └── Feb
     └── Liverpool.mov</code></pre>
     
-running `$ handbraker */*.mov --output-dir optimised` would output: 
+running `$ veelo */*.mov --output-dir optimised` would output: 
     
 <pre><code>.
 ├── Jan
@@ -133,7 +133,7 @@ running `$ handbraker */*.mov --output-dir optimised` would output:
     └── optimised
         └── Liverpool.m4v</code></pre>
 
-If you specify an absolute path, or a path beginning with "." or "..", output will be directed to a single, specific directory. So, running `$ handbraker */*.mov --output-dir ./optimised` would output: 
+If you specify an absolute path, or a path beginning with "." or "..", output will be directed to a single, specific directory. So, running `$ veelo */*.mov --output-dir ./optimised` would output: 
 
 <pre><code>.
 ├── Jan
@@ -154,11 +154,11 @@ If the original file dates are important to you (quite often the case with home 
 <span id="usage-recurse"></span>
 Recurse
 -------
-By default, Handbraker ignore directories. If you wish to traverse into directories processing the entire tree, use `--recurse`. 
+By default, Veelo ignore directories. If you wish to traverse into directories processing the entire tree, use `--recurse`. 
 
 With large directory trees, control which files are processed using `--include` and `--exclude` filters. Both these options accept Regular Expressions. For example, to only process `wmv` and `avi` files:
 
-    $ handbraker --recurse Sport --include "\.wmv|\.avi"
+    $ veelo --recurse Sport --include "\.wmv|\.avi"
 
 <span id="usage-dry-run"></span>
 Dry Run
@@ -170,14 +170,14 @@ Embedding Subtitles
 -------------------
 If videos in your batch have external SRT subtitle files, you can embed them automatically by passing `--embed-srt`.
 
-    $ handbraker Film/World/* --embed-srt
+    $ veelo Film/World/* --embed-srt
 
 *Known Issue*: Handbrake does not accept SRT filenames containing a comma (the comma is a reserved delimiter character for the `--srt-file` option). 
 
 <span id="config"></span>
 Configuration
 =============
-The Handbraker configuration file is stored at `~/.handbraker.json` on Mac and Linux, `%USERPROFILE%\Application Data` on Windows XP and `%USERPROFILE%\AppData\Roaming` on Windows Vista and later. It must remain [valid JSON](http://jsonlint.com). 
+The Veelo configuration file is stored at `~/.veelo.json` on Mac and Linux, `%USERPROFILE%\Application Data` on Windows XP and `%USERPROFILE%\AppData\Roaming` on Windows Vista and later. It must remain [valid JSON](http://jsonlint.com). 
 
 The initial config file looks like this: 
 
@@ -189,11 +189,11 @@ The initial config file looks like this:
                 "srt-codeset": "UTF-8", 
                 "srt-lang": "eng"
             },
-            "handbraker": {
+            "veelo": {
                 "ext": "m4v",
                 "preserve-dates": true,
                 "ignoreList": [".DS_Store"],
-                "archiveDirectory": "handbraker-originals"
+                "archiveDirectory": "veelo-originals"
             }
         }
     }
@@ -201,11 +201,11 @@ The initial config file looks like this:
 <span id="config-defaults"></span>
 Defaults
 --------
-Handbraker ships with the "Normal" Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.
+Veelo ships with the "Normal" Handbrake preset set as default. This preset maintains the quality, dimensions and frame rate of the original. You can personalise your defaults in the config file. Options passed on the command line override their corresponding defaults.
 
 Ignore List
 -----------
-Manage the list of files Handbraker should ignore, e.g. "Thumbs.db", ".DS_Store" etc.
+Manage the list of files Veelo should ignore, e.g. "Thumbs.db", ".DS_Store" etc.
 
 <span id="examples"></span>
 More Examples
@@ -216,21 +216,21 @@ Make Samples
 ------------
 To test the water, you want to encode a small sample of each video in the "Comedy" directory. Use the Handbrake options `--start-at` and `--stop-at`. For example, create samples beginning at the 180th second lasting for 10 seconds, outputing each into a `samples` sub-directory:
 
-    $ handbraker Comedy/* --start-at duration:180 --stop-at duration:10 --output-dir samples
+    $ veelo Comedy/* --start-at duration:180 --stop-at duration:10 --output-dir samples
 
 <span id="examples-ab"></span>
 Higher Audio Quality
 --------------------    
 If sound quality is important, encode with a higher audio bitrate (e.g. 256kb/s):
 
-    $ handbraker Concert.wmv --ab 256
+    $ veelo Concert.wmv --ab 256
 
 <span id="examples-audio-sub"></span>
 Cherry-picking Audio and Subtitle tracks
 ----------------------------------------
 Say your source media contains audio and subtitle tracks in several languages. You are interested in keeping just the Japanese audio and English subtitles. First scan the source media to find the ID numbers of the audio/subtitle tracks you wish to keep:
 
-    $ handbraker --scan TokyoStory.mkv
+    $ veelo --scan TokyoStory.mkv
     
 In the output you'll see something like this: 
 
@@ -244,25 +244,25 @@ In the output you'll see something like this:
 
 So, we'll transcode taking audio track 3 and subtitle track 2:
 
-    $ handbraker TokyoStory.mkv --audio 3 --subtitle 2
+    $ veelo TokyoStory.mkv --audio 3 --subtitle 2
 
 <span id="examples-quality"></span>
 Video Compression Quality
 -------------------------
 Use `--quality` to adjust the compression quality of the output. 20 is the optimum value, between 35 and 40 will give a conveniently small output file whilst remaining watchable - useful for email attachment:
 
-    $ handbraker campaign.mov --quality 35
+    $ veelo campaign.mov --quality 35
 
 <span id="examples-presets"></span>
 Presets
 -------
 Handbrake comes with a collection of [built-in presets](https://trac.handbrake.fr/wiki/BuiltInPresets), optimised for common scenarios and specific devices. View the list using: 
 
-    $ handbraker --preset-list
+    $ veelo --preset-list
     
 To encode video optimised for iPod, you might use: 
 
-    $ handbraker --preset iPod video1.mov video2.mov
+    $ veelo --preset iPod video1.mov video2.mov
 
 <span id="contrib"></span>
 Contributing
@@ -276,16 +276,16 @@ Patches welcome. Feel free to implement:
 <span id="contrib-bugs"></span>
 Bugs
 ----
-Please file bugs or feature requests on the [Issue List](https://github.com/75lb/handbraker/issues?state=open).
+Please file bugs or feature requests on the [Issue List](https://github.com/75lb/veelo/issues?state=open).
 
 <span id="contrib-dev"></span>
 Developer install
 -----------------
-    $ git clone https://github.com/75lb/handbraker.git
-    $ cd handbraker
+    $ git clone https://github.com/75lb/veelo.git
+    $ cd veelo
     $ npm link
     
-From there, the `handbraker` command will point to your checkout. If you make some changes, check everything still works by running the test suite: 
+From there, the `veelo` command will point to your checkout. If you make some changes, check everything still works by running the test suite: 
 
     $ npm test
 
@@ -296,7 +296,7 @@ Notes
 <span id="notes-dvd"></span>
 DVD Copy Protection
 -------------------
-You can use handbraker to rip DVDs but it *does not crack DVD copy protection*. Use a specialised DVD ripper for this. 
+You can use veelo to rip DVDs but it *does not crack DVD copy protection*. Use a specialised DVD ripper for this. 
 
 <span id="license"></span>
 License
