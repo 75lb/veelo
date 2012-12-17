@@ -31,10 +31,11 @@
             <a href="#usage">Usage</a>
           </li>
           <li><a href="#usage-handbrake">HandbrakeCLI Options</a></li>
-          <li><a href="#usage-ext">Output File Extension</a></li>
-          <li><a href="#usage-archive">Archive Originals</a></li>
-          <li><a href="#usage-output-dir">Specify Output Dir</a></li>
-          <li><a href="#usage-recurse">Recurse</a></li>
+          <li><a href="#usage-ext">Output Format</a></li>
+          <li><a href="#usage-archive">Archiving Originals</a></li>
+          <li><a href="#usage-output-dir">Output Directory</a></li>
+          <li><a href="#usage-preserve">Preserving Dates</a></li>
+          <li><a href="#usage-recurse">Recursing</a></li>
           <li><a href="#usage-dry-run">Dry Run</a></li>
           <li><a href="#usage-embed-srt">Embedding Subtitles</a></li>
 
@@ -46,7 +47,23 @@
           <li class="nav-header">
             <a href="#examples">More Examples</a>
           </li>
-          <li><a href="#examples-samples">Make Samples</a></li>
+          <li><a href="#examples-samples">Making Samples</a></li>
+          <li><a href="#examples-ab">Higher audio quality</a></li>
+          <li><a href="#examples-audio-sub">Pick Audio / Subs</a></li>
+          <li><a href="#examples-quality">Video Quality</a></li>
+          <li><a href="#examples-presets">Presets</a></li>
+
+          <li class="nav-header">
+            <a href="#contrib">Contributing</a>
+          </li>
+          <li><a href="#contrib-bugs">Bugs</a></li>
+          <li><a href="#contrib-dev">Developer Install</a></li>
+
+          <li class="nav-header">
+            <a href="#notes">Notes</a>
+          </li>
+          <li><a href="#notes-dvd">DVD Protection</a></li>
+          <li><a href="#license">License</a></li>
         </ul>
       </div>
       <div class="span10">
@@ -56,7 +73,7 @@
 <p><a href="https://travis-ci.org/75lb/handbraker"><img src="https://travis-ci.org/75lb/handbraker.png" alt="Build Status"></a>
 
 </p>
-<p>Requiring properiatary media players or plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices is aggravating. Well, optimise your video library - consolidate the mixture of legacy and proprietary formats down to a single, modern format which works everywhere (<a href="http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264/MPEG-4 AVC</a>).
+<p>Requiring multiple media players and plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices even more so. Well, you could optimise your video library - consolidate from a mixture of legacy and proprietary formats to a single, modern format which works everywhere (<a href="http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC">H.264/MPEG-4 AVC</a>).
 
 </p>
 <p>Handbraker, a command-line Video Library Optimisation tool built on top of the outstanding encoder Handbrake, was built for this task.
@@ -122,16 +139,17 @@ $ sudo npm -g run-script handbraker ubuntu-setup</code></pre>
 Usage: handbraker [options] [HandbrakeCLI options] [files]
 
 ### Handbraker Options-------------------------------------------------------
-        --ext                  Output file extension. Choose &#39;mp4&#39;, &#39;m4v&#39; or &#39;mkv&#39; (default: m4v)
-        --archive              Archive the original file in a &#39;handbraker-originals&#39; directory
-        --output-dir           Outputs to the specified directory
+        --ext &lt;string&gt;         Output file extension (implicitly sets container format). Choose &#39;mp4&#39;, &#39;m4v&#39; or &#39;mkv&#39;.
+        --archive              Archive the original file to a specified directory (default: &#39;handbraker-originals&#39;)
+        --output-dir &lt;string&gt;  Outputs to the specified directory
         --preserve-dates       Preserve input&#39;s &#39;modified&#39; and &#39;accessed&#39; times on the output file
         --recurse              Traverse into directories
-        --include              Regex include filter, for use with --recurse
-        --exclude              Regex exclude filter, for use with --recurse
+        --include &lt;regex&gt;      Regex include filter, for use with --recurse
+        --exclude &lt;regex&gt;      Regex exclude filter, for use with --recurse
         --dry-run              Describe the outcome without performing the actual work
         --embed-srt            If a matching .srt file exists, embed subtitles into the output video
     -v, --verbose              Show detailed output
+        --version              Show version info
     -h, --help                 Show this help
         --hbhelp               Show this help plus all HandbrakeCLI options</code></pre>
 <p><span id="usage-handbrake"></span>
@@ -141,9 +159,10 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
 
 </p>
 <pre><code>$ handbraker --hbhelp</code></pre>
-<p>Where specified, these options are passed directly to the underlying Handbrake encoder.
+<p>When specified, these options are passed directly to the underlying Handbrake encoder. The following options set a <a href="https://trac.handbrake.fr/wiki/ConstantQuality">constant quality</a> of 25 with 64kb/s, mono audio: 
 
 </p>
+<pre><code>$ handbraker --quality 25 --ab 64 --mixdown mono video.mov</code></pre>
 <p><span id="usage-ext"></span>
 </p>
 <h2>Set Output File Extension</h2>
@@ -195,7 +214,7 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
     └── optimised
         └── Liverpool.m4v</code></pre>
 
-<p>If you specify an absolute <code>--output-dir</code> path, or a path beginning with &quot;.&quot; or &quot;..&quot;, output will be directed to a single, specific directory. So, running <code>$ handbraker */*.mov --output-dir ./optimised</code> would output: 
+<p>If you specify an absolute path, or a path beginning with &quot;.&quot; or &quot;..&quot;, output will be directed to a single, specific directory. So, running <code>$ handbraker */*.mov --output-dir ./optimised</code> would output: 
 
 </p>
 <pre><code>.
@@ -209,10 +228,16 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
     └── Feb
         └── Liverpool.m4v</code></pre>
 
+<p><span id="usage-preserve"></span>
+</p>
+<h2>Preserve Dates</h2>
+<p>If the original file dates are important to you (quite often the case with home video), set <code>--preserve-dates</code>. Output will preserve the dates of the input. Initially set by defualt.
+
+</p>
 <p><span id="usage-recurse"></span>
 </p>
 <h2>Recurse</h2>
-<p>By default, Handbraker ignore directories. If you wish to traverse into directories, processing the entire tree, use <code>--recurse</code>. 
+<p>By default, Handbraker ignore directories. If you wish to traverse into directories processing the entire tree, use <code>--recurse</code>. 
 
 </p>
 <p>With large directory trees, control which files are processed using <code>--include</code> and <code>--exclude</code> filters. Both these options accept Regular Expressions. For example, to only process <code>wmv</code> and <code>avi</code> files:
@@ -238,7 +263,7 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
 <p><span id="config"></span>
 </p>
 <h1>Configuration</h1>
-<p>The Handbraker configuration file is stored at <code>~/.handbraker</code> on Mac and Linux, <code>%USERPROFILE%\Application Data</code> on Windows XP and <code>%USERPROFILE%\AppData\Roaming</code> on Windows Vista and later. It must remain <a href="http://jsonlint.com">valid JSON</a>. 
+<p>The Handbraker configuration file is stored at <code>~/.handbraker.json</code> on Mac and Linux, <code>%USERPROFILE%\Application Data</code> on Windows XP and <code>%USERPROFILE%\AppData\Roaming</code> on Windows Vista and later. It must remain <a href="http://jsonlint.com">valid JSON</a>. 
 
 </p>
 <p>The initial config file looks like this: 
@@ -273,24 +298,27 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
 <p><span id="examples"></span>
 </p>
 <h1>More Examples</h1>
-<p>More usage examples 
-
-</p>
 <p><span id="examples-samples"></span>
 </p>
 <h2>Make Samples</h2>
-<p>To test the water, you want to encode a small sample of each video in the &quot;Comedy&quot; directory. Use the Handbrake options <code>--start-at</code> and <code>--stop-at</code>. For example, create samples beginning at the 60th second lasting for 120 seconds, outputing each into a <code>samples</code> sub-directory:
+<p>To test the water, you want to encode a small sample of each video in the &quot;Comedy&quot; directory. Use the Handbrake options <code>--start-at</code> and <code>--stop-at</code>. For example, create samples beginning at the 180th second lasting for 10 seconds, outputing each into a <code>samples</code> sub-directory:
 
 </p>
-<pre><code>$ handbraker Comedy/* --start-at duration:60 --stop-at duration:120 --output-dir samples</code></pre>
+<pre><code>$ handbraker Comedy/* --start-at duration:180 --stop-at duration:10 --output-dir samples</code></pre>
+<p><span id="examples-ab"></span>
+</p>
+<h2>Higher Audio Quality</h2>
 <p>If sound quality is important, encode with a higher audio bitrate (e.g. 256kb/s):
 
 </p>
 <pre><code>$ handbraker Concert.wmv --ab 256</code></pre>
+<p><span id="examples-audio-sub"></span>
+</p>
+<h2>Cherry-picking Audio and Subtitle tracks</h2>
 <p>Say your source media contains audio and subtitle tracks in several languages. You are interested in keeping just the Japanese audio and English subtitles. First scan the source media to find the ID numbers of the audio/subtitle tracks you wish to keep:
 
 </p>
-<pre><code>$ handbraker -t 0 TokyoStory.mkv</code></pre>
+<pre><code>$ handbraker --scan TokyoStory.mkv</code></pre>
 <p>In the output you&#39;ll see something like this: 
 
 </p>
@@ -305,10 +333,15 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
 
 </p>
 <pre><code>$ handbraker TokyoStory.mkv --audio 3 --subtitle 2</code></pre>
+<p><span id="examples-quality"></span>
+</p>
+<h2>Video Compression Quality</h2>
 <p>Use <code>--quality</code> to adjust the compression quality of the output. 20 is the optimum value, between 35 and 40 will give a conveniently small output file whilst remaining watchable - useful for email attachment:
 
 </p>
 <pre><code>$ handbraker campaign.mov --quality 35</code></pre>
+<p><span id="examples-presets"></span>
+</p>
 <h2>Presets</h2>
 <p>Handbrake comes with a collection of <a href="https://trac.handbrake.fr/wiki/BuiltInPresets">built-in presets</a>, optimised for common scenarios and specific devices. View the list using: 
 
@@ -318,8 +351,10 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
 
 </p>
 <pre><code>$ handbraker --preset iPod video1.mov video2.mov</code></pre>
+<p><span id="contrib"></span>
+</p>
 <h1>Contributing</h1>
-<p>Patches welcome. There are a few features that would be nice to have, if you fancy implementing them: 
+<p>Patches welcome. Feel free to implement: 
 
 </p>
 <ul>
@@ -327,8 +362,13 @@ Usage: handbraker [options] [HandbrakeCLI options] [files]
 <li>live queue management</li>
 <li>user-defined presets </li>
 </ul>
+<p><span id="contrib-bugs"></span>
+</p>
+<h2>Bugs</h2>
 <p>Please file bugs or feature requests on the <a href="https://github.com/75lb/handbraker/issues?state=open">Issue List</a>.
 
+</p>
+<p><span id="contrib-dev"></span>
 </p>
 <h2>Developer install</h2>
 <pre><code>$ git clone https://github.com/75lb/handbraker.git
@@ -338,12 +378,19 @@ $ npm link</code></pre>
 
 </p>
 <pre><code>$ npm test</code></pre>
-<h1>DVD Copy Protection</h1>
+<p><span id="notes"></span>
+</p>
+<h1>Notes</h1>
+<p><span id="notes-dvd"></span>
+</p>
+<h2>DVD Copy Protection</h2>
 <p>You can use handbraker to rip DVDs but it <em>does not crack DVD copy protection</em>. Use a specialised DVD ripper for this. 
 
 </p>
-<h1>License</h1>
-<p>(c) 2012, Lloyd Brookes <a href="&#x6d;&#97;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x37;&#x35;&#112;&#111;&#117;&#110;&#x64;&#64;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;">&#x37;&#x35;&#112;&#111;&#117;&#110;&#x64;&#64;&#103;&#x6d;&#x61;&#105;&#x6c;&#46;&#x63;&#111;&#x6d;</a>
+<p><span id="license"></span>
+</p>
+<h2>License</h2>
+<p>(c) 2012, Lloyd Brookes <a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#x6f;&#58;&#55;&#x35;&#x70;&#x6f;&#x75;&#110;&#x64;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#55;&#x35;&#x70;&#x6f;&#x75;&#110;&#x64;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;</a>
 (MIT License)</p>
 </article>
       </div>

@@ -1,9 +1,9 @@
 <span id="handbraker"></span>
 Handbraker
-=====
+==========
 [![Build Status](https://travis-ci.org/75lb/handbraker.png)](https://travis-ci.org/75lb/handbraker)
 
-Requiring proprietary media players or plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices is aggravating. Well, optimise your video library - consolidate the mixture of legacy and proprietary formats down to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)).
+Requiring multiple media players and plugins to play video is annoying. Video refusing to play on expensive, modern TVs and mobile devices even more so. Well, you could optimise your video library - consolidate from a mixture of legacy and proprietary formats to a single, modern format which works everywhere ([H.264/MPEG-4 AVC](http://en.wikipedia.org/wiki/H.264/MPEG-4_AVC)).
 
 Handbraker, a command-line Video Library Optimisation tool built on top of the outstanding encoder Handbrake, was built for this task.
 
@@ -28,15 +28,15 @@ Then, at the command line enter:
 <span id="install-winmac"></span>
 Windows & Mac OS X
 ------------------
-	$ npm -g install handbraker
-	
+    $ npm -g install handbraker
+    
 *some older Mac operating systems may require running the above with `sudo`* 
 
 <span id="install-ubuntu"></span>
 Ubuntu Linux
 ------------
-	$ sudo npm -g install handbraker
-	$ sudo npm -g run-script handbraker ubuntu-setup
+    $ sudo npm -g install handbraker
+    $ sudo npm -g run-script handbraker ubuntu-setup
 
 (the second step above installs the [official Ubuntu Handbrake package](https://launchpad.net/~stebbins/+archive/handbrake-releases)).
 
@@ -50,30 +50,31 @@ Update
 ------
 If you already have handbraker installed, double-check you have the latest version: 
 
-	$ sudo npm update -g handbraker
+    $ sudo npm update -g handbraker
 
 <span id="usage"></span>
 Usage
 =====
 A quick summary of the options can be displayed with the `--help` option:
 
-	$ handbraker --help
-	
-	Usage: handbraker [options] [HandbrakeCLI options] [files]
+    $ handbraker --help
+    
+    Usage: handbraker [options] [HandbrakeCLI options] [files]
 
-	### Handbraker Options-------------------------------------------------------
-	        --ext                  Output file extension. Choose 'mp4', 'm4v' or 'mkv' (default: m4v)
-	        --archive              Archive the original file in a 'handbraker-originals' directory
-	        --output-dir           Outputs to the specified directory
-	        --preserve-dates       Preserve input's 'modified' and 'accessed' times on the output file
-	        --recurse              Traverse into directories
-	        --include              Regex include filter, for use with --recurse
-	        --exclude              Regex exclude filter, for use with --recurse
-	        --dry-run              Describe the outcome without performing the actual work
-	        --embed-srt            If a matching .srt file exists, embed subtitles into the output video
-	    -v, --verbose              Show detailed output
-	    -h, --help                 Show this help
-	        --hbhelp               Show this help plus all HandbrakeCLI options
+    ### Handbraker Options-------------------------------------------------------
+            --ext <string>         Output file extension (implicitly sets container format). Choose 'mp4', 'm4v' or 'mkv'.
+            --archive              Archive the original file to a specified directory (default: 'handbraker-originals')
+            --output-dir <string>  Outputs to the specified directory
+            --preserve-dates       Preserve input's 'modified' and 'accessed' times on the output file
+            --recurse              Traverse into directories
+            --include <regex>      Regex include filter, for use with --recurse
+            --exclude <regex>      Regex exclude filter, for use with --recurse
+            --dry-run              Describe the outcome without performing the actual work
+            --embed-srt            If a matching .srt file exists, embed subtitles into the output video
+        -v, --verbose              Show detailed output
+            --version              Show version info
+        -h, --help                 Show this help
+            --hbhelp               Show this help plus all HandbrakeCLI options
 
 <span id="usage-handbrake"></span>
 Specifiy HandbrakeCLI Options
@@ -82,7 +83,9 @@ If you are fimilar with Handbrake, and/or want more control over the encoder set
 
     $ handbraker --hbhelp
  
-Where specified, these options are passed directly to the underlying Handbrake encoder.
+When specified, these options are passed directly to the underlying Handbrake encoder. The following options set a [constant quality](https://trac.handbrake.fr/wiki/ConstantQuality) of 25 with 64kb/s, mono audio: 
+
+    $ handbraker --quality 25 --ab 64 --mixdown mono video.mov
 
 <span id="usage-ext"></span>
 Set Output File Extension
@@ -99,7 +102,7 @@ Handbraker does not delete or modify your original files, it leaves them where t
 └── video.mov</code></pre>
 
 after processing would be arranged like so: 
-	
+    
 <pre><code>.
 ├── handbraker-originals
 │   ├── rain.mov
@@ -119,7 +122,7 @@ By default, handbraker outputs in the same directory as the input file. You can 
     └── Liverpool.mov</code></pre>
     
 running `$ handbraker */*.mov --output-dir optimised` would output: 
-	
+    
 <pre><code>.
 ├── Jan
 │   ├── Manchester.mov
@@ -130,7 +133,7 @@ running `$ handbraker */*.mov --output-dir optimised` would output:
     └── optimised
         └── Liverpool.m4v</code></pre>
 
-If you specify an absolute `--output-dir` path, or a path beginning with "." or "..", output will be directed to a single, specific directory. So, running `$ handbraker */*.mov --output-dir ./optimised` would output: 
+If you specify an absolute path, or a path beginning with "." or "..", output will be directed to a single, specific directory. So, running `$ handbraker */*.mov --output-dir ./optimised` would output: 
 
 <pre><code>.
 ├── Jan
@@ -143,14 +146,19 @@ If you specify an absolute `--output-dir` path, or a path beginning with "." or 
     └── Feb
         └── Liverpool.m4v</code></pre>
 
+<span id="usage-preserve"></span>
+Preserve Dates
+--------------
+If the original file dates are important to you (quite often the case with home video), set `--preserve-dates`. Output will preserve the dates of the input. Initially set by defualt.
+
 <span id="usage-recurse"></span>
 Recurse
 -------
-By default, Handbraker ignore directories. If you wish to traverse into directories, processing the entire tree, use `--recurse`. 
+By default, Handbraker ignore directories. If you wish to traverse into directories processing the entire tree, use `--recurse`. 
 
 With large directory trees, control which files are processed using `--include` and `--exclude` filters. Both these options accept Regular Expressions. For example, to only process `wmv` and `avi` files:
 
-	$ handbraker --recurse Sport --include "\.wmv|\.avi"
+    $ handbraker --recurse Sport --include "\.wmv|\.avi"
 
 <span id="usage-dry-run"></span>
 Dry Run
@@ -162,32 +170,32 @@ Embedding Subtitles
 -------------------
 If videos in your batch have external SRT subtitle files, you can embed them automatically by passing `--embed-srt`.
 
-	$ handbraker Film/World/* --embed-srt
+    $ handbraker Film/World/* --embed-srt
 
 *Known Issue*: Handbrake does not accept SRT filenames containing a comma (the comma is a reserved delimiter character for the `--srt-file` option). 
 
 <span id="config"></span>
 Configuration
 =============
-The Handbraker configuration file is stored at `~/.handbraker` on Mac and Linux, `%USERPROFILE%\Application Data` on Windows XP and `%USERPROFILE%\AppData\Roaming` on Windows Vista and later. It must remain [valid JSON](http://jsonlint.com). 
+The Handbraker configuration file is stored at `~/.handbraker.json` on Mac and Linux, `%USERPROFILE%\Application Data` on Windows XP and `%USERPROFILE%\AppData\Roaming` on Windows Vista and later. It must remain [valid JSON](http://jsonlint.com). 
 
 The initial config file looks like this: 
 
     {
-    	"defaults": {
-    		"handbrake": {
-    			"preset": "Normal",
-    			"optimize": true,
-    			"srt-codeset": "UTF-8", 
-    			"srt-lang": "eng"
-    		},
-    		"handbraker": {
-    			"ext": "m4v",
-    			"preserve-dates": true,
-    			"ignoreList": [".DS_Store"],
-    			"archiveDirectory": "handbraker-originals"
-    		}
-    	}
+        "defaults": {
+            "handbrake": {
+                "preset": "Normal",
+                "optimize": true,
+                "srt-codeset": "UTF-8", 
+                "srt-lang": "eng"
+            },
+            "handbraker": {
+                "ext": "m4v",
+                "preserve-dates": true,
+                "ignoreList": [".DS_Store"],
+                "archiveDirectory": "handbraker-originals"
+            }
+        }
     }
 
 <span id="config-defaults"></span>
@@ -202,77 +210,96 @@ Manage the list of files Handbraker should ignore, e.g. "Thumbs.db", ".DS_Store"
 <span id="examples"></span>
 More Examples
 =============
-More usage examples 
 
 <span id="examples-samples"></span>
 Make Samples
 ------------
-To test the water, you want to encode a small sample of each video in the "Comedy" directory. Use the Handbrake options `--start-at` and `--stop-at`. For example, create samples beginning at the 60th second lasting for 120 seconds, outputing each into a `samples` sub-directory:
+To test the water, you want to encode a small sample of each video in the "Comedy" directory. Use the Handbrake options `--start-at` and `--stop-at`. For example, create samples beginning at the 180th second lasting for 10 seconds, outputing each into a `samples` sub-directory:
 
-	$ handbraker Comedy/* --start-at duration:60 --stop-at duration:120 --output-dir samples
-	
+    $ handbraker Comedy/* --start-at duration:180 --stop-at duration:10 --output-dir samples
+
+<span id="examples-ab"></span>
+Higher Audio Quality
+--------------------    
 If sound quality is important, encode with a higher audio bitrate (e.g. 256kb/s):
 
-	$ handbraker Concert.wmv --ab 256
-	
+    $ handbraker Concert.wmv --ab 256
+
+<span id="examples-audio-sub"></span>
+Cherry-picking Audio and Subtitle tracks
+----------------------------------------
 Say your source media contains audio and subtitle tracks in several languages. You are interested in keeping just the Japanese audio and English subtitles. First scan the source media to find the ID numbers of the audio/subtitle tracks you wish to keep:
 
-	$ handbraker -t 0 TokyoStory.mkv
-	
+    $ handbraker --scan TokyoStory.mkv
+    
 In the output you'll see something like this: 
 
-	+ audio tracks:
-	  + 1, Russian (AC3) (2.0 ch) (iso639-2: rus), 48000Hz, 192000bps
-	  + 2, Russian (AC3) (2.0 ch) (iso639-2: rus), 48000Hz, 192000bps
-	  + 3, Japanese (AC3) (2.0 ch) (iso639-2: jpn), 48000Hz, 192000bps
-	+ subtitle tracks:
-	  + 1, Russian (iso639-2: rus) (Text)(UTF-8)
-	  + 2, English (iso639-2: eng) (Text)(UTF-8)
+    + audio tracks:
+      + 1, Russian (AC3) (2.0 ch) (iso639-2: rus), 48000Hz, 192000bps
+      + 2, Russian (AC3) (2.0 ch) (iso639-2: rus), 48000Hz, 192000bps
+      + 3, Japanese (AC3) (2.0 ch) (iso639-2: jpn), 48000Hz, 192000bps
+    + subtitle tracks:
+      + 1, Russian (iso639-2: rus) (Text)(UTF-8)
+      + 2, English (iso639-2: eng) (Text)(UTF-8)
 
 So, we'll transcode taking audio track 3 and subtitle track 2:
 
-	$ handbraker TokyoStory.mkv --audio 3 --subtitle 2
-	
+    $ handbraker TokyoStory.mkv --audio 3 --subtitle 2
+
+<span id="examples-quality"></span>
+Video Compression Quality
+-------------------------
 Use `--quality` to adjust the compression quality of the output. 20 is the optimum value, between 35 and 40 will give a conveniently small output file whilst remaining watchable - useful for email attachment:
 
-	$ handbraker campaign.mov --quality 35
+    $ handbraker campaign.mov --quality 35
 
+<span id="examples-presets"></span>
 Presets
 -------
 Handbrake comes with a collection of [built-in presets](https://trac.handbrake.fr/wiki/BuiltInPresets), optimised for common scenarios and specific devices. View the list using: 
 
-	$ handbraker --preset-list
-	
+    $ handbraker --preset-list
+    
 To encode video optimised for iPod, you might use: 
 
-	$ handbraker --preset iPod video1.mov video2.mov
+    $ handbraker --preset iPod video1.mov video2.mov
 
-
+<span id="contrib"></span>
 Contributing
 ============
-Patches welcome. There are a few features that would be nice to have, if you fancy implementing them: 
+Patches welcome. Feel free to implement: 
 
 * a web frontend
 * live queue management
 * user-defined presets 
 
+<span id="contrib-bugs"></span>
+Bugs
+----
 Please file bugs or feature requests on the [Issue List](https://github.com/75lb/handbraker/issues?state=open).
 
+<span id="contrib-dev"></span>
 Developer install
 -----------------
-	$ git clone https://github.com/75lb/handbraker.git
-	$ cd handbraker
-	$ npm link
-	
+    $ git clone https://github.com/75lb/handbraker.git
+    $ cd handbraker
+    $ npm link
+    
 From there, the `handbraker` command will point to your checkout. If you make some changes, check everything still works by running the test suite: 
 
-	$ npm test
+    $ npm test
 
+<span id="notes"></span>
+Notes
+=====
+
+<span id="notes-dvd"></span>
 DVD Copy Protection
-===================
+-------------------
 You can use handbraker to rip DVDs but it *does not crack DVD copy protection*. Use a specialised DVD ripper for this. 
 
+<span id="license"></span>
 License
-=======
+-------
 (c) 2012, Lloyd Brookes <75pound@gmail.com>
 (MIT License)
