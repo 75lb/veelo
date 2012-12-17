@@ -1,6 +1,7 @@
 var assert = require("assert"),
 	fs = require("fs-extra"),
 	path = require("path"),
+    os = require("os"),
 	util = require("util"),
 	exec = require("child_process").exec,
 	Job = require("../lib/job"),
@@ -105,7 +106,7 @@ describe("Unit Test", function(){
 			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 			assert.ok(job.archivePath == "", JSON.stringify(job));
 			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
-			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
 		});
 		
 		it("should instantiate default archive path", function(){
@@ -120,7 +121,7 @@ describe("Unit Test", function(){
 			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 			assert.ok(job.archivePath == path.join("veelo-originals", "test.mov"), JSON.stringify(job));
 			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
-			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
 		});
 
 		it("should instantiate custom archive path", function(){
@@ -136,7 +137,7 @@ describe("Unit Test", function(){
 			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 			assert.ok(job.archivePath == path.join("archive", "test.mov"), JSON.stringify(job));
 			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
-			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
 		});
 
 		it("should instantiate deep custom archive path", function(){
@@ -152,7 +153,7 @@ describe("Unit Test", function(){
 			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 			assert.ok(job.archivePath == path.join("sub", "archive", "test.mov"), JSON.stringify(job));
 			assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
-			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
 		});
 
 		it("should instantiate correct nested output-dir", function(){
@@ -167,7 +168,7 @@ describe("Unit Test", function(){
 			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 			assert.ok(job.archivePath == "", JSON.stringify(job));
 			assert.ok(job.outputPath == path.join("output", "test.m4v"), JSON.stringify(job));
-			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
 		});
 
 		it("should instantiate correct absolute output-dir", function(){
@@ -182,7 +183,7 @@ describe("Unit Test", function(){
 			assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 			assert.ok(job.archivePath == "", JSON.stringify(job));
 			assert.ok(job.outputPath == path.join("..", "output", "test.m4v"), JSON.stringify(job));
-			assert.ok(job.workingPath == ".processing.test.m4v", JSON.stringify(job));
+			assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
 		});
 
 		it("should fire 'invalid' event if not a file", function(){
