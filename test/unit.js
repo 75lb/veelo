@@ -86,14 +86,9 @@ describe("Job", function(){
 
 	it("should instantiate deep custom archive path", function(){
 		var config = _config;
-		config = {
-			archiveDirectory: path.join("sub", "archive"),
-			options: {
-				veelo: {
-					archive: true
-				}
-			}
-		};
+		config.options.veelo.archiveDirectory = path.join("sub", "archive");
+		config.options.veelo.archive = true;
+
 		var job = new Job(config, "test.mov");
 		assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 		assert.ok(job.archivePath == path.join("sub", "archive", "test.mov"), JSON.stringify(job));
@@ -102,13 +97,9 @@ describe("Job", function(){
 	});
 
 	it("should instantiate correct nested output-dir", function(){
-		config = {
-			options: {
-				veelo: {
-					"output-dir": "output"
-				}
-			}
-		};
+		var config = _config;
+		config.options.veelo["output-dir"] = "output";
+
 		var job = new Job(config, "test.mov");
 		assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 		assert.ok(job.archivePath == "", JSON.stringify(job));
@@ -117,13 +108,9 @@ describe("Job", function(){
 	});
 
 	it("should instantiate correct absolute output-dir", function(){
-		config = {
-			options: {
-				veelo: {
-					"output-dir": "../output"
-				}
-			}
-		};
+		var config = _config;
+		config.options.veelo["output-dir"] = "../output";
+
 		var job = new Job(config, "test.mov");
 		assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 		assert.ok(job.archivePath == "", JSON.stringify(job));
@@ -132,7 +119,7 @@ describe("Job", function(){
 	});
 
 	it("should fire 'invalid' event if not a file", function(){
-		var job = new Job(config, path.join(__dirname, "mock/")), 
+		var job = new Job(_config, path.join(__dirname, "mock/")), 
 			message;
 			
 		job.on("invalid", function(msg){
@@ -144,7 +131,7 @@ describe("Job", function(){
 	});
 
 	it("should fire 'invalid' event if file doesn't exist", function(){
-		var job = new Job(config, "kjhkjhjkgb"), message;
+		var job = new Job(_config, "kjhkjhjkgb"), message;
 			
 		job.on("invalid", function(msg){
 			message = msg; 
