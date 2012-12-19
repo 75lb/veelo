@@ -11,7 +11,7 @@ HandbrakeCLI.prototype.spawn = function(processArgs, printOutput) {
     function success(){
         self.emit("success");
     }
-    setTimeout(success, 10);
+    setTimeout(success, 1);
 };
 
 HandbrakeCLI.prototype.exec = function(processArgString, done){

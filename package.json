@@ -21,7 +21,7 @@
     "url": "git://github.com/75lb/veelo.git"
   },
   "keywords": [
-    "veelo", "handbrake", "batch", "encode", "transcode",
+    "veelo", "handbrake", "handbraker", "batch", "encode", "transcode",
     "video", "mp4", "m4v", "mkv", "avi", "mpg", "divx", "xvid"
   ],
   "author": "Lloyd Brookes",

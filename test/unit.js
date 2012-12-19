@@ -22,6 +22,10 @@ var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
 	SUB_DIR2 = path.join(SUB_DIR, "subdir2"),
 	ORIGINALS_DIR = "veelo-originals";
 
+function log(msg){
+    console.log(util.inspect(msg, true, null, true));
+}
+
 function clearFixture(){
 	fs.removeSync(FIXTURE_DIR);
 	fs.mkdirsSync(SUB_DIR2);
@@ -56,7 +60,8 @@ describe("Job", function(){
     });
         
 	it("should instantiate with sensible paths if no supplied config", function(){
-		var job = new Job(_config, "test.mov");
+		var config = new Config();
+		var job = new Job(config, "test.mov");
 		assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 		assert.ok(job.archivePath == "", JSON.stringify(job));
 		assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
@@ -64,7 +69,7 @@ describe("Job", function(){
 	});
 		
 	it("should instantiate default archive path", function(){
-		var config = _config;
+		var config = new Config();
         config.options.veelo.archive = true;
 		var job = new Job(config, "test.mov");
 		assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
@@ -74,7 +79,7 @@ describe("Job", function(){
 	});
 
 	it("should instantiate custom archive path", function(){
-		var config = _config;
+		var config = new Config();
 		config.options.veelo.archiveDirectory = "archive";
 		config.options.veelo.archive = true;
 
@@ -86,7 +91,7 @@ describe("Job", function(){
 	});
 
 	it("should instantiate deep custom archive path", function(){
-		var config = _config;
+		var config = new Config();
 		config.options.veelo.archiveDirectory = path.join("sub", "archive");
 		config.options.veelo.archive = true;
 
@@ -98,9 +103,8 @@ describe("Job", function(){
 	});
 
 	it("should instantiate correct nested output-dir", function(){
-		var config = _config;
+		var config = new Config();
 		config.options.veelo["output-dir"] = "output";
-        console.log(config);
 		var job = new Job(config, "test.mov");
 		assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 		assert.ok(job.archivePath == "", JSON.stringify(job));
@@ -109,7 +113,7 @@ describe("Job", function(){
 	});
 
 	it("should instantiate correct absolute output-dir", function(){
-		var config = _config;
+		var config = new Config();
 		config.options.veelo["output-dir"] = "../output";
 
 		var job = new Job(config, "test.mov");
@@ -120,7 +124,8 @@ describe("Job", function(){
 	});
 
 	it("should fire 'invalid' event if not a file", function(){
-		var job = new Job(_config, path.join(__dirname, "mock/")), 
+		var config = new Config();
+		var job = new Job(config, path.join(__dirname, "mock/")), 
 			message;
 			
 		job.on("invalid", function(msg){
@@ -132,7 +137,8 @@ describe("Job", function(){
 	});
 
 	it("should fire 'invalid' event if file doesn't exist", function(){
-		var job = new Job(_config, "kjhkjhjkgb"), message;
+		var config = new Config();
+		var job = new Job(config, "kjhkjhjkgb"), message;
 			
 		job.on("invalid", function(msg){
 			message = msg; 
@@ -143,16 +149,21 @@ describe("Job", function(){
 	});
 				
     it("should spawn a process, fire 'processing' event", function(done){
-        var inputFile = path.join(FIXTURE_DIR, VIDEO1),
-            processingEmitted;
-
-        var job = new Job(_config, inputFile);
+		var config = new Config(),
+            inputFile = path.join(FIXTURE_DIR, VIDEO1),
+            processingEmitted,
+            job = new Job(config, inputFile),
+            spy = sinon.spy(MockHandbrakeCLI.prototype, "spawn");
+            
         job._inject({ HandbrakeCLI: MockHandbrakeCLI });
         
         job.on("processing", function(){
             processingEmitted = true;
         });
         job.on("success", function(){
+            assert.ok(processingEmitted, "processingEmitted: " + processingEmitted);
+            assert.ok(spy.called, spy);
+            assert.ok(spy.args[0][0].i == inputFile, JSON.stringify(spy.args[0]));
             done();
         })
         job.init();
@@ -160,10 +171,10 @@ describe("Job", function(){
     });
 		
 });
-	
-// describe("HandbrakeCLI", function(){
-// 	it("should spawn HandbrakeCLI with no args", function(done){
-// 		var handbrakeCLI = new HandbrakeCLI();
-// 		handbrakeCLI.spawn();
-// 	});
-// });
+
+describe("HandbrakeCLI", function(){
+    it("should spawn HandbrakeCLI with no args", function(done){
+        var handbrakeCLI = new HandbrakeCLI();
+        handbrakeCLI.spawn();
+    });
+});
