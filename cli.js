@@ -21,8 +21,14 @@ colours.setTheme({
 function log(){
 	var args = Array.prototype.slice.call(arguments)
 		addDate = args.shift();
-	if (addDate) args[0] = util.format("[%s] %s", new Date().toLocaleTimeString(), args[0]);
-	console.log.apply(this, args);
+	if (addDate){
+        args[0] = util.format("[%s] %s", new Date().toLocaleTimeString(), args[0]);
+	} 
+    console.log.apply(this, args);
+}
+
+function stdoutWrite(data){
+    process.stdout.write(data);
 }
 
 // instantiate Veelo and attach listeners
@@ -44,6 +50,10 @@ veelo.on("report", function(report){
 
 veelo.queue.on("message", function(msg){
 	if(!config.options.veelo["dry-run"]) log(true, msg);
+});
+
+veelo.queue.on("handbrake-output", function(msg){
+	stdoutWrite(msg);
 });
 
 veelo.queue.on("begin", function(){

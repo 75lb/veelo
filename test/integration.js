@@ -439,9 +439,11 @@ describe("config file", function(){
 // web gui, live graph showing fps speed and data-throughput over time
 // man page
 // --split, divide video into e.g. 15 minute pieces
+// GA on doc site nav
 
 // To Fix: 
 // fix --output-dir ../dir/file.mov from outputting to output-dir/..
-// improve dry-run report, more stats.
+// improve dry-run report, more stats.. include confirmation of all the processing options being applied.. file type counts.. 
 // passing ignoreList on cli
 // when working on a remote drive, use local disk as scratch
+// should Job emit success in fse.copy completion callback? 
