@@ -6,6 +6,7 @@ var assert = require("assert"),
 	util = require("util"),
     EventEmitter = require("events").EventEmitter,
 	Job = require("../lib/job"),
+    Config = require("../lib/config"),
 	MockHandbrakeCLI = require("./mock/handbrakeCli");
 
 var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
@@ -36,19 +37,19 @@ function setupSingleFileFixture(file, done){
 
 
 describe("Job", function(){
-	var _config = {
-	    defaults: {},
-        passedIn: {},
-        options: {
-            veelo: {
-                ext: "m4v",
-                ignoreList: [],
-                archiveDirectory: "veelo-originals"
-            },
-            handbrake: {},
-            files: []
-        }
-	};
+    // var _config = {
+    //     defaults: {},
+    //         passedIn: {},
+    //         options: {
+    //             veelo: {
+    //                 ext: "m4v",
+    //                 ignoreList: [],
+    //                 archiveDirectory: "veelo-originals"
+    //             },
+    //             handbrake: {},
+    //             files: []
+    //         }
+    // };
 		
     before(function(done){
         setupSingleFileFixture(VIDEO1, done);
@@ -99,7 +100,7 @@ describe("Job", function(){
 	it("should instantiate correct nested output-dir", function(){
 		var config = _config;
 		config.options.veelo["output-dir"] = "output";
-
+        console.log(config);
 		var job = new Job(config, "test.mov");
 		assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
 		assert.ok(job.archivePath == "", JSON.stringify(job));
