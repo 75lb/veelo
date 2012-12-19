@@ -28,7 +28,7 @@ function log(){
 }
 
 function stdoutWrite(data){
-    process.stdout.write(data);
+    process.stdout.write(data.hbOutput);
 }
 
 // instantiate Veelo and attach listeners

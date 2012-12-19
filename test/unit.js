@@ -169,12 +169,27 @@ describe("Job", function(){
         job.init();
         job.process();
     });
-		
 });
 
 describe("HandbrakeCLI", function(){
-    it("should spawn HandbrakeCLI with no args", function(done){
+    it("should do nothing with no args", function(done){
         var handbrakeCLI = new HandbrakeCLI();
         handbrakeCLI.spawn();
+    });
+    
+    it("should spawn HandbrakeCLI with correct, passed in args", function(done){
+        
+    });
+    
+    it("should respond to child_process 'data' event", function(done){
+        
+    });
+
+    it("should respond to child_process 'exit' event", function(done){
+        
+    });
+
+    it("should respond to child_process 'SIGINT' event", function(done){
+        
     });
 });
