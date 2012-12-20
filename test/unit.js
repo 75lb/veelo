@@ -177,19 +177,19 @@ describe("HandbrakeCLI", function(){
         handbrakeCLI.spawn();
     });
     
-    it("should spawn HandbrakeCLI with correct, passed in args", function(done){
+    it("should spawn with correct, passed in args", function(done){
         
     });
     
-    it("should respond to child_process 'data' event", function(done){
+    it("should spawn and respond to child_process 'data' event", function(done){
         
     });
 
-    it("should respond to child_process 'exit' event", function(done){
+    it("should spawn and respond to child_process 'exit' event", function(done){
         
     });
 
-    it("should respond to child_process 'SIGINT' event", function(done){
+    it("should spawn and respond to child_process 'SIGINT' event", function(done){
         
     });
 });
