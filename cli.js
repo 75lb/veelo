@@ -88,5 +88,10 @@ veelo.queue.on("error", function(err){
 	process.exit(0);
 });
 
+veelo.queue.on("job-fail", function(data){
+   log(true, "%s [%s]", data.msg, data.inputPath.fileName);
+   if (data.output) log(false, data.output);
+});
+
 // start work
 veelo.start();
