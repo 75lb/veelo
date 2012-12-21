@@ -417,14 +417,12 @@ describe("config file", function(){
 // correct cleanup on CTRL+C
 
 // To implement:
-// pass multiple --preset vals to output multiple versions
-// file globbing on windows
+// better HandBrakeCLI output, progress bar
+// --info option, parse --scan and display
+//   --dry-run with --info ammends the report
 // user-defined presets
 //   presets for Blackberry
 //   preset repo server
-// tidier HandBrakeCLI output, progress bar
-// --info option, parse --scan and display
-// --dry-run with --info ammends the report
 // hooks.. insert notification, alert, email, script etc.. e.g. a hook onStart to make backups, etc.
 // --default option, list defaults
 //   --default-set "preset:iPhone and iPod Touch"
@@ -437,6 +435,8 @@ describe("config file", function(){
 //   validate passed in files, e.g. file exists
 //   custom validate - e.g. video file has a valid title
 // web gui, live graph showing fps speed and data-throughput over time
+// pass multiple --preset vals to output multiple versions
+// file globbing on windows
 // man page
 // --split, divide video into e.g. 15 minute pieces
 // GA on doc site nav
@@ -447,3 +447,5 @@ describe("config file", function(){
 // passing ignoreList on cli
 // when working on a remote drive, use local disk as scratch
 // should Job emit success in fse.copy completion callback? 
+// remove config on npm rm
+// can't CTRL+C test

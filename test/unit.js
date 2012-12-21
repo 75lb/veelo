@@ -8,8 +8,8 @@ var assert = require("assert"),
     fs = require("fs-extra"),
     Job = require("../lib/job"),
     Config = require("../lib/config"),
-    HandbrakeCLI = require("../lib/handbrakeCli"),
-    MockHandbrakeCLI = require("./mock/handbrakeCli");
+    HandbrakeCLI = require("../lib/handbrakeCli")
+    Veelo = require("../lib/veelo");
 
 var VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
     VIDEO1_MKV = "clip1.mkv", VIDEO1_MP4 = "clip1.mp4",
@@ -60,7 +60,9 @@ describe("HandbrakeCLI", function(){
     ReadableStream.prototype = new Stream();
     
     beforeEach(function(){
-        mockCp = require("./mock/child_process");
+        mockCp = { 
+            spawn: function(){} 
+        };
         handle = new ChildProcess();
         sinon.stub(mockCp, "spawn").returns(handle);
         handbrakeCLI = new HandbrakeCLI();
@@ -172,99 +174,124 @@ describe("HandbrakeCLI", function(){
 
 
 describe("Job", function(){
+    var config,
+        inputPath = path.join(FIXTURE_DIR, VIDEO1);
+    
     before(function(done){
         setupSingleFileFixture(VIDEO1, done);
     });
-        
+    beforeEach(function(){
+        config = new Config({
+            configDefinition: Veelo.configDefinition
+        });
+    });
+    
     it("should instantiate with sensible paths if no supplied config", function(){
-        var config = new Config();
-        var job = new Job(config, "test.mov");
-        assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
-        assert.ok(job.archivePath == "", JSON.stringify(job));
-        assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
-        assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
+        var job = new Job({ inputPath: "test.mov" });
+        assert.ok(job.path.input == "test.mov", JSON.stringify(job));
+        assert.ok(job.path.archive == "", JSON.stringify(job));
+        assert.ok(job.path.output == "test.m4v", JSON.stringify(job));
+        assert.ok(job.path.working == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
     });
         
     it("should instantiate default archive path", function(){
-        var config = new Config();
-        config.options.veelo.archive = true;
-        var job = new Job(config, "test.mov");
-        assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
-        assert.ok(job.archivePath == path.join("veelo-originals", "test.mov"), JSON.stringify(job));
-        assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
-        assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
+        var job = new Job({ 
+            config: config.set("archive", true),
+            inputPath: "test.mov"
+        });
+        
+        assert.ok(job.path.input == "test.mov", JSON.stringify(job));
+        assert.ok(job.path.archive == path.join(config.get("archiveDirectory"), "test.mov"), JSON.stringify(job));
+        assert.ok(job.path.output == "test.m4v", JSON.stringify(job));
+        assert.ok(job.path.working == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
     });
 
     it("should instantiate custom archive path", function(){
-        var config = new Config();
-        config.options.veelo.archiveDirectory = "archive";
-        config.options.veelo.archive = true;
-
-        var job = new Job(config, "test.mov");
-        assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
-        assert.ok(job.archivePath == path.join("archive", "test.mov"), JSON.stringify(job));
-        assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
-        assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
+        config.set("archiveDirectory", "archive")
+              .set("archive", true);
+        var job = new Job({ 
+            config: config,
+            inputPath: "test.mov"
+        });
+        
+        assert.ok(job.path.input == "test.mov", JSON.stringify(job));
+        assert.ok(job.path.archive == path.join("archive", "test.mov"), JSON.stringify(job));
+        assert.ok(job.path.output == "test.m4v", JSON.stringify(job));
+        assert.ok(job.path.working == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
     });
 
     it("should instantiate deep custom archive path", function(){
-        var config = new Config();
         config.options.veelo.archiveDirectory = path.join("sub", "archive");
         config.options.veelo.archive = true;
-
-        var job = new Job(config, "test.mov");
-        assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
-        assert.ok(job.archivePath == path.join("sub", "archive", "test.mov"), JSON.stringify(job));
-        assert.ok(job.outputPath == "test.m4v", JSON.stringify(job));
-        assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
+        var job = new Job({ 
+            config: config,
+            inputPath: "test.mov"
+        });
+        
+        assert.ok(job.path.input == "test.mov", JSON.stringify(job));
+        assert.ok(job.path.archive == path.join("sub", "archive", "test.mov"), JSON.stringify(job));
+        assert.ok(job.path.output == "test.m4v", JSON.stringify(job));
+        assert.ok(job.path.working == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
     });
 
     it("should instantiate correct nested output-dir", function(){
-        var config = new Config();
         config.options.veelo["output-dir"] = "output";
-        var job = new Job(config, "test.mov");
-        assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
-        assert.ok(job.archivePath == "", JSON.stringify(job));
-        assert.ok(job.outputPath == path.join("output", "test.m4v"), JSON.stringify(job));
-        assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
+        var job = new Job({ 
+            config: config,
+            inputPath: "test.mov"
+        });
+        
+        assert.ok(job.path.input == "test.mov", JSON.stringify(job));
+        assert.ok(job.path.archive == "", JSON.stringify(job));
+        assert.ok(job.path.output == path.join("output", "test.m4v"), JSON.stringify(job));
+        assert.ok(job.path.working == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
     });
 
     it("should instantiate correct absolute output-dir", function(){
-        var config = new Config();
         config.options.veelo["output-dir"] = "../output";
 
         var job = new Job(config, "test.mov");
-        assert.ok(job.inputPath == "test.mov", JSON.stringify(job));
-        assert.ok(job.archivePath == "", JSON.stringify(job));
-        assert.ok(job.outputPath == path.join("..", "output", "test.m4v"), JSON.stringify(job));
-        assert.ok(job.workingPath == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
+        assert.ok(job.path.input == "test.mov", JSON.stringify(job));
+        assert.ok(job.path.archive == "", JSON.stringify(job));
+        assert.ok(job.path.output == path.join("..", "output", "test.m4v"), JSON.stringify(job));
+        assert.ok(job.path.working == path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
     });
 
     it("should fire 'invalid' event if not a file", function(){
-        var config = new Config();
         var job = new Job(config, path.join(__dirname, "mock/")), 
             message;
             
         job.on("invalid", function(msg){
             message = msg; 
         });
-        job.init();
+        job.validate();
             
         assert.ok(message, message || "event not fired");
     });
 
     it("should fire 'invalid' event if file doesn't exist", function(){
-        var config = new Config();
         var job = new Job(config, "kjhkjhjkgb"), message;
             
         job.on("invalid", function(msg){
             message = msg; 
         });
-        job.init();
+        job.validate();
             
         assert.ok(message, message || "event not fired");
     });
-                
+    
+    it("should fire 'processing' on process()", function(){
+        var eventFired = false,
+            job = new Job(config, inputPath);
+        
+        job.on("processing", function(){
+            eventFired = true;
+        });
+        job.process();
+        
+        assert.ok(eventFired);
+    });
+    
     // it("should spawn a process, fire 'processing' event", function(done){
     //     var config = new Config(),
     //         inputFile = path.join(FIXTURE_DIR, VIDEO1),
