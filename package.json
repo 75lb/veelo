@@ -1,41 +1,41 @@
 {
-  "name": "veelo",
-  "version": "0.0.25",
-  "description": "Optimise your video library",
-  "homepage": "http://75lb.github.com/veelo/",
-  "bugs": "https://github.com/75lb/veelo/issues",
-  "engines": {
-    "node": "~0.8"
-  },
-  "bin": "./cli.js",
-  "preferGlobal": true,
-  "scripts": {
-    "test": "mocha --timeout 10000 --reporter spec test/unit.js test/integration.js",
-    "unit-test": "mocha --timeout 10000 --reporter spec test/unit.js",
-    "integration-test": "mocha --timeout 10000 --reporter spec test/integration.js",
-    "ubuntu-setup": "scripts/ubuntu-setup.sh",
-    "postinstall": "node scripts/install-handbrakeCLI.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/75lb/veelo.git"
-  },
-  "keywords": [
-    "veelo", "handbrake", "handbraker", "batch", "encode", "transcode",
-    "video", "mp4", "m4v", "mkv", "avi", "mpg", "divx", "xvid"
-  ],
-  "author": "Lloyd Brookes",
-  "license": "MIT",
-  "dependencies": {
-    "optimist": "~0.3.5",
-    "underscore": "~1.4.2",
-    "colors": "~0.6.0-1",
-    "fs-extra": "~0.3.2",
-    "request": "~2.12.0",
-    "unzip": "~0.1.0"
-  },
-  "devDependencies": {
-    "mocha": "~1.7",
-    "sinon": "~1.5.2"
-  }
+    "name": "veelo",
+    "version": "0.0.26",
+    "description": "Optimise your video library",
+    "homepage": "http://75lb.github.com/veelo/",
+    "bugs": "https://github.com/75lb/veelo/issues",
+    "engines": {
+        "node": "~0.8"
+    },
+    "bin": "./cli.js",
+    "preferGlobal": true,
+    "scripts": {
+        "test": "mocha --timeout 10000 --reporter dot test/unit-*.js test/integration.js",
+        "unit-test": "mocha --timeout 10000 --reporter spec test/unit.js",
+        "integration-test": "mocha --timeout 10000 --reporter spec test/integration.js",
+        "ubuntu-setup": "scripts/ubuntu-setup.sh",
+        "postinstall": "node scripts/install-handbrakeCLI.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/75lb/veelo.git"
+    },
+    "keywords": [
+        "veelo", "handbrake", "handbraker", "batch", "encode", "transcode",
+        "video", "mp4", "m4v", "mkv", "avi", "mpg", "divx", "xvid"
+    ],
+    "author": "Lloyd Brookes",
+    "license": "MIT",
+    "dependencies": {
+        "optimist": "~0.3.5",
+        "underscore": "~1.4.2",
+        "colors": "~0.6.0-1",
+        "fs-extra": "~0.3.2",
+        "request": "~2.12.0",
+        "unzip": "~0.1.0"
+    },
+    "devDependencies": {
+        "mocha": "~1.7",
+        "sinon": "~1.5.2"
+    }
 }
