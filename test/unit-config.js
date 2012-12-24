@@ -14,38 +14,42 @@ describe("Config", function(){
             config.group("veelo")
                     .option("version", {type: "boolean"});
             config.group("handbrake")
-                    .group("general")
+                    .subgroup("general")
                         .option("update", { type: "boolean" });
                    
-            assert.deepEqual(config.definition, {
-                top: {
-                    type: "string",
-                    default: "root"
-                },
-                veelo: {
-                   version: {
-                       type: "boolean"
-                   }
-                },
-                handbrake: {
-                   general: {
-                       update: {
+            assert.deepEqual(
+                config.definition, 
+                {
+                    top: {
+                        type: "string",
+                        default: "root"
+                    },
+                    veelo: {
+                       version: {
                            type: "boolean"
                        }
-                   }
-                }
-            });
+                    },
+                    handbrake: {
+                       general: {
+                           update: {
+                               type: "boolean"
+                           }
+                       }
+                    }
+                },
+                JSON.stringify(config.definition)
+            );
             
         });
-   
+
         it("should set/get option", function(){
             config.option("archiveDirectory", {type: "string"});
             config.set("archiveDirectory", "testset");
-       
+
             assert.equal(config.get("archiveDirectory"), "testset");
         });
-    
-        it("should set/get option within specified group", function(){
+
+        it("should set/get option within specific group", function(){
             config.group("veelo").option("archiveDirectory", {type: "string"});
             config.group("veelo").set("archiveDirectory", "testset2");
 
@@ -59,7 +63,9 @@ describe("Config", function(){
                 .option("three", {type: "boolean"});
 
             assert.equal(config.group("veelo").size, 3);
-        })
+        });
+        
+        it("should handle invalid group/option names");
     });
     
     describe("defaults: ", function(){
