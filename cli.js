@@ -7,7 +7,7 @@ var	util = require("util"),
 	Veelo = require("./lib/veelo"),
 	Config = require("./lib/config");
 
-// setup
+// colours setup
 colours.setTheme({
 	fileName: "bold",
 	hbOutput: "grey",

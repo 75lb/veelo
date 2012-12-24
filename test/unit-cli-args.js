@@ -2,20 +2,20 @@ var assert = require("assert"),
     cli = require("../lib/cli-args");
 
 describe("cli-args", function(){
-    it("should return passed-in arg-value pairs", function(){
+    var optionDefinitions = {
+        version: {type: "boolean"},
+        "output-dir": { type: "string", alias: "o" },
+        other: {type: "string"},
+        another: {type: "number"}
+    };
+
+    it("should correctly parse args", function(){
         cli._inject([
             "node", "/usr/bin/blah",
             "file.js", "--version", "-o", "./testdir", "file2.mov"
         ]);
-        var optionDefinitions = {
-            version: {type: "boolean"},
-            "output-dir": { type: "string", alias: "o" },
-            other: {type: "string"},
-            another: {type: "number"}
-        };
         
         var args = cli.getArgs(optionDefinitions);
-        console.log(args);
         assert.deepEqual(
             args,
             {
@@ -23,8 +23,20 @@ describe("cli-args", function(){
                 args: {
                     version: true,
                     "output-dir": "./testdir"
-                }
+                },
+                invalid: []
             }, 
+            JSON.stringify(args)
+        );
+    });
+    
+    it("should reject invalid options", function(){
+        cli._inject(["node", "/blah/blah", "--ridiculous", "words", "-t", "-a"]);
+        
+        var args = cli.getArgs(optionDefinitions);
+        assert.deepEqual(
+            args,
+            { files: ["words"], args: {}, invalid: ["--ridiculous", "-t", "-a"] },
             JSON.stringify(args)
         );
     });

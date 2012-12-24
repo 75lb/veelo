@@ -52,6 +52,14 @@ describe("Config", function(){
             assert.equal(config.group("veelo").get("archiveDirectory"), "testset");
         });
 
+        it("should return group size", function(){
+            config.group("veelo")
+                .option("one", {type: "boolean"})
+                .option("two", {type: "boolean"})
+                .option("three", {type: "boolean"});
+
+            assert.equal(config.group("veelo").size, 3);
+        })
     });
     
     describe("defaults: ", function(){
