@@ -22,20 +22,17 @@ describe("Config", function(){
                 {
                     top: {
                         type: "string",
-                        default: "root"
+                        default: "root",
+                        group: ""
                     },
-                    veelo: {
-                       version: {
-                           type: "boolean"
-                       }
-                    },
-                    handbrake: {
-                       general: {
-                           update: {
-                               type: "boolean"
-                           }
-                       }
-                    }
+                   version: {
+                       type: "boolean",
+                       group: "veelo"
+                   },
+                   update: {
+                       type: "boolean",
+                       group: "handbrake.general"
+                   }
                 },
                 JSON.stringify(config.definition)
             );
@@ -51,9 +48,9 @@ describe("Config", function(){
 
         it("should set/get option within specific group", function(){
             config.group("veelo").option("archiveDirectory", {type: "string"});
-            config.group("veelo").set("archiveDirectory", "testset2");
+            config.set("archiveDirectory", "testset2");
 
-            assert.equal(config.group("veelo").get("archiveDirectory"), "testset");
+            assert.equal(config.get("archiveDirectory"), "testset2");
         });
 
         it("should return group size", function(){
@@ -66,6 +63,8 @@ describe("Config", function(){
         });
         
         it("should handle invalid group/option names");
+        
+        it("should output group as object");
     });
     
     describe("defaults: ", function(){
