@@ -2,11 +2,19 @@ var assert = require("assert"),
     cli = require("../lib/cli-args");
 
 describe("cli-args", function(){
+    // var optionDefinitions = {
+    //     version: {type: "boolean"},
+    //     "output-dir": { type: "string", alias: "o" },
+    //     other: {type: "string"},
+    //     another: {type: "number"}
+    // };
+    
     var optionDefinitions = {
-        version: {type: "boolean"},
-        "output-dir": { type: "string", alias: "o" },
+        version: { type: "boolean" },
+    	"output-dir": { type: "string" },
         other: {type: "string"},
-        another: {type: "number"}
+        another: {type: "number"},
+        o: "output-dir"
     };
 
     it("should correctly parse args", function(){

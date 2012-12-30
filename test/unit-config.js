@@ -8,7 +8,7 @@ describe("Config", function(){
         beforeEach(function(){
             config = new Config();
         });
-    
+
         it("should build config definition in groups", function(){
             config.option("top", {type: "string", default: "root" });
             config.group("veelo")
@@ -59,7 +59,7 @@ describe("Config", function(){
                 .option("two", {type: "boolean"})
                 .option("three", {type: "boolean"});
 
-            assert.equal(config.group("veelo").size, 3);
+            assert.equal(config.group("veelo").size(), 3);
         });
         
         it("should handle invalid group/option names");
@@ -80,8 +80,7 @@ describe("Config", function(){
             
             assert.equal(config.get("test"), "one");
             assert.equal(config.group("group").get("test"), "two");
-        });
-        
+        });        
     });
     
     describe("validation: ", function(){

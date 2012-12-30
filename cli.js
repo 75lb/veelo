@@ -4,8 +4,7 @@
 var	util = require("util"),
 	colours = require("colors"),
 	_ = require("underscore"),
-	Veelo = require("./lib/veelo"),
-	Config = require("./lib/config");
+	Veelo = require("./lib/veelo");
 
 // colours setup
 colours.setTheme({
