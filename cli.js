@@ -31,11 +31,7 @@ function stdoutWrite(data){
 }
 
 // instantiate Veelo and attach listeners
-var config = new Config({
-    configDefinition: Veelo.configDefinition,
-    getPassedIn: true
-});
-var veelo = new Veelo(config);
+var veelo = new Veelo();
 
 veelo.on("error", function(err){
 	log(true, err);

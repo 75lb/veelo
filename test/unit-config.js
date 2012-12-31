@@ -1,12 +1,17 @@
 var assert = require("assert"),
-    Config = require("../lib/config");
+    config = require("../lib/config");
+
+function l(msg){ 
+    var util = require("util");
+    console.log(util.inspect(msg, true, null, true));
+}
+
 
 describe("Config", function(){
     describe("definition: ", function(){
-        var config;
     
         beforeEach(function(){
-            config = new Config();
+            config.reset();
         });
 
         it("should build config definition in groups", function(){
@@ -16,7 +21,7 @@ describe("Config", function(){
             config.group("handbrake")
                     .subgroup("general")
                         .option("update", { type: "boolean" });
-                   
+
             assert.deepEqual(
                 config.definition, 
                 {
@@ -61,28 +66,15 @@ describe("Config", function(){
 
             assert.equal(config.group("veelo").size(), 3);
         });
-        
+
         it("should handle invalid group/option names");
+        it("should output group toJson, e.g. config.getGroup('external defaults') or config.getGroup('handbrake')");
+        it("should fail to set unspecified option");
+        it("should fail to get unspecified option");
+        it("should report if get/set ambiguous name");
+        it("should return true if 'has' option");
+    });
         
-        it("should output group as object");
-    });
-    
-    describe("defaults: ", function(){
-        it("should apply defaults", function(){
-            var config = new Config({
-                defaults: {
-                    test: "one", 
-                    group: {
-                        test: "two"
-                    }
-                }
-            });
-            
-            assert.equal(config.get("test"), "one");
-            assert.equal(config.group("group").get("test"), "two");
-        });        
-    });
-    
     describe("validation: ", function(){
         it("should validate string");
         it("should validate number");
