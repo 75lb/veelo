@@ -12,5 +12,5 @@ Works on __Windows__, __Linux__ and __Mac OSX__.
 
 License
 =======
-(c) 2012, Lloyd Brookes <75pound@gmail.com>
+(c) 2012-13, Lloyd Brookes <75pound@gmail.com>
 [MIT License]

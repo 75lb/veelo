@@ -17,7 +17,7 @@ describe("Config", function(){
         it("should build config definition in groups", function(){
             config.option("top", {type: "string", default: "root" });
             config.group("veelo")
-                    .option("version", {type: "boolean"});
+                    .option("version", {type: "boolean", alias: "v"});
             config.group("handbrake")
                     .subgroup("general")
                         .option("update", { type: "boolean" });
@@ -34,6 +34,7 @@ describe("Config", function(){
                        type: "boolean",
                        group: "veelo"
                    },
+                   v: "version",
                    update: {
                        type: "boolean",
                        group: "handbrake.general"
