@@ -47,7 +47,8 @@ veelo.on("report", function(report){
 });
 
 veelo.queue.on("message", function(msg){
-    if(!config.options.veelo["dry-run"]) log(true, msg);
+    // if(!config.options.veelo["dry-run"]) log(true, msg);
+    log(true, msg);
 });
 
 veelo.queue.on("handbrake-output", function(msg){

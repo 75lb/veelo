@@ -6,10 +6,12 @@ var assert = require("assert"),
     sinon = require("sinon"),
     fs = require("fs-extra"),
     Job = require("../lib/job"),
-    Config = require("../lib/config"),
+    config = require("../lib/config"),
     HandbrakeCLI = require("../lib/handbrakeCli"),
     Veelo = require("../lib/veelo"),
     shared = require("./shared");
+
+// Veelo.initConfig();
 
 describe("Job", function(){
     var config,
@@ -19,11 +21,9 @@ describe("Job", function(){
     before(function(done){
         shared.setupSingleFileFixture(p.VIDEO1, done);
     });
-    beforeEach(function(){
-        config = new Config({
-            configDefinition: Veelo.configDefinition
-        });
-    });
+    // beforeEach(function(){
+    //     config.reset();
+    // });
     
     it("should instantiate with sensible paths if no supplied config", function(){
         var job = new Job({ inputPath: "test.mov" });

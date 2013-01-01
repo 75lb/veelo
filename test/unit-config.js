@@ -8,7 +8,7 @@ function l(msg){
 
 
 describe("Config", function(){
-    describe("definition: ", function(){
+    describe("basics: ", function(){
     
         beforeEach(function(){
             config.reset();
@@ -68,12 +68,78 @@ describe("Config", function(){
             assert.equal(config.group("veelo").size(), 3);
         });
 
-        it("should handle invalid group/option names");
-        it("should output group toJson, e.g. config.getGroup('external defaults') or config.getGroup('handbrake')");
-        it("should fail to set unspecified option");
-        it("should fail to get unspecified option");
+        it("should handle invalid option get", function(){
+            assert.throws(function(){
+                config.get("asdf");
+            }, Error);
+        });
+        
+        it("should handle invalid option set", function(){
+            assert.throws(function(){
+                config.set("asdf", 0);
+            }, Error);
+        });
+        
+        it("should output group toJson", function(){
+            config.group("testgroup")
+                .option("one", {})
+                .option("two", {})
+                .option("three", {})
+                .set("one", 1)
+                .set("two", 2)
+                .set("three", 3);
+            
+            assert.deepEqual(
+                config.group("testgroup").toJSON(),
+                {
+                    one: 1,
+                    two: 2,
+                    three: 3
+                }
+            );
+        });
+
+        it("should output group and subgroup toJson", function(){
+            config.group("testgroup")
+                .option("one", {})
+                .subgroup("sub")
+                    .option("two", {})
+                    .option("three", {})
+                .set("one", 1)
+                .set("two", 2)
+                .set("three", 3);
+            
+            assert.deepEqual(
+                config.group("testgroup").toJSON(),
+                {
+                    one: 1,
+                    two: 2,
+                    three: 3
+                }
+            );
+            assert.deepEqual(
+                config.group("testgroup").subgroup("sub").toJSON(),
+                {
+                    two: 2,
+                    three: 3
+                }
+            );
+        });
+        
         it("should report if get/set ambiguous name");
-        it("should return true if 'has' option");
+        it("has() should return true if option has value", function(){
+            config.option("one", {});
+            config.set("one", 1);
+            
+            assert.strictEqual(config.has("one"), true);
+            
+        });
+
+        it("has() should return false if option has no value", function(){
+            config.option("one", {});
+            
+            assert.strictEqual(config.has("one"), false);
+        });
     });
         
     describe("validation: ", function(){
