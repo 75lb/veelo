@@ -11,36 +11,6 @@ var assert = require("assert"),
     HandbrakeCLI = require("../lib/handbrakeCli")
     Veelo = require("../lib/veelo");
 
-var VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
-    VIDEO1_MKV = "clip1.mkv", VIDEO1_MP4 = "clip1.mp4",
-    VIDEO1_SRT = "clip1.srt",
-    VIDEO2 = "music.m4v", VIDEO2_M4V = "music_.m4v",
-    VIDEO2_MKV = "music.mkv", VIDEO2_MP4 = "music.mp4",
-    MEDIUM = "medium.m4v", MEDIUM_M4V = "medium_.m4v",
-    PRESET = "iPod", 
-    ASSETS_DIR = path.join(__dirname, "assets"),
-    FIXTURE_DIR = path.resolve(__dirname, "fixture"),
-    SUB_DIR = path.join(FIXTURE_DIR, "subdir"),
-    SUB_DIR2 = path.join(SUB_DIR, "subdir2"),
-    ORIGINALS_DIR = "veelo-originals";
-
-function log(msg){
-    console.log(util.inspect(msg, true, null, true));
-}
-
-function clearFixture(){
-    fs.removeSync(FIXTURE_DIR);
-    fs.mkdirsSync(SUB_DIR2);
-}
-
-function setupSingleFileFixture(file, done){
-    clearFixture();
-    fs.copy(path.join(ASSETS_DIR, file), path.join(FIXTURE_DIR, file), function(err){
-        if (err) throw err;
-        done();
-    });
-}
-
 describe("HandbrakeCLI", function(){
     var handbrakeCLI, mockCp, handle;
     
