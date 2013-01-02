@@ -1,17 +1,13 @@
 {
     "defaults": {
-        "handbrake": {
-            "preset": "Normal",
-            "optimize": true,
-            "srt-codeset": "UTF-8", 
-            "srt-lang": "eng"
-        },
-        "veelo": {
-            "ext": "m4v",
-            "preserve-dates": true,
-            "ignoreList": [".DS_Store"],
-            "archiveDirectory": "veelo-originals"
-        }
+        "preset": "Normal",
+        "optimize": true,
+        "srt-codeset": "UTF-8", 
+        "srt-lang": "eng",
+        "ext": "m4v",
+        "preserve-dates": true,
+        "ignoreList": [".DS_Store"],
+        "archiveDirectory": "veelo-originals"
     },
     "presets": {
         "android-compact": {

@@ -42,6 +42,10 @@ veelo.on("message", function(msg){
     log(false, msg);
 });
 
+veelo.on("warning", function(msg){
+    log(true, msg.warning);
+});
+
 veelo.on("report", function(report){
     log(false, report);
 });
