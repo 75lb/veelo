@@ -9,13 +9,13 @@ function l(msg){
 
 describe("Config", function(){
     describe("basics: ", function(){
-    
+
         beforeEach(function(){
             config.reset();
         });
 
         it("should build config definition in groups", function(){
-            config.option("top", {type: "string", default: "root" });
+            config.option("top", {type: "string" });
             config.group("veelo")
                     .option("version", {type: "boolean", alias: "v"});
             config.group("handbrake")
@@ -23,11 +23,10 @@ describe("Config", function(){
                         .option("update", { type: "boolean" });
 
             assert.deepEqual(
-                config.definition, 
+                config._definitions,
                 {
                     top: {
                         type: "string",
-                        default: "root",
                         group: ""
                     },
                    version: {
@@ -40,11 +39,10 @@ describe("Config", function(){
                        group: "handbrake.general"
                    }
                 },
-                JSON.stringify(config.definition)
+                JSON.stringify(config._definitions)
             );
-            
         });
-
+        
         it("should set/get option", function(){
             config.option("archiveDirectory", {type: "string"});
             config.set("archiveDirectory", "testset");
@@ -59,6 +57,12 @@ describe("Config", function(){
             assert.equal(config.get("archiveDirectory"), "testset2");
         });
 
+        it("should set default option value", function(){
+            config.option("one", {type: "number", default: 1 });
+            
+            assert.strictEqual(config.get("one"), 1);
+        });
+
         it("should return group size", function(){
             config.group("veelo")
                 .option("one", {type: "boolean"})
@@ -68,13 +72,17 @@ describe("Config", function(){
             assert.equal(config.group("veelo").size(), 3);
         });
 
-        it("should handle invalid option get", function(){
+        // it("should return undefined on invalid get", function(){
+        //     assert.strictEqual(config.get("ldfjd"), undefined);
+        // });
+
+        it("should throw on invalid option get", function(){
             assert.throws(function(){
-                config.get("asdf");
+                config.get("asdf", 0);
             }, Error);
         });
         
-        it("should handle invalid option set", function(){
+        it("should throw on invalid option set", function(){
             assert.throws(function(){
                 config.set("asdf", 0);
             }, Error);
@@ -127,6 +135,7 @@ describe("Config", function(){
         });
         
         it("should report if get/set ambiguous name");
+        
         it("has() should return true if option has value", function(){
             config.option("one", {});
             config.set("one", 1);
