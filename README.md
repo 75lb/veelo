@@ -6,7 +6,7 @@ Requiring multiple media players and plugins to play video is annoying. Video re
 
 Veelo, a command-line Video Library Optimisation tool built on top of the outstanding encoder [Handbrake](http://handbrake.fr), was built for this task.
 
-Works on __Windows__, __Linux__ and __Mac OSX__.
+Works on __Windows__, __Linux__ and __Mac OSX__. Can be used from the command line or as a library. 
 
 <h3><a href="http://75lb.github.com/veelo/">Full Documentation</a></h3>
 
