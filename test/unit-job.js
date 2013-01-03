@@ -228,5 +228,6 @@ describe("Job", function(){
         //     assert.ok(eventFired);
         // });
     
+        it("should clean up on 'terminated'");
     });
 });
