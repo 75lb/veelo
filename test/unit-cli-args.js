@@ -12,15 +12,17 @@ describe("cli-args", function(){
     var optionDefinitions = {
         version: { type: "boolean" },
     	"output-dir": { type: "string" },
+        o: "output-dir",
         other: {type: "string"},
         another: {type: "number"},
-        o: "output-dir"
+        verbose: {type: "boolean"},
+        "v": "verbose"
     };
 
     it("should correctly parse args", function(){
         cli._inject([
             "node", "/usr/bin/blah",
-            "file.js", "--version", "-o", "./testdir", "file2.mov"
+            "file.js", "--version", "-o", "./testdir", "file2.mov", "-v"
         ]);
         
         var args = cli.getArgs(optionDefinitions);
@@ -30,7 +32,8 @@ describe("cli-args", function(){
                 files: ["file.js", "file2.mov"],
                 args: {
                     version: true,
-                    "output-dir": "./testdir"
+                    "output-dir": "./testdir",
+                    verbose: true
                 },
                 invalid: []
             }, 

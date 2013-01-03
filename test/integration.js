@@ -6,7 +6,8 @@ var assert = require("assert"),
     EventEmitter = require("events").EventEmitter,
 	exec = require("child_process").exec,
 	Job = require("../lib/job"),
-	HandbrakeCLI = require("../lib/handbrakeCli");
+	HandbrakeCLI = require("../lib/handbrakeCli"),
+    shared = require("./shared");
 
 var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
 	VIDEO1_MKV = "clip1.mkv", VIDEO1_MP4 = "clip1.mp4",
@@ -89,10 +90,6 @@ function setupDeepFileFixture(done){
 			});
 		});
 	});
-}
-
-function l(msg){
-	console.log(msg);
 }
 
 describe("operations which don't encode files", function(){
@@ -310,7 +307,7 @@ describe("invalid input", function(){
 
 	it("should obey ignore list", function(done){
 		run('"%s"', ignoredFile, function(output){
-			assert.ok(output == "", "output length should be 0, is: " + output.length);
+			assert.ok(/nothing to process/.test(output), JSON.stringify(output));
 			done();
 		});
 	});
