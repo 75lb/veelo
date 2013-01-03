@@ -72,10 +72,6 @@ describe("Config", function(){
             assert.equal(config.group("veelo").size(), 3);
         });
 
-        // it("should return undefined on invalid get", function(){
-        //     assert.strictEqual(config.get("ldfjd"), undefined);
-        // });
-
         it("should throw on invalid option get", function(){
             assert.throws(function(){
                 config.get("asdf", 0);
@@ -134,8 +130,6 @@ describe("Config", function(){
             );
         });
         
-        it("should report if get/set ambiguous name");
-        
         it("has() should return true if option has value", function(){
             config.option("one", {});
             config.set("one", 1);
@@ -149,6 +143,34 @@ describe("Config", function(){
             
             assert.strictEqual(config.has("one"), false);
         });
+        
+        it("should unset an option, and its alias", function(){
+            config.option("one", {type: "number", default: 1, alias: "K" });
+            assert.strictEqual(config.get("one"), 1);
+            assert.strictEqual(config.get("K"), 1);
+            config.unset("one");
+            assert.strictEqual(config.get("one"), undefined);            
+            assert.strictEqual(config.get("K"), undefined);
+        });
+        
+        it("should set options in bulk", function(){
+            config.option("one", {})
+                .option("two", {})
+                .option("three", {});
+            
+            config.set({
+                one: 1,
+                two: 2,
+                three: 3
+            });
+            
+            assert.strictEqual(config.get("one"), 1);
+            assert.strictEqual(config.get("two"), 2);
+            assert.strictEqual(config.get("three"), 3);
+        });
+
+        it("should report if get/set ambiguous name");
+        it("should set aliassed option too when setting alias");
     });
         
     describe("validation: ", function(){
