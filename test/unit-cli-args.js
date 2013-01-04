@@ -51,4 +51,22 @@ describe("cli-args", function(){
             JSON.stringify(args)
         );
     });
+    
+    it("should not accept the next option as a value", function(){
+        cli._inject(["node", "blah.js", "the-file.mov", "--output-dir", "--version", "--verbose"]);
+        var args = cli.getArgs(optionDefinitions);
+        
+        assert.deepEqual(
+            args,
+            {
+                files: ["the-file.mov"], 
+                args: {
+                    "output-dir": "",
+                    version: true,
+                    verbose: true
+                },
+                invalid: []
+            }
+        );
+    });
 });

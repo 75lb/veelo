@@ -44,10 +44,17 @@ describe("Config", function(){
         });
         
         it("should set/get option", function(){
-            config.option("archiveDirectory", {type: "string"});
+            config.option("archiveDirectory", { type: "string", alias: "d" });
             config.set("archiveDirectory", "testset");
 
             assert.equal(config.get("archiveDirectory"), "testset");
+        });
+
+        it("should set/get option alias", function(){
+            config.option("archiveDirectory", { type: "string", alias: "d" });
+            config.set("d", "testset");
+
+            assert.equal(config.get("d"), "testset");
         });
 
         it("should set/get option within specific group", function(){
@@ -154,14 +161,18 @@ describe("Config", function(){
         });
         
         it("should set options in bulk", function(){
-            config.option("one", {})
-                .option("two", {})
-                .option("three", {});
+            config.option("one", { type: "string", alias: "1" })
+                .option("two", { type: "string", alias: "t" })
+                .option("three", { type: "string", alias: "3" });
             
+            assert.strictEqual(config.get("one"), undefined);
+            assert.strictEqual(config.get("t"), undefined);
+            assert.strictEqual(config.get("3"), undefined);
+
             config.set({
                 one: 1,
-                two: 2,
-                three: 3
+                "t": 2,
+                "3": 3
             });
             
             assert.strictEqual(config.get("one"), 1);
