@@ -8,4 +8,4 @@ function log(msg){
 v.onMessage(log);
 v.onHandbrakeOutput(log);
 
-v.add("/Users/Lloyd/Downloads/idiot.mp4");
+// v.add("/Users/Lloyd/Documents/Kunai/veelo/clip1.mov");
