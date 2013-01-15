@@ -4,7 +4,7 @@
 var util = require("util"),
     colours = require("colors"),
     _ = require("underscore"),
-    Veelo = require("./lib/veelo");
+    veelo = require("./lib/veelo");
 
 // colours setup
 colours.setTheme({
@@ -30,9 +30,7 @@ function stdoutWrite(data){
     process.stdout.write(data.hbOutput);
 }
 
-// instantiate Veelo and attach listeners
-var veelo = new Veelo();
-
+// attach listeners
 veelo.on("error", function(err){
     log(true, err);
     process.exit(1);    
