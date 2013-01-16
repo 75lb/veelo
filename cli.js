@@ -91,5 +91,14 @@ veelo.queue.on("job-fail", function(data){
    if (data.output) log(false, data.output);
 });
 
+veelo.config.parseCliArgs({
+    onInvalidArgs: function(invalid){
+        log("Invalid options: " + invalid.join(", "));
+    },
+    onDone: function(args){
+        veelo.add(args.files);
+    }
+});
+
 // start work
 veelo.start();
