@@ -4,7 +4,8 @@
 var util = require("util"),
     colours = require("colors"),
     _ = require("underscore"),
-    veelo = require("./lib/veelo");
+    veelo = require("./lib/veelo"),
+    ProgressBar = require("progress");
 
 // colours setup
 colours.setTheme({
@@ -15,6 +16,9 @@ colours.setTheme({
     strong: "bold",
     warning: "red"
 });
+
+var bar,
+    previousPercentComplete = 0;
 
 // standard console writing method
 function log(){
@@ -32,7 +36,8 @@ function stdoutWrite(data){
 
 // attach listeners
 veelo.on("progress", function(progress){
-    log(false, progress);    
+    bar.tick((progress.percentComplete * 0.3) - ((previousPercentComplete || 0) * 0.3));
+    previousPercentComplete = progress.percentComplete;
 });
 
 veelo.on("error", function(err){
@@ -58,10 +63,12 @@ veelo.queue.on("message", function(msg){
 });
 
 veelo.queue.on("handbrake-output", function(msg){
-    stdoutWrite(msg);
+    // stdoutWrite(msg);
 });
 
 veelo.queue.on("begin", function(){
+    bar = new ProgressBar("[:bar] :percent :etas", { total:30 });
+    
     log(true, "queue length: %d", this.stats.valid);
     log(true, "file types: %s", _.map(this.stats.ext, function(value, key){
         return util.format("%s(%d)", key, value);
@@ -69,6 +76,8 @@ veelo.queue.on("begin", function(){
 });
 
 veelo.queue.on("complete", function(){
+    bar.tick(10000);
+    log(false);
     var stats = this.stats;
 
     log(true, "%d jobs processed in %s (%d successful, %d failed).", stats.valid, stats.elapsed, stats.successful, stats.failed);
@@ -103,6 +112,12 @@ veelo.config.parseCliArgs({
         veelo.add(args.files);
     }
 });
+
+process.on("SIGINT", function(){
+    log(false, "CACK");
+    bar.tick(1000);
+});
+
 
 // start work
 veelo.start();
