@@ -31,6 +31,10 @@ function stdoutWrite(data){
 }
 
 // attach listeners
+veelo.on("progress", function(progress){
+    log(false, progress);    
+});
+
 veelo.on("error", function(err){
     log(true, err);
     process.exit(1);    
