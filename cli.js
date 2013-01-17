@@ -5,7 +5,7 @@ var util = require("util"),
     colours = require("colors"),
     _ = require("underscore"),
     veelo = require("./lib/veelo"),
-    ProgressBar = require("progress");
+    cursor = require("ansi")(process.stdout);
 
 // colours setup
 colours.setTheme({
@@ -36,8 +36,11 @@ function stdoutWrite(data){
 
 // attach listeners
 veelo.on("progress", function(progress){
-    bar.tick((progress.percentComplete * 0.3) - ((previousPercentComplete || 0) * 0.3));
-    previousPercentComplete = progress.percentComplete;
+    // bar.tick((progress.percentComplete * 0.3) - ((previousPercentComplete || 0) * 0.3));
+    // previousPercentComplete = progress.percentComplete;
+    cursor.horizontalAbsolute(0);
+    cursor.eraseLine();
+    cursor.write(progress.percentComplete);
 });
 
 veelo.on("error", function(err){
@@ -67,8 +70,6 @@ veelo.queue.on("handbrake-output", function(msg){
 });
 
 veelo.queue.on("begin", function(){
-    bar = new ProgressBar("[:bar] :percent :etas", { total:30 });
-    
     log(true, "queue length: %d", this.stats.valid);
     log(true, "file types: %s", _.map(this.stats.ext, function(value, key){
         return util.format("%s(%d)", key, value);
@@ -76,7 +77,6 @@ veelo.queue.on("begin", function(){
 });
 
 veelo.queue.on("complete", function(){
-    bar.tick(10000);
     log(false);
     var stats = this.stats;
 
