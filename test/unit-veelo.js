@@ -39,11 +39,11 @@ it("should correctly add and register test file as valid", function(){
     assert.strictEqual(veelo.queue.stats.valid, 1, JSON.stringify(veelo));
 });
 
-it("should start() and raise 'starting' event", function(){
+it("should fire 'queue-starting' event", function(){
     var startingEventFired = false;
 
     veelo.add(_inputFile);
-    veelo.on("starting", function(){
+    veelo.on("queue-starting", function(){
         startingEventFired = true;
     });
     veelo.start();
@@ -51,11 +51,12 @@ it("should start() and raise 'starting' event", function(){
     assert.strictEqual(startingEventFired, true);
 });
 
-it("should raise 'progress' event, return correct progress data", function(){
+it("should fire 'job-starting' event");
+it("should fire 'job-progress' event, return correct progress data", function(){
     var progressData;
 
     veelo.add(_inputFile);
-    veelo.on("progress", function(progress){
+    veelo.on("job-progress", function(progress){
         progressData = progress;
     });
     veelo.start();
@@ -67,9 +68,10 @@ it("should raise 'progress' event, return correct progress data", function(){
        eta: "00h13m19s"
     });
 });
+it("should fire 'job-complete' event");
 
-it("start should raise 'error' event");
-it("start should raise 'warning' event");
-it("start should raise 'info' event");
-it("start should raise 'complete' event");
-it("start should raise 'progress' event");
+it("start should fire 'error' event");
+it("start should fire 'warning' event");
+it("start should fire 'info' event");
+
+it("start should fire 'queue-complete' event");

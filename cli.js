@@ -36,8 +36,6 @@ function stdoutWrite(data){
 
 // attach listeners
 veelo.on("progress", function(progress){
-    // bar.tick((progress.percentComplete * 0.3) - ((previousPercentComplete || 0) * 0.3));
-    // previousPercentComplete = progress.percentComplete;
     cursor.horizontalAbsolute(0);
     cursor.eraseLine();
     cursor.write(progress.percentComplete);
@@ -77,6 +75,7 @@ veelo.queue.on("begin", function(){
 });
 
 veelo.queue.on("complete", function(){
+    cursor.reset();
     log(false);
     var stats = this.stats;
 
@@ -112,12 +111,6 @@ veelo.config.parseCliArgs({
         veelo.add(args.files);
     }
 });
-
-process.on("SIGINT", function(){
-    log(false, "CACK");
-    bar.tick(1000);
-});
-
 
 // start work
 veelo.start();
