@@ -14,7 +14,7 @@ var _p = shared.path,
     _inputFile = path.join(_p.FIXTURE_DIR, _p.VIDEO1);
 
 describe("Job", function(){
-    describe("basics: ", function(){
+    describe("instantiation: ", function(){
         before(function(done){
             shared.setupSingleFileFixture(_p.VIDEO1, done);
         });
