@@ -140,4 +140,6 @@ describe("HandbrakeCLI", function(){
         
         assert.ok(eventFired == true);
     });
+    
+    it("should just have a 'run' method, not 'spawn' and 'exec'");
 });

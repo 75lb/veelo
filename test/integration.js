@@ -182,8 +182,9 @@ describe("basic operation on a single file", function(){
 				done();
 			});			
 		});
-	})
+	});
 	
+    it("should correctly clean up on CTRL+C");
 });
 
 describe("basic operations on multiple files", function(){
@@ -242,6 +243,8 @@ describe("output-dir operations", function(){
 			done();
 		});
 	});
+    
+    it("should output to a different, external drive");
 });
 
 describe("preserve-dates", function(){
