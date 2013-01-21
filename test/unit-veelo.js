@@ -24,10 +24,6 @@ _mockQueue.prototype.add = function(){
     this.stats.valid += 1;
 };
 
-/**
- * Tests Section
- */
-
 veelo._inject(_mockQueue);
 
 describe("Veelo", function(){
@@ -45,41 +41,43 @@ describe("Veelo", function(){
         assert.strictEqual(veelo.queue.stats.valid, 1, JSON.stringify(veelo));
     });
 
-    it("should fire 'queue-starting' event", function(){
-        var startingEventFired = false;
+    describe("events: ", function(){
+        it("should fire 'queue-starting' event", function(){
+            var startingEventFired = false;
 
-        veelo.add(_inputFile);
-        veelo.on("queue-starting", function(){
-            startingEventFired = true;
-        });
-        veelo.start();
+            veelo.add(_inputFile);
+            veelo.on("queue-starting", function(){
+                startingEventFired = true;
+            });
+            veelo.start();
     
-        assert.strictEqual(startingEventFired, true);
-    });
-
-    it("should fire 'job-starting' event");
-    it("should fire 'job-progress' event, return correct progress data", function(){
-        var progressData;
-
-        veelo.add(_inputFile);
-        veelo.on("job-progress", function(progress){
-            progressData = progress;
+            assert.strictEqual(startingEventFired, true);
         });
-        veelo.start();
+
+        it("should fire 'job-starting' event");
+        it("should fire 'job-progress' event, return correct progress data", function(){
+            var progressData;
+
+            veelo.add(_inputFile);
+            veelo.on("job-progress", function(progress){
+                progressData = progress;
+            });
+            veelo.start();
     
-        assert.deepEqual(progressData, {
-           percentComplete: 0.59,
-           fps: 127.14,
-           avgFps: 134.42,
-           eta: "00h13m19s"
+            assert.deepEqual(progressData, {
+               percentComplete: 0.59,
+               fps: 127.14,
+               avgFps: 134.42,
+               eta: "00h13m19s"
+            });
         });
+        it("should fire 'job-complete' event");
+
+        it("start should fire 'error' event");
+        it("start should fire 'warning' event");
+        it("start should fire 'info' event");
+
+        it("start should fire 'queue-complete' event");    
     });
-    it("should fire 'job-complete' event");
-
-    it("start should fire 'error' event");
-    it("start should fire 'warning' event");
-    it("start should fire 'info' event");
-
-    it("start should fire 'queue-complete' event");
 });
 
