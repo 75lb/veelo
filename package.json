@@ -10,7 +10,7 @@
   "bin": "./cli.js",
   "preferGlobal": true,
   "scripts": {
-    "test": "mocha --timeout 10000 --reporter dot test/unit-*.js test/integration.js",
+    "test": "mocha --timeout 10000 --reporter spec test/unit-*.js test/integration.js",
     "unit-test": "mocha --timeout 10000 --reporter spec test/unit.js",
     "integration-test": "mocha --timeout 10000 --reporter spec test/integration.js",
     "ubuntu-setup": "scripts/ubuntu-setup.sh",

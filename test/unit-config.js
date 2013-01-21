@@ -65,7 +65,7 @@ describe("Config", function(){
         });
 
         it("should set default option value", function(){
-            config.option("one", {type: "number", default: 1 });
+            config.option("one", {type: "number", defaultVal: 1 });
             
             assert.strictEqual(config.get("one"), 1);
         });
@@ -152,7 +152,7 @@ describe("Config", function(){
         });
         
         it("should unset an option, and its alias", function(){
-            config.option("one", {type: "number", default: 1, alias: "K" });
+            config.option("one", {type: "number", defaultVal: 1, alias: "K" });
             assert.strictEqual(config.get("one"), 1);
             assert.strictEqual(config.get("K"), 1);
             config.unset("one");

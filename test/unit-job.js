@@ -21,9 +21,9 @@ describe("Job", function(){
         beforeEach(function(){
             config.reset();
             config.group("veelo")
-                .option("ext", { type: "string", valid: "\.mp4|\.m4v|\.mkv", default: "m4v" })
+                .option("ext", { type: "string", valid: "\.mp4|\.m4v|\.mkv", defaultVal: "m4v" })
                 .option("archive", { type: "boolean" })
-                .option("archiveDirectory", { type: "string", default: "veelo-originals" })
+                .option("archiveDirectory", { type: "string", defaultVal: "veelo-originals" })
                 .option("verbose", { type: "boolean" })
                 .option("version", { type: "boolean" })
                 .option("config", { type: "boolean" })
@@ -34,7 +34,7 @@ describe("Job", function(){
                 .option("output-dir", { type: "string" })
                 .option("include", { type: "regex" })
                 .option("exclude", { type: "regex" })
-                .option("ignoreList", { type: "array", default: [] });
+                .option("ignoreList", { type: "array", defaultVal: [] });
         
         });
     
@@ -102,7 +102,9 @@ describe("Job", function(){
             assert.strictEqual(job.path.output, path.join("..", "output", "test.m4v"), JSON.stringify(job));
             assert.strictEqual(job.path.working, path.join(os.tmpDir(), ".processing.test.m4v"), JSON.stringify(job));
         });
+    });
 
+    describe("instatiation events:", function(){
         it("should fire 'invalid' event if not a file", function(){
             var job = new Job({ inputPath: path.join(__dirname, "mock/") }),
                 message;
@@ -151,9 +153,9 @@ describe("Job", function(){
         beforeEach(function(){
             config.reset();
             config.group("veelo")
-                .option("ext", { type: "string", valid: "\.mp4|\.m4v|\.mkv", default: "m4v" })
+                .option("ext", { type: "string", valid: "\.mp4|\.m4v|\.mkv", value: "m4v" })
                 .option("archive", { type: "boolean" })
-                .option("archiveDirectory", { type: "string", default: "veelo-originals" })
+                .option("archiveDirectory", { type: "string", defaultVal: "veelo-originals" })
                 .option("verbose", { type: "boolean" })
                 .option("version", { type: "boolean" })
                 .option("config", { type: "boolean" })
@@ -164,7 +166,7 @@ describe("Job", function(){
                 .option("output-dir", { type: "string" })
                 .option("include", { type: "regex" })
                 .option("exclude", { type: "regex" })
-                .option("ignoreList", { type: "array", default: [] });
+                .option("ignoreList", { type: "array", defaultVal: [] });
             
             _job = new Job({ inputPath: path.join(_p.FIXTURE_DIR, _p.VIDEO1) });
             _job._inject({ HandbrakeCLI: MockHandbrakeCLI });

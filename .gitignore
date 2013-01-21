@@ -3,4 +3,5 @@ bin
 test/fixture
 npm-debug.log
 coverage
-tmp/
+tmp
+out
