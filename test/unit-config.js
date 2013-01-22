@@ -6,7 +6,6 @@ function l(msg){
     console.log(util.inspect(msg, true, null, true));
 }
 
-
 describe("Config", function(){
     describe("basics: ", function(){
 
@@ -182,6 +181,7 @@ describe("Config", function(){
 
         it("should report if get/set ambiguous name");
         it("should set aliassed option too when setting alias");
+        it("should list defined options");
     });
         
     describe("validation: ", function(){

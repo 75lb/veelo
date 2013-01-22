@@ -34,6 +34,15 @@ function stdoutWrite(data){
     process.stdout.write(data.hbOutput);
 }
 
+veelo.config.parseFromCli({
+    onInvalidArgs: function(invalid){
+        log("Invalid options: " + invalid.join(", "));
+    },
+    onDone: function(args){
+        veelo.add(args.files);
+    }
+});
+
 // attach listeners
 veelo.on("progress", function(progress){
     cursor.horizontalAbsolute(0);
@@ -58,23 +67,23 @@ veelo.on("report", function(report){
     log(false, report);
 });
 
-veelo.queue.on("message", function(msg){
+veelo.on("message", function(msg){
     // if(!config.options.veelo["dry-run"]) log(true, msg);
     log(true, msg);
 });
 
-veelo.queue.on("handbrake-output", function(msg){
+veelo.on("handbrake-output", function(msg){
     // stdoutWrite(msg);
 });
 
-veelo.queue.on("begin", function(){
+veelo.on("begin", function(){
     log(true, "queue length: %d", this.stats.valid);
     log(true, "file types: %s", _.map(this.stats.ext, function(value, key){
         return util.format("%s(%d)", key, value);
     }).join(" "));
 });
 
-veelo.queue.on("complete", function(){
+veelo.on("complete", function(){
     cursor.reset();
     log(false);
     var stats = this.stats;
@@ -88,29 +97,21 @@ veelo.queue.on("complete", function(){
     }
 });
 
-veelo.queue.on("processing", function(file){
+veelo.on("processing", function(file){
     log(true, "processing: %s", file.fileName);
 });
 
-veelo.queue.on("error", function(err){
+veelo.on("error", function(err){
     log(true, "Error: ".error + err);
     log(false, "Please check your regular expression syntax and try again.".strong);
     process.exit(0);
 });
 
-veelo.queue.on("job-fail", function(data){
+veelo.on("job-fail", function(data){
    log(true, "%s [%s]", data.msg, data.inputPath.fileName);
    if (data.output) log(false, data.output);
 });
 
-veelo.config.parseCliArgs({
-    onInvalidArgs: function(invalid){
-        log("Invalid options: " + invalid.join(", "));
-    },
-    onDone: function(args){
-        veelo.add(args.files);
-    }
-});
 
 // start work
 veelo.start();

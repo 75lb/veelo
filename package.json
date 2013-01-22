@@ -33,7 +33,6 @@
         "fs-extra": "~0.3.2",
         "request": "~2.12.0",
         "unzip": "~0.1.0",
-        "progress": "~0.1.0",
         "ansi": "~0.1.2"
     },
     "devDependencies": {
