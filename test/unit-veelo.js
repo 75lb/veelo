@@ -35,49 +35,92 @@ describe("Veelo", function(){
         veelo.clear();
     })
     
-    it("should correctly add and register test file as valid", function(){
-        veelo.add(_inputFile);
-        
-        assert.strictEqual(veelo.queue.stats.valid, 1, JSON.stringify(veelo));
+    describe("properties: ", function(){
+        it("should expose a Config instance", function(){
+            assert.strictEqual(veelo.config, require("../lib/config"));
+        });
     });
-
-    describe("events: ", function(){
-        it("should fire 'queue-starting' event", function(){
-            var startingEventFired = false;
-
-            veelo.add(_inputFile);
-            veelo.on("queue-starting", function(){
-                startingEventFired = true;
-            });
-            veelo.start();
     
-            assert.strictEqual(startingEventFired, true);
-        });
-
-        it("should fire 'job-starting' event");
-        it("should fire 'job-progress' event, return correct progress data", function(){
-            var progressData;
-
+    describe("methods: ", function(){
+        it("should correctly add() and register valid file", function(){
             veelo.add(_inputFile);
-            veelo.on("job-progress", function(progress){
-                progressData = progress;
-            });
-            veelo.start();
-    
-            assert.deepEqual(progressData, {
-               percentComplete: 0.59,
-               fps: 127.14,
-               avgFps: 134.42,
-               eta: "00h13m19s"
-            });
+        
+            assert.strictEqual(veelo.stats.valid, 1, JSON.stringify(veelo));
+            assert.strictEqual(veelo.jobs.valid.length, 1, JSON.stringify(veelo));
         });
-        it("should fire 'job-complete' event");
+        
+        it("should correctly add() and register invalid file", function(){
+            veelo.add("kjhkjlh");
+        
+            assert.strictEqual(veelo.stats.invalid, 1, JSON.stringify(veelo));
+            assert.strictEqual(veelo.jobs.invalid.length, 1, JSON.stringify(veelo));
+        });
+        
+        it("should complained if file already added");
+
+        it("should clear()", function(){
+            veelo.add(_inputFile);        
+            assert.strictEqual(veelo.stats.valid, 1, JSON.stringify(veelo.stats));
+            assert.strictEqual(veelo.jobs.valid.length, 1, JSON.stringify(veelo.jobs));
+            veelo.add("kjhkjlh");
+            assert.strictEqual(veelo.stats.invalid, 1, JSON.stringify(veelo.stats));
+            assert.strictEqual(veelo.jobs.invalid.length, 1, JSON.stringify(veelo.jobs));
+            
+            veelo.clear();
+            assert.strictEqual(veelo.stats.invalid, 0, JSON.stringify(veelo.stats));
+            assert.strictEqual(veelo.jobs.invalid.length, 0, JSON.stringify(veelo.jobs));
+            assert.strictEqual(veelo.stats.valid, 0, JSON.stringify(veelo.stats));
+            assert.strictEqual(veelo.jobs.valid.length, 0, JSON.stringify(veelo.jobs));
+        });
+        
+        it("should start(), executing a command based on options specified");
+    })
+
+    describe("events:", function(){
+        describe("with valid input file supplied", function(){
+            it("should fire 'starting' event with queue stats", function(){
+                var startingEventFired = false,
+                    startingStats;
+
+                veelo.add(_inputFile);
+                veelo.on("starting", function(stats){
+                    startingEventFired = true;
+                    startingStats = stats;
+                });
+                veelo.start();
+    
+                assert.strictEqual(startingEventFired, true);
+                assert.strictEqual(startingStats.jobs.valid, 1);
+                assert.deepEqual(startingStats.jobs.fileExtensions, {
+                    ".mov": 1
+                });
+            });
+
+            it("should fire 'job-starting' event");
+            it("should fire 'progress' event, return correct progress data", function(){
+                var progressData;
+
+                veelo.add(_inputFile);
+                veelo.on("progress", function(progress){
+                    progressData = progress;
+                });
+                veelo.start();
+    
+                assert.deepEqual(progressData, {
+                   percentComplete: 0.59,
+                   fps: 127.14,
+                   avgFps: 134.42,
+                   eta: "00h13m19s"
+                });
+            });
+            it("should fire 'job-complete' event");
+            it("should fire 'complete' event");
+        });
 
         it("start should fire 'error' event");
         it("start should fire 'warning' event");
         it("start should fire 'info' event");
 
-        it("start should fire 'queue-complete' event");    
     });
 });
 
