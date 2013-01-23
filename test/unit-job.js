@@ -35,7 +35,6 @@ describe("Job", function(){
                 .option("include", { type: "regex" })
                 .option("exclude", { type: "regex" })
                 .option("ignoreList", { type: "array", defaultVal: [] });
-        
         });
     
         it("should instantiate with sensible paths if no supplied config", function(){
