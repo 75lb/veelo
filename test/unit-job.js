@@ -192,14 +192,14 @@ describe("Job", function(){
 
         it("should fire message on embedding subs");
         
-        it("should fire 'handbrake-output' on handbrakeCli output", function(){
+        it("should fire 'output' on handbrakeCli output", function(){
             var eventFired = false;
 
-            _job.on("handbrake-output", function(){
+            _job.on("output", function(){
                 eventFired = true;
             })
             _job.process();
-            _mockHandbrakeCLI.emit("handbrake-output");
+            _mockHandbrakeCLI.emit("output");
 
             assert.ok(eventFired);
         });

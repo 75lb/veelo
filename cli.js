@@ -72,7 +72,7 @@ veelo.on("message", function(msg){
     log(true, msg);
 });
 
-veelo.on("handbrake-output", function(msg){
+veelo.on("output", function(msg){
     // stdoutWrite(msg);
 });
 

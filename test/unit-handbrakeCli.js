@@ -8,11 +8,11 @@ var assert = require("assert"),
     fs = require("fs-extra"),
     Job = require("../lib/job"),
     Config = require("../lib/config"),
-    HandbrakeCLI = require("../lib/handbrakeCli")
+    handbrakeCLI = require("../lib/handbrakeCli")
     Veelo = require("../lib/veelo");
 
-describe("HandbrakeCLI", function(){
-    var handbrakeCLI, mockCp, handle;
+describe("handbrakeCLI", function(){
+    var mockCp, handle;
     
     function ChildProcess(){
         this.stdin = new ReadableStream();
@@ -35,7 +35,6 @@ describe("HandbrakeCLI", function(){
         };
         handle = new ChildProcess();
         sinon.stub(mockCp, "spawn").returns(handle);
-        handbrakeCLI = new HandbrakeCLI();
         handbrakeCLI._inject({
             cp: mockCp
         });
@@ -56,20 +55,20 @@ describe("HandbrakeCLI", function(){
         assert.ok(mockCp.spawn.args[0][1][0] == "-i", mockCp.spawn.args[0][1][0]);
     });
     
-    it("should fire 'handbrake-output' on handbrake stdout data", function(){
+    it("should fire 'output' on handbrake stdout data", function(){
         handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }});
-        handbrakeCLI.on("handbrake-output", function(data){
+        handbrakeCLI.on("output", function(data){
             assert.ok(data == "test data", data);
         });
         
         handle.stdout.emit("data", "test data");
     });
 
-    it("should NOT fire 'handbrake-output' on handbrake stderr data", function(){
+    it("should NOT fire 'output' on handbrake stderr data", function(){
         var eventFired = false;
         
         handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }, emitOutput: false });
-        handbrakeCLI.on("handbrake-output", function(data){
+        handbrakeCLI.on("output", function(data){
             assert.ok(data == "test data", data);
             eventFired = true;
         });
@@ -78,11 +77,11 @@ describe("HandbrakeCLI", function(){
         assert.ok(eventFired == false);
     });
 
-    it("SHOULD fire 'handbrake-output' on handbrake stderr data + emitOutput", function(){
+    it("SHOULD fire 'output' on handbrake stderr data + emitOutput", function(){
         var eventFired = false;
 
         handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }, emitOutput: true });
-        handbrakeCLI.on("handbrake-output", function(data){
+        handbrakeCLI.on("output", function(data){
             assert.ok(data == "test data", data);
             eventFired = true;
         });
