@@ -12,7 +12,7 @@ var assert = require("assert"),
     Veelo = require("../lib/veelo");
 
 describe("handbrakeCLI", function(){
-    var mockCp, handle;
+    var mock_child_process, mockHandle;
     
     function ChildProcess(){
         this.stdin = new ReadableStream();
@@ -28,117 +28,138 @@ describe("handbrakeCLI", function(){
         this.setEncoding = function(){};
     }
     ReadableStream.prototype = new Stream();
+
+    mock_child_process = { 
+        spawn: function(){},
+        exec: function(cmd, callback){
+            callback(null, "test", "test");
+        }
+    };
+    
+    handbrakeCLI._inject({
+        cp: mock_child_process
+    });
     
     beforeEach(function(){
-        mockCp = { 
-            spawn: function(){} 
-        };
-        handle = new ChildProcess();
-        sinon.stub(mockCp, "spawn").returns(handle);
-        handbrakeCLI._inject({
-            cp: mockCp
-        });
+        mockHandle = new ChildProcess();
+        sinon.stub(mock_child_process, "spawn").returns(mockHandle);
     });
     
     afterEach(function(){
-        mockCp.spawn.restore();
+        mock_child_process.spawn.restore();
     })
     
-    it("should throw with no args", function(){
-        assert.throws(function(){
-            handbrakeCLI.spawn();
-        }, Error);
+    describe("methods:", function(){
+        describe("run()", function(){
+
+            it("run(args) should return an instance of Handbrake", function(){
+                var handbrake = handbrakeCLI.run({
+                    arg: "test"
+                });
+
+                assert.deepEqual(handbrake.args, { arg: "test" });
+            });
+            
+            it("run(args, onComplete) should call onComplete(stdout, stderr)", function(){
+                var returnedStdout, returnedStderr;
+                handbrakeCLI.run({ arg: "test" }, function(stdout, stderr){
+                    returnedStdout = stdout;
+                    returnedStderr = stderr;
+                });
+                
+                assert.strictEqual(returnedStdout, "test");
+                assert.strictEqual(returnedStderr, "test");
+            });
+        });
     });
     
-    it("should spawn with correct, passed in args", function(){
-        handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }});
-        assert.ok(mockCp.spawn.args[0][1][0] == "-i", mockCp.spawn.args[0][1][0]);
-    });
+    describe("Handbrake events: ", function(){
+        
+        it("should fire 'output' on ChildProcess stdout data", function(){
+            var handbrake = handbrakeCLI.run();
+            
+            handbrake.on("output", function(data){
+                assert.strictEqual(data, "test data", data);
+            });
+                    
+            mockHandle.stdout.emit("data", "test data");
+        });
+
+        it("should fire 'output' on ChildProcess stderr data", function(){
+            var handbrake = handbrakeCLI.run();
+            
+            handbrake.on("output", function(data){
+                assert.strictEqual(data, "test data", data);
+            });
+                    
+            mockHandle.stderr.emit("data", "test data");
+        });
+
+        it("should fire 'terminated' on killing ChildProcess", function(){
+            var eventFired = false;
+
+            var handbrake = handbrakeCLI.run();
+            handbrake.on("terminated", function(){
+                eventFired = true;
+            })
+            mockHandle.kill();
+                    
+            assert.strictEqual(eventFired, true);
+        });
+
+        it("should fire 'error' on ChildProcess exit with non-zero code", function(){
+            var eventFired = false;
+
+            var handbrake = handbrakeCLI.run();
+            handbrake.on("error", function(){
+                eventFired = true;
+            })
+            mockHandle.emit("exit", 1);
+                    
+            assert.strictEqual(eventFired, true);
+        });
+
+        it("should fire 'error' if ChildProcess outputs 'no title found'", function(){
+            var eventFired = false;
+
+            var handbrake = handbrakeCLI.run();
+            handbrake.on("error", function(){
+                eventFired = true;
+            })
+            mockHandle.stderr.emit("data", "No title found. Bitch.");
+            mockHandle.emit("exit", 0);
+
+            assert.strictEqual(eventFired, true);
+        });
     
-    it("should fire 'output' on handbrake stdout data", function(){
-        handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }});
-        handbrakeCLI.on("output", function(data){
-            assert.ok(data == "test data", data);
+        it("should fire 'success' if ChildProcess completes", function(){
+            var eventFired = false;
+
+            var handbrake = handbrakeCLI.run();
+            handbrake.on("success", function(){
+                eventFired = true;
+            })
+            mockHandle.emit("exit", 0);
+
+            assert.strictEqual(eventFired, true);
         });
         
-        handle.stdout.emit("data", "test data");
-    });
+        it("should fire 'progress' while ChildProcess encodes", function(){
+            var handle = handbrakeCLI.run();
+            var progressData;
+            
+            handle.on("progress", function(progress){
+                progressData = progress;
+            });
+            mockHandle.stdout.emit("data", "Encoding: task 1 of 1, 0.59 % (127.14 fps, avg 134.42 fps, ETA 00h13m19s)");
 
-    it("should NOT fire 'output' on handbrake stderr data", function(){
-        var eventFired = false;
-        
-        handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }, emitOutput: false });
-        handbrakeCLI.on("output", function(data){
-            assert.ok(data == "test data", data);
-            eventFired = true;
+            assert.deepEqual(progressData, {
+               percentComplete: 0.59,
+               fps: 127.14,
+               avgFps: 134.42,
+               eta: "00h13m19s"
+            });
+            
         });
-        handle.stderr.emit("data", "test data");
-        
-        assert.ok(eventFired == false);
-    });
-
-    it("SHOULD fire 'output' on handbrake stderr data + emitOutput", function(){
-        var eventFired = false;
-
-        handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }, emitOutput: true });
-        handbrakeCLI.on("output", function(data){
-            assert.ok(data == "test data", data);
-            eventFired = true;
-        });
-        handle.stderr.emit("data", "test data");
-        
-        assert.ok(eventFired == true);
-    });
-    
-    
-    it("should fire 'terminated' on killing child_process", function(){
-        var eventFired = false;
-        
-        handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }});
-        handbrakeCLI.on("terminated", function(){
-            eventFired = true;
-        })
-        handle.kill();
-        
-        assert.ok(eventFired == true);
-    });
-
-    it("should fire 'fail' on child_process exit with non-zero code", function(){
-        var eventFired = false;
-        
-        handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }});
-        handbrakeCLI.on("fail", function(){
-            eventFired = true;
-        })
-        handle.emit("exit", 1);
-        
-        assert.ok(eventFired == true);
-    });
-
-    it("should fire 'fail' if Handbrake outputs 'no title found'", function(){
-        var eventFired = false;
-        
-        handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }});
-        handbrakeCLI.on("fail", function(){
-            eventFired = true;
-        })
-        handle.stderr.emit("data", "No title found. Bitch.");
-        handle.emit("exit", 0);
-        
-        assert.ok(eventFired == true);
-    });
-    
-    it("should fire 'success' if Handbrake completes", function(){
-        var eventFired = false;
-        
-        handbrakeCLI.spawn({ handbrakeArgs: { i: "test.mov", o: "test.m4v" }});
-        handbrakeCLI.on("success", function(){
-            eventFired = true;
-        })
-        handle.emit("exit", 0);
-        
-        assert.ok(eventFired == true);
-    });
-    
-    it("should just have a 'run' method, not 'spawn' and 'exec'");
+    });    
 });
