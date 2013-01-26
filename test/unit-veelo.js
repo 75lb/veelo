@@ -40,7 +40,7 @@ describe("Veelo", function(){
     });
     
     describe("methods: ", function(){
-        it("should correctly add() and register valid file", function(){
+        it("should correctly add() and register a valid file", function(){
             MockJob.valid = true;
             veelo.add("some file");
         
@@ -48,7 +48,7 @@ describe("Veelo", function(){
             assert.strictEqual(veelo.jobs.valid.length, 1, JSON.stringify(veelo.jobs));
         });
         
-        it("should correctly add() and register invalid file", function(){
+        it("should correctly add() and register a invalid file", function(){
             MockJob.valid = false;
             veelo.add("kjhkjlh");
         
@@ -138,3 +138,6 @@ describe("Veelo", function(){
     });
 });
 
+describe("Veelo2", function(){
+    
+});
