@@ -8,7 +8,7 @@ Veelo, a command-line Video Library Optimisation tool built on top of the outsta
 
 Works on __Windows__, __Linux__ and __Mac OSX__. Can be used from the command line or as a library. 
 
-Check the [development branch](https://github.com/75lb/veelo/tree/dev) for work in progress.
+To view progress on the upcoming rewrite, please check the [development branch](https://github.com/75lb/veelo/tree/dev).
 
 <h3><a href="http://75lb.github.com/veelo/">Full Documentation</a></h3>
 
