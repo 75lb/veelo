@@ -115,3 +115,7 @@ veelo.on("job-fail", function(data){
 
 // start work
 veelo.start();
+
+
+veelo.execute(command, args);
+

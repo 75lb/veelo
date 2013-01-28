@@ -7,7 +7,7 @@ var assert = require("assert"),
     fs = require("fs-extra"),
     Job = require("../lib/job"),
     config = require("../lib/config"),
-    HandbrakeCLI = require("../lib/handbrakeCli"),
+    HandbrakeCLI = require("../lib/handbrake"),
     shared = require("./shared");
 
 var _p = shared.path,

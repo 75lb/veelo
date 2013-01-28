@@ -6,7 +6,7 @@ var assert = require("assert"),
     EventEmitter = require("events").EventEmitter,
 	exec = require("child_process").exec,
 	Job = require("../lib/job"),
-	HandbrakeCLI = require("../lib/handbrakeCli"),
+	HandbrakeCLI = require("../lib/handbrake"),
     shared = require("./shared");
 
 var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",

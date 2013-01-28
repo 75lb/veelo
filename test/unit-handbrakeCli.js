@@ -8,7 +8,7 @@ var assert = require("assert"),
     fs = require("fs-extra"),
     Job = require("../lib/job"),
     Config = require("../lib/config"),
-    handbrakeCLI = require("../lib/handbrakeCli")
+    handbrakeCLI = require("../lib/handbrake")
     Veelo = require("../lib/veelo");
 
 describe("handbrakeCLI", function(){
