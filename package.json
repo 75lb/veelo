@@ -15,7 +15,7 @@
     "engines": {
         "node": "~0.8"
     },
-    "bin": "./cli.js",
+    "bin": "./app.js",
     "main": "./lib/veelo",
     "preferGlobal": true,
     "scripts": {
