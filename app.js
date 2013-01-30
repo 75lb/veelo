@@ -113,11 +113,26 @@ function stdoutWrite(data){
 // veelo.start();
 
 try{
-    var cliValues = cli.parse([
-        { command: "encode",  config: veelo.encode.config() },
+    var cliInput = cli.parse([
+        { command: "encode", default: true, config: veelo.encode.config() },
         { command: "help" },
         { command: "info", config: veelo.info.config() }
     ]);
 } catch(e) {
     log(true, "%s: %s", e.name, e.message);
+    process.exit(1);
+}
+
+switch(cliInput.command){
+    case "encode":
+        log(true, "encoding");
+        veelo.encode(cliInput.files, cliInput.options)
+            .on("starting", function(){})
+            .on("progress", function(){})
+            .on("complete", function(){});
+        break;
+    case "info": 
+        log(true, "getting info");
+        var info = veelo.info();
+        break;
 }

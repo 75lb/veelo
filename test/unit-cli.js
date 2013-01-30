@@ -3,76 +3,6 @@ var assert = require("assert"),
     shared = require("../test/shared"),
     Config = require("../lib/config");
 
-// describe("cli-args", function(){
-//     // var optionDefinitions = {
-//     //     version: {type: "boolean"},
-//     //     "output-dir": { type: "string", alias: "o" },
-//     //     other: {type: "string"},
-//     //     another: {type: "number"}
-//     // };
-//     
-//     var optionDefinitions = {
-//         version: { type: "boolean" },
-//         "output-dir": { type: "string" },
-//         o: "output-dir",
-//         other: {type: "string"},
-//         another: {type: "number"},
-//         verbose: {type: "boolean"},
-//         "v": "verbose"
-//     };
-// 
-//     it("should correctly parse args", function(){
-//         cli._inject([
-//             "node", "/usr/bin/blah",
-//             "file.js", "--version", "-o", "./testdir", "file2.mov", "-v"
-//         ]);
-//         
-//         var args = cli.getArgs(optionDefinitions);
-//         assert.deepEqual(
-//             args,
-//             {
-//                 files: ["file.js", "file2.mov"],
-//                 args: {
-//                     version: true,
-//                     "output-dir": "./testdir",
-//                     verbose: true
-//                 },
-//                 invalid: []
-//             }, 
-//             JSON.stringify(args)
-//         );
-//     });
-//     
-//     it("should reject invalid options", function(){
-//         cli._inject(["node", "/blah/blah", "--ridiculous", "words", "-t", "-a"]);
-//         
-//         var args = cli.getArgs(optionDefinitions);
-//         assert.deepEqual(
-//             args,
-//             { files: ["words"], args: {}, invalid: ["--ridiculous", "-t", "-a"] },
-//             JSON.stringify(args)
-//         );
-//     });
-//     
-//     it("should not accept the next option as a value", function(){
-//         cli._inject(["node", "blah.js", "the-file.mov", "--output-dir", "--version", "--verbose"]);
-//         var args = cli.getArgs(optionDefinitions);
-//         
-//         assert.deepEqual(
-//             args,
-//             {
-//                 files: ["the-file.mov"], 
-//                 args: {
-//                     "output-dir": "",
-//                     version: true,
-//                     verbose: true
-//                 },
-//                 invalid: []
-//             }
-//         );
-//     });
-// });
-
 describe("cli", function(){
     describe("methods:", function(){
         it("parse(Array) should correctly parse an array of commands", function(){
@@ -97,7 +27,7 @@ describe("cli", function(){
             });
         });
         
-        it("parse(Array) should throw on undefined command passed", function(){
+        it("parse(Array) should throw unless a defined command is passed", function(){
             cli._inject(["node", "test", "dflj", "file.js"]);
             
             assert.throws(function(){
@@ -110,5 +40,29 @@ describe("cli", function(){
         it("parse(Array) should throw on undefined option");
         it("parse(Object) should correctly parse cli with the specified config spec");
         it("parse(Object) should throw error on invalid option");
+        
+        it("parse(Object) should not accept the next option as a value", function(){
+            cli._inject(["node", "blah.js", "the-file.mov", "--output-dir", "--version", "--verbose"]);
+            
+            var cliValues = cli.parse(
+                new Config()
+                    .option("version", { type: "boolean" })
+                    .option("output-dir", { type: "string", alias: "o" })
+                    .option("verbose", { type: "boolean", alias: "v" })
+             );
+             
+            assert.deepEqual(
+                cliValues,
+                {
+                    files: ["the-file.mov"], 
+                    options: {
+                        "output-dir": "",
+                        version: true,
+                        verbose: true
+                    }
+                }
+            );
+        });
+        
     });
 });
