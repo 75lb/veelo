@@ -114,7 +114,7 @@ function stdoutWrite(data){
 
 try{
     var cliInput = cli.parse([
-        { command: "encode", default: true, config: veelo.encode.config() },
+        { command: "encode", config: veelo.encode.config() },
         { command: "help" },
         { command: "info", config: veelo.info.config() }
     ]);
