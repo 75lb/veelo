@@ -138,21 +138,36 @@ var shared = require("./shared"),
 //     });
 // });
 
+var _mockJob;
+var MockJob = function(){
+    _mockJob = this;
+};
+MockJob.prototype = new EventEmitter();
+
 describe("Veelo2", function(){
    describe("methods: ", function(){
        it("encode(files, options) should return a EncodeQueue", function(){
            var startingFired, progressFired, completeFired;
-           var queue = veelo.encode(["file.js", "file2.js"], { preset: "Test" });
-           queue.on("starting", function(){
+           veelo._inject(null, MockJob);
+           
+           var queue = veelo.encode(["file.js"], { preset: "Test" });
+           queue.on("starting", function(stats){
                startingFired = true;
            });
-           queue.on("progress", function(){
+           queue.on("progress", function(progress){
                progressFired = true;
            });
-           queue.on("complete", function(){
+           queue.on("complete", function(stats){
                completeFired = true;
            });
            
+           _mock.emit("starting");
+           _mock.emit("progress");
+           _mock.emit("complete");
+           
+           assert.strictEqual(startingFired, true);
+           assert.strictEqual(progressFired, true);
+           assert.strictEqual(completeFired, true);
            
        })
    }) 

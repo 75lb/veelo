@@ -112,12 +112,11 @@ function stdoutWrite(data){
 // // start work
 // veelo.start();
 
+// make cli.parse understand Config instances, setting values in found on CLI.. passed populated 
+// Config instances back to veelo. 
+
 try{
-    var cliInput = cli.parse([
-        { command: "encode", config: veelo.encode.config() },
-        { command: "help" },
-        { command: "info", config: veelo.info.config() }
-    ]);
+    var cliInput = cli.parse(veelo.cliCommands);
 } catch(e) {
     log(true, "%s: %s", e.name, e.message);
     process.exit(1);
