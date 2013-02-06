@@ -7,16 +7,6 @@ var util = require("util"),
     cli = require("./lib/cli"),
     cursor = require("ansi")(process.stdout);
 
-// // colours setup
-// colours.setTheme({
-//     fileName: "bold",
-//     hbOutput: "grey",
-//     em: "italic",
-//     error: "red",
-//     strong: "bold",
-//     warning: "red"
-// });
-
 // standard console writing method
 function log(){
     var args = Array.prototype.slice.call(arguments)
@@ -115,23 +105,34 @@ function stdoutWrite(data){
 // make cli.parse understand Config instances, setting values in found on CLI.. passed populated 
 // Config instances back to veelo. 
 
-try{
-    var cliInput = cli.parse(veelo.cliCommands);
-} catch(e) {
-    log(true, "%s: %s", e.name, e.message);
-    process.exit(1);
-}
+// try{
+//     var cliInput = cli.parse(veelo.cliCommands);
+// } catch(e) {
+//     log(true, "%s: %s", e.name, e.message);
+//     process.exit(1);
+// }
+// 
+// switch(cliInput.command){
+//     case "encode":
+//         log(true, "encoding");
+//         veelo.encode(cliInput.files, cliInput.options)
+//             .on("starting", function(){})
+//             .on("progress", function(){})
+//             .on("complete", function(){});
+//         break;
+//     case "info": 
+//         log(true, "getting info");
+//         var info = veelo.info();
+//         break;
+// }
 
-switch(cliInput.command){
-    case "encode":
-        log(true, "encoding");
-        veelo.encode(cliInput.files, cliInput.options)
-            .on("starting", function(){})
-            .on("progress", function(){})
-            .on("complete", function(){});
-        break;
-    case "info": 
-        log(true, "getting info");
-        var info = veelo.info();
-        break;
-}
+veelo.encode("test/fixture/clip1.mov", {}, { preset: "iPod" })
+    .on("starting", function(stats){
+        log(false, stats);
+    })
+    .on("progress", function(progress){
+        log(false, progress);
+    })
+    .on("complete", function(stats){
+        log(false, stats);
+    });
