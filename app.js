@@ -127,12 +127,22 @@ function stdoutWrite(data){
 // }
 
 veelo.encode("test/fixture/clip1.mov", {}, { preset: "iPod" })
-    .on("starting", function(stats){
-        log(false, stats);
+    .on("info", function(msg){
+        log(true, "info: %s", msg);
+    })
+    .on("warning", function(msg){
+        log(true, "warning: %s", msg);
+    })
+    .on("error", function(error){
+        log(true, "error");
+        log(error);
+    })
+    .on("starting", function(timer){
+        console.log(timer);
     })
     .on("progress", function(progress){
-        log(false, progress);
+        console.log(progress);
     })
-    .on("complete", function(stats){
-        log(false, stats);
+    .on("complete", function(timer){
+        console.log(timer);
     });
