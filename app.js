@@ -27,10 +27,15 @@ var files = [
     "test/fixture/medium.m4v",
 ];
 
-veelo.encode(files, {}, { preset: "iPod" })
+var options = {
+    ext: "mkv", 
+    archive: true,
+    archiveDirectory: "BITCH"
+};
+
+veelo.encode(files, options, { preset: "iPod" })
     .on("info", function(msg){
-        log(true, "Info");
-        log(true, "info: %s", msg);
+        stdoutWrite(msg);
     })
     .on("warning", function(msg){
         log(true, "Warning");
@@ -38,7 +43,7 @@ veelo.encode(files, {}, { preset: "iPod" })
     })
     .on("error", function(error){
         log(true, "Error");
-        log(error);
+        console.log(error);
     })
     .on("starting", function(timer){
         log(true, "Queue starting");
