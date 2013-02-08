@@ -5,17 +5,28 @@ var assert = require("assert"),
 
 describe("cli", function(){
     describe("methods:", function(){
-        it("parse(Array) should correctly parse an array of commands", function(){
+        var _commands = [
+            { 
+                command: "info", 
+                config: new Config()
+                    .option("recurse", { alias: "r", type: "boolean" })
+                    .option("sort", { type: "string" })
+            },
+            {
+                command: "help"
+            },
+            {
+                command: "encode",
+                config: new Config()
+                    .option("width", { alias: "w", type: "number", default: 400 })
+                    .option("height", { alias: "h", type: "number" })
+            }
+        ];
+        
+        it("parse(Array) should correctly parse config1 from a command array", function(){
             cli._inject(["node", "test.js", "info", "-r", "test_dir", "test_file.js", "--sort", "date"]);
             
-            var cliValues = cli.parse([
-                { 
-                    command: "info", 
-                    config: new Config()
-                        .option("recurse", { alias: "r", type: "boolean" })
-                        .option("sort", { type: "string" })
-                }
-            ]);
+            var cliValues = cli.parse(_commands);
             
             assert.deepEqual(cliValues, {
                 command: "info", 
@@ -26,43 +37,83 @@ describe("cli", function(){
                 }
             });
         });
+
+        it("parse(Array) should correctly parse config2 from a command array", function(){
+            cli._inject(["node", "test.js", "help", "test_dir", "test_file.js"]);
+            
+            var cliValues = cli.parse(_commands);
+            
+            assert.deepEqual(cliValues, {
+                command: "help", 
+                files: [ "test_dir", "test_file.js" ]
+            });
+        });
+
+        it("parse(Array) should correctly parse config3 from a command array", function(){
+            cli._inject(["node", "test.js", "encode", "test_dir", "test_file.js", "-w", "600", "--height", "1000"]);
+            
+            var cliValues = cli.parse(_commands);
+            
+            assert.deepEqual(cliValues, {
+                command: "encode", 
+                files: [ "test_dir", "test_file.js" ],
+                options: {
+                    width: "600",
+                    height: "1000"
+                }
+            });
+        });
         
         it("parse(Array) should throw unless a defined command is passed", function(){
             cli._inject(["node", "test", "dflj", "file.js"]);
             
             assert.throws(function(){
-                var cliValues = cli.parse([ { command: "test" } ]);
+                var cliValues = cli.parse([ { command: "work" } ]);
+            });
+        });
+
+        it("parse(Array) should throw on undefined option", function(){
+            cli._inject(["node", "test.js", "help", "-r"]);
+            
+            assert.throws(function(){
+                var cliValues = cli.parse(_commands);
             });
         });
         
-        it("parse(Array) should throw on 'multiple commands passed'");
+        it("parse(Array) should throw on 'multiple commands passed'", function(){
+            cli._inject(["node", "test.js", "encode", "help", "test_dir", "test_file.js", "-w", "600", "--height", "1000"]);
+
+            assert.throws(function(){
+                var cliValues = cli.parse(_commands);
+            });
+            
+        });
         it("parse(Array) should throw on 'no command passed and no default specified'");
-        it("parse(Array) should throw on undefined option");
         it("parse(Object) should correctly parse cli with the specified config spec");
         it("parse(Object) should throw error on invalid option");
         
-        it("parse(Object) should not accept the next option as a value", function(){
-            cli._inject(["node", "blah.js", "the-file.mov", "--output-dir", "--version", "--verbose"]);
-            
-            var cliValues = cli.parse(
-                new Config()
-                    .option("version", { type: "boolean" })
-                    .option("output-dir", { type: "string", alias: "o" })
-                    .option("verbose", { type: "boolean", alias: "v" })
-             );
-             
-            assert.deepEqual(
-                cliValues,
-                {
-                    files: ["the-file.mov"], 
-                    options: {
-                        "output-dir": "",
-                        version: true,
-                        verbose: true
-                    }
-                }
-            );
-        });
+        // it("parse(Object) should not accept the next option as a value", function(){
+        //     cli._inject(["node", "blah.js", "the-file.mov", "--output-dir", "--version", "--verbose"]);
+        //     
+        //     var cliValues = cli.parse(
+        //         new Config()
+        //             .option("version", { type: "boolean" })
+        //             .option("output-dir", { type: "string", alias: "o" })
+        //             .option("verbose", { type: "boolean", alias: "v" })
+        //      );
+        //      
+        //     assert.deepEqual(
+        //         cliValues,
+        //         {
+        //             files: ["the-file.mov"], 
+        //             options: {
+        //                 "output-dir": "",
+        //                 version: true,
+        //                 verbose: true
+        //             }
+        //         }
+        //     );
+        // });
         
     });
 });
