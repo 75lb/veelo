@@ -25,7 +25,7 @@ var cli = veelo.parseCli();
 
 switch (cli.command){
     case "encode":
-        veelo.encode(cli.options)
+        veelo.encode(cli.config)
             .on("info", function(msg){
                 stdoutWrite(msg);
             })

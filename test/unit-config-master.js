@@ -71,3 +71,6 @@ configMaster.get("handbrake"); // empty config
 config = configMaster.get("handbrake", values); // passing values
 config.get("preset");
 config.group("");
+
+//  toConfig()
+config.group("handbrake").toConfig()
