@@ -11,6 +11,12 @@ describe("cli", function(){
                 config: new Config()
                     .option("recurse", { alias: "r", type: "boolean" })
                     .option("sort", { type: "string" })
+                    .option("files", { 
+                        type: "array",
+                        required: true,
+                        defaultOption: true,
+                        valid: { pathExists: true }
+                    })
             },
             {
                 command: "help"
@@ -30,33 +36,32 @@ describe("cli", function(){
             
             assert.deepEqual(cliValues, {
                 command: "info", 
-                files: [ "test_dir", "test_file.js" ],
                 options: {
                     recurse: true,
-                    sort: "date"
+                    sort: "date",
+                    files: [ "test_dir", "test_file.js" ]
                 }
             });
         });
 
         it("parse(Array) should correctly parse config2 from a command array", function(){
-            cli._inject(["node", "test.js", "help", "test_dir", "test_file.js"]);
+            cli._inject(["node", "test.js", "help" ]);
             
             var cliValues = cli.parse(_commands);
             
             assert.deepEqual(cliValues, {
-                command: "help", 
-                files: [ "test_dir", "test_file.js" ]
+                command: "help",
+                options: {}
             });
         });
 
         it("parse(Array) should correctly parse config3 from a command array", function(){
-            cli._inject(["node", "test.js", "encode", "test_dir", "test_file.js", "-w", "600", "--height", "1000"]);
+            cli._inject(["node", "test.js", "encode", "-w", "600", "--height", "1000"]);
             
             var cliValues = cli.parse(_commands);
             
             assert.deepEqual(cliValues, {
                 command: "encode", 
-                files: [ "test_dir", "test_file.js" ],
                 options: {
                     width: "600",
                     height: "1000"
@@ -79,16 +84,52 @@ describe("cli", function(){
                 var cliValues = cli.parse(_commands);
             });
         });
+
+        it("parse(Array) should throw if unnamed values passed with no `defaultOption` specified", function(){
+            cli._inject(["node", "test.js", "help", "file.txt", "file2.txt"]);
+            
+            assert.throws(function(){
+                var cliValues = cli.parse(_commands);
+            });
+        });
         
         it("parse(Array) should throw on 'multiple commands passed'", function(){
             cli._inject(["node", "test.js", "encode", "help", "test_dir", "test_file.js", "-w", "600", "--height", "1000"]);
 
             assert.throws(function(){
                 var cliValues = cli.parse(_commands);
-            });
-            
+            }); 
         });
-        it("parse(Array) should throw on 'no command passed and no default specified'");
+
+        it("parse(Array) should throw on 'no command passed and no default specified'", function(){
+            cli._inject(["node", "test.js"]);
+            
+            assert.throws(function(){
+                var cliValues = cli.parse(_commands);
+            });
+        });
+
+        it("parse(Array) should return default command if none passed", function(){
+            cli._inject(["node", "test.js", "test_dir", "test_file.js", "-w", "600", "--height", "1000"]);
+            
+            var cliValues = cli.parse([
+                { command: "one" },
+                { 
+                    command: "two", 
+                    default: true,
+                    config: new Config()
+                        .option("width", { alias: "w", type: "number", default: 400 })
+                        .option("height", { alias: "h", type: "number" })
+                        .option("files", { type: "array", defaultOption: true })
+                },
+                { command: "three" }
+            ]);
+            
+            assert.deepEqual(cliValues, {
+                command: "two"
+            });
+        });
+        
         it("parse(Object) should correctly parse cli with the specified config spec");
         it("parse(Object) should throw error on invalid option");
         

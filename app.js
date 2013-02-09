@@ -21,48 +21,41 @@ function stdoutWrite(data){
     process.stdout.write(data);
 }
 
-var files = [
-    "test/fixture/clip1.mov",
-    "test/fixture/music.m4v",
-    "test/fixture/medium.m4v",
-];
+var cli = veelo.parseCli();
 
-var options = {
-    ext: "mkv", 
-    archive: true,
-    archiveDirectory: "BITCH"
-};
-
-veelo.encode(files, options, { preset: "iPod" })
-    .on("info", function(msg){
-        stdoutWrite(msg);
-    })
-    .on("warning", function(msg){
-        log(true, "Warning");
-        log(true, "warning: %s", msg);
-    })
-    .on("error", function(error){
-        log(true, "Error");
-        console.log(error);
-    })
-    .on("starting", function(timer){
-        log(true, "Queue starting");
-        console.log(timer);
-    })
-    .on("complete", function(timer){
-        log(true, "Queue complete");
-        console.log(timer);
-    })
-    .on("job-starting", function(name, timer){
-        log(true, "Job starting: %s", name);
-        console.log(timer);
-    })
-    .on("job-progress", function(name, progress){
-        log(true, "Job Progress: %s", name);
-        console.log(progress.percentComplete);
-    })
-    .on("job-complete", function(name, timer){
-        log(true, "Job Complete: %s", name);
-        console.log(timer);
-    });
+switch (cli.command){
+    case "encode":
+        veelo.encode(cli.options)
+            .on("info", function(msg){
+                stdoutWrite(msg);
+            })
+            .on("warning", function(msg){
+                log(true, "Warning");
+                log(true, "warning: %s", msg);
+            })
+            .on("error", function(error){
+                log(true, "Error");
+                console.log(error);
+            })
+            .on("starting", function(timer){
+                log(true, "Queue starting");
+                console.log(timer);
+            })
+            .on("complete", function(timer){
+                log(true, "Queue complete");
+                console.log(timer);
+            })
+            .on("job-starting", function(name, timer){
+                log(true, "Job starting: %s", name);
+                console.log(timer);
+            })
+            .on("job-progress", function(name, progress){
+                log(true, "Job Progress: %s", name);
+                console.log(progress.percentComplete);
+            })
+            .on("job-complete", function(name, timer){
+                log(true, "Job Complete: %s", name);
+                console.log(timer);
+            });
+}
     
