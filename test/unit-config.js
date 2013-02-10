@@ -5,15 +5,12 @@ var assert = require("assert"),
 function l(msg){ general.log(msg); }
 
 describe("Config", function(){
+    var _config;
+    beforeEach(function(){
+        _config = new Config();
+    });
 
-    it("should clone()");
-    
     describe("basics: ", function(){
-        var _config;
-        beforeEach(function(){
-            _config = new Config();
-        })
-        
         it("should set/get option", function(){
             _config.option("archiveDirectory", { type: "string", alias: "d" });
             _config.set("archiveDirectory", "testset");
@@ -36,7 +33,7 @@ describe("Config", function(){
         });
 
         it("should set default option value", function(){
-            _config.option("one", {type: "number", defaultVal: 1 });
+            _config.option("one", {type: "number", default: 1 });
             
             assert.strictEqual(_config.get("one"), 1);
         });
@@ -123,7 +120,7 @@ describe("Config", function(){
         });
         
         it("should unset an option, and its alias", function(){
-            _config.option("one", {type: "number", defaultVal: 1, alias: "K" });
+            _config.option("one", {type: "number", default: 1, alias: "K" });
             assert.strictEqual(_config.get("one"), 1);
             assert.strictEqual(_config.get("K"), 1);
             _config.unset("one");
@@ -154,6 +151,28 @@ describe("Config", function(){
         it("should report if get/set ambiguous name");
         it("should set aliassed option too when setting alias");
         it("should list defined options");
+    });
+    
+    describe("methods: ", function(){
+        it("definition() should return correctly", function(){
+            _config.option("one", { type: "string", default: 1, alias: "1"})
+
+            assert.deepEqual(
+                _config.definition("one"), 
+                { type: "string", default: 1, alias: "1", value: 1, group: "" }
+            );
+        });
+        
+        it("should clone()", function(){
+            _config.option("one", { default: 1 })
+                .option("two", { default: 2 });
+            
+            var config2 = _config.clone();
+
+            assert.notStrictEqual(_config, config2);
+            assert.deepEqual(_config.definition("one"), config2.definition("one"), config2);
+            assert.deepEqual(_config.definition("two"), config2.definition("two"), config2);
+        });
     });
         
     describe("validation: ", function(){
