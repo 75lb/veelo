@@ -1,4 +1,5 @@
 var assert = require("assert"),
+    general = require("../lib/general"),
     ConfigMaster = require("../lib/config-master"),
     Config = require("../lib/config");
 
@@ -17,21 +18,28 @@ describe("methods:", function(){
     });
     
     it("add(name, configName) should add a copy of configName", function(){
+        var config1 = new Config()
+            .group("whatever")
+                .option("one", { default: 1, valid: /[0-9]/, type: "number" });
         var config2 = _configMaster
-            .add("config1", new Config().option("one", { default: 1 }))
+            .add("config1", config1 )
             .add("config2", "config1")
             .get("config2");
-        
-        assert.deepEqual(config2.toJSON(), { one: 1 });
+
+        assert.deepEqual(config1.definition("one"), config2.definition("one"));
     });
 
     it("add(name, [configNames]) should add a config with merged copies of configNames", function(){
+        var config1 = new Config().option("one", { default: 1 });
+        var config2 = new Config().option("two", { default: 2 });
         var config3 = _configMaster
-            .add("config1", new Config().option("one", { default: 1 }))
-            .add("config2", new Config().option("two", { default: 2 }))
+            .add("config1", config1)
+            .add("config2", config2)
             .add("config3", [ "config1", "config2" ])
             .get("config3");
-        
+
+        assert.deepEqual(config3.definition("one"), config1.definition("one"));
+        assert.deepEqual(config3.definition("two"), config2.definition("two"));
         assert.deepEqual(config3.toJSON(), { one: 1, two: 2 });
     });
     
