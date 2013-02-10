@@ -173,6 +173,21 @@ describe("Config", function(){
             assert.deepEqual(_config.definition("one"), config2.definition("one"), config2);
             assert.deepEqual(_config.definition("two"), config2.definition("two"), config2);
         });
+        
+        it("options() should return Array of option names");
+        
+        it("mixin(config) should work", function(){
+            _config.option("year", { type: "number", default: 2013 });
+            var config2 = new Config().option("month", { type: "string", default: "feb" });
+            var config3 = new Config().option("day", { type: "string", default: "Sunday" })
+            
+            _config.mixIn(config2);
+            _config.mixIn(config3);
+            
+            assert.strictEqual(_config.get("year"), 2013);
+            assert.strictEqual(_config.get("month"), "feb");
+            assert.strictEqual(_config.get("day"), "Sunday");
+        });
     });
         
     describe("validation: ", function(){
