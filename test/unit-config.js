@@ -1,12 +1,13 @@
 var assert = require("assert"),
+    general = require("general"),
     config = require("../lib/config");
 
-function l(msg){ 
-    var util = require("util");
-    console.log(util.inspect(msg, true, null, true));
-}
+function l(msg){ general.log(msg); }
 
 describe("Config", function(){
+
+    it("should clone()");
+    
     describe("basics: ", function(){
 
         beforeEach(function(){

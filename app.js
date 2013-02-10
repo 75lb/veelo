@@ -21,7 +21,7 @@ function stdoutWrite(data){
     process.stdout.write(data);
 }
 
-var cli = veelo.parseCli();
+var cli = veelo.parseCliCommand();
 
 switch (cli.command){
     case "encode":
@@ -57,5 +57,17 @@ switch (cli.command){
                 log(true, "Job Complete: %s", name);
                 console.log(timer);
             });
+        break;
+    case "info":
+        veelo.info(cli.config)
+            .on("info", function(msg){
+                stdoutWrite(msg);
+            });
+        break;
+    case "help":
+        veelo.help(cli.config, function(help){
+            stdoutWrite(msg);
+        });
+        break;
 }
     
