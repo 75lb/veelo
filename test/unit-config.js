@@ -1,6 +1,6 @@
 var assert = require("assert"),
-    general = require("general"),
-    config = require("../lib/config");
+    general = require("../lib/general"),
+    Config = require("../lib/config");
 
 function l(msg){ general.log(msg); }
 
@@ -9,90 +9,61 @@ describe("Config", function(){
     it("should clone()");
     
     describe("basics: ", function(){
-
+        var _config;
         beforeEach(function(){
-            config.reset();
-        });
-
-        it("should build config definition in groups", function(){
-            config.option("top", {type: "string" });
-            config.group("veelo")
-                    .option("version", {type: "boolean", alias: "v"});
-            config.group("handbrake")
-                    .subgroup("general")
-                        .option("update", { type: "boolean" });
-
-            assert.deepEqual(
-                config._definitions,
-                {
-                    top: {
-                        type: "string",
-                        group: ""
-                    },
-                   version: {
-                       type: "boolean",
-                       group: "veelo"
-                   },
-                   v: "version",
-                   update: {
-                       type: "boolean",
-                       group: "handbrake.general"
-                   }
-                },
-                JSON.stringify(config._definitions)
-            );
-        });
+            _config = new Config();
+        })
         
         it("should set/get option", function(){
-            config.option("archiveDirectory", { type: "string", alias: "d" });
-            config.set("archiveDirectory", "testset");
+            _config.option("archiveDirectory", { type: "string", alias: "d" });
+            _config.set("archiveDirectory", "testset");
 
-            assert.equal(config.get("archiveDirectory"), "testset");
+            assert.equal(_config.get("archiveDirectory"), "testset");
         });
 
         it("should set/get option alias", function(){
-            config.option("archiveDirectory", { type: "string", alias: "d" });
-            config.set("d", "testset");
+            _config.option("archiveDirectory", { type: "string", alias: "d" });
+            _config.set("d", "testset");
 
-            assert.equal(config.get("d"), "testset");
+            assert.equal(_config.get("d"), "testset");
         });
 
         it("should set/get option within specific group", function(){
-            config.group("veelo").option("archiveDirectory", {type: "string"});
-            config.set("archiveDirectory", "testset2");
+            _config.group("veelo").option("archiveDirectory", {type: "string"});
+            _config.set("archiveDirectory", "testset2");
 
-            assert.equal(config.get("archiveDirectory"), "testset2");
+            assert.equal(_config.get("archiveDirectory"), "testset2");
         });
 
         it("should set default option value", function(){
-            config.option("one", {type: "number", defaultVal: 1 });
+            _config.option("one", {type: "number", defaultVal: 1 });
             
-            assert.strictEqual(config.get("one"), 1);
+            assert.strictEqual(_config.get("one"), 1);
         });
 
         it("should return group size", function(){
-            config.group("veelo")
+            _config.group("veelo")
                 .option("one", {type: "boolean"})
                 .option("two", {type: "boolean"})
                 .option("three", {type: "boolean"});
 
-            assert.equal(config.group("veelo").size(), 3);
+            assert.strictEqual(_config.group("veelo").size(), 3);
         });
 
         it("should throw on invalid option get", function(){
             assert.throws(function(){
-                config.get("asdf", 0);
+                _config.get("asdf", 0);
             }, Error);
         });
         
         it("should throw on invalid option set", function(){
             assert.throws(function(){
-                config.set("asdf", 0);
+                _config.set("asdf", 0);
             }, Error);
         });
         
         it("should output group toJson", function(){
-            config.group("testgroup")
+            _config.group("testgroup")
                 .option("one", {})
                 .option("two", {})
                 .option("three", {})
@@ -101,7 +72,7 @@ describe("Config", function(){
                 .set("three", 3);
             
             assert.deepEqual(
-                config.group("testgroup").toJSON(),
+                _config.group("testgroup").toJSON(),
                 {
                     one: 1,
                     two: 2,
@@ -111,17 +82,17 @@ describe("Config", function(){
         });
 
         it("should output group and subgroup toJson", function(){
-            config.group("testgroup")
+            _config.group("testgroup")
                 .option("one", {})
+                .set("one", 1)
                 .subgroup("sub")
                     .option("two", {})
                     .option("three", {})
-                .set("one", 1)
-                .set("two", 2)
-                .set("three", 3);
+                    .set("two", 2)
+                    .set("three", 3);
             
             assert.deepEqual(
-                config.group("testgroup").toJSON(),
+                _config.group("testgroup").toJSON(),
                 {
                     one: 1,
                     two: 2,
@@ -129,7 +100,7 @@ describe("Config", function(){
                 }
             );
             assert.deepEqual(
-                config.group("testgroup").subgroup("sub").toJSON(),
+                _config.group("testgroup").subgroup("sub").toJSON(),
                 {
                     two: 2,
                     three: 3
@@ -138,46 +109,46 @@ describe("Config", function(){
         });
         
         it("has() should return true if option has value", function(){
-            config.option("one", {});
-            config.set("one", 1);
+            _config.option("one", {});
+            _config.set("one", 1);
             
-            assert.strictEqual(config.has("one"), true);
+            assert.strictEqual(_config.hasValue("one"), true);
             
         });
 
         it("has() should return false if option has no value", function(){
-            config.option("one", {});
+            _config.option("one", {});
             
-            assert.strictEqual(config.has("one"), false);
+            assert.strictEqual(_config.hasValue("one"), false);
         });
         
         it("should unset an option, and its alias", function(){
-            config.option("one", {type: "number", defaultVal: 1, alias: "K" });
-            assert.strictEqual(config.get("one"), 1);
-            assert.strictEqual(config.get("K"), 1);
-            config.unset("one");
-            assert.strictEqual(config.get("one"), undefined);            
-            assert.strictEqual(config.get("K"), undefined);
+            _config.option("one", {type: "number", defaultVal: 1, alias: "K" });
+            assert.strictEqual(_config.get("one"), 1);
+            assert.strictEqual(_config.get("K"), 1);
+            _config.unset("one");
+            assert.strictEqual(_config.get("one"), undefined);            
+            assert.strictEqual(_config.get("K"), undefined);
         });
         
         it("should set options in bulk", function(){
-            config.option("one", { type: "string", alias: "1" })
-                .option("two", { type: "string", alias: "t" })
-                .option("three", { type: "string", alias: "3" });
+            _config.option("one", { type: "number", alias: "1" })
+                .option("two", { type: "number", alias: "t" })
+                .option("three", { type: "number", alias: "3" });
             
-            assert.strictEqual(config.get("one"), undefined);
-            assert.strictEqual(config.get("t"), undefined);
-            assert.strictEqual(config.get("3"), undefined);
+            assert.strictEqual(_config.get("one"), undefined);
+            assert.strictEqual(_config.get("t"), undefined);
+            assert.strictEqual(_config.get("3"), undefined);
 
-            config.set({
+            _config.set({
                 one: 1,
                 "t": 2,
                 "3": 3
             });
             
-            assert.strictEqual(config.get("one"), 1);
-            assert.strictEqual(config.get("two"), 2);
-            assert.strictEqual(config.get("three"), 3);
+            assert.strictEqual(_config.get("one"), 1);
+            assert.strictEqual(_config.get("two"), 2);
+            assert.strictEqual(_config.get("three"), 3);
         });
 
         it("should report if get/set ambiguous name");

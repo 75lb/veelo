@@ -1,4 +1,5 @@
-var ConfigMaster = require("../lib/config-master"),
+var assert = require("assert"),
+    ConfigMaster = require("../lib/config-master"),
     Config = require("../lib/config");
 
 var _configMaster;
