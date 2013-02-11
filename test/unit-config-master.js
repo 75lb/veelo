@@ -83,8 +83,47 @@ describe("ConfigMaster", function(){
         });
         
         it("parseCommand([commandNames], commandArray) will parse the command and config from configName)", function(){
+            var helpConfig = new Config()
+                .option("listTopics", { type: "boolean", defaultOption: true })
+                .option("topic", { type: "string" });
+
+            var encodeConfig = new Config()
+                .option("ext", { type: "string", default: "m4v" })
+                .option("width", { type: "number", alias: "w" })
+                .option("height", { type: "number", alias: "h" });
+                
+            _configMaster
+                .add("help", helpConfig)
+                .add("encode", encodeConfig);
             
-        })
+            var command = _configMaster.parseCommand(
+                ["help", "encode"], 
+                {
+                    defaultCommand: "help",
+                    commandArrayToParse: ["node", "test.js"]
+                }
+            );
+            
+            assert.strictEqual(command.command, "help");
+            assert.strictEqual(command.config, helpConfig);
+            assert.strictEqual(command.config.get("listTopics"), true);
+
+            var command = _configMaster.parseCommand(
+                ["help", "encode"], 
+                {
+                    defaultCommand: "help",
+                    commandArrayToParse: ["node", "test.js", "encode", "--width", "300", "-h", "200"]
+                }
+            );
+            
+            assert.strictEqual(command.command, "encode");
+            assert.strictEqual(command.config, encodeConfig);
+            assert.strictEqual(command.config.get("width"), 300);
+            assert.strictEqual(command.config.get("w"), 300);
+            assert.strictEqual(command.config.get("height"), 200);
+            assert.strictEqual(command.config.get("h"), 200);
+            
+        });
     });
     
     
