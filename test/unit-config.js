@@ -128,7 +128,13 @@ describe("Config", function(){
             assert.strictEqual(_config.get("K"), undefined);
         });
         
-        it("should set options in bulk", function(){
+        it("should report if get/set ambiguous name");
+        it("should set aliassed option too when setting alias");
+        it("should list defined options");
+    });
+    
+    describe("methods: ", function(){
+        it("set(optionsHash) should set options in bulk", function(){
             _config.option("one", { type: "number", alias: "1" })
                 .option("two", { type: "number", alias: "t" })
                 .option("three", { type: "number", alias: "3" });
@@ -148,12 +154,28 @@ describe("Config", function(){
             assert.strictEqual(_config.get("three"), 3);
         });
 
-        it("should report if get/set ambiguous name");
-        it("should set aliassed option too when setting alias");
-        it("should list defined options");
-    });
-    
-    describe("methods: ", function(){
+        it("set(configInstance) should set options in bulk", function(){
+            _config.option("one", { type: "number", alias: "1" })
+                .option("two", { type: "number", alias: "t" })
+                .option("three", { type: "number", alias: "3" });
+            
+            assert.strictEqual(_config.get("one"), undefined);
+            assert.strictEqual(_config.get("t"), undefined);
+            assert.strictEqual(_config.get("3"), undefined);
+
+            var config2 = new Config()
+                .option("one", { type: "number", default: -1 })
+                .option("two", { type: "number", default: -2 })
+                .option("three", { type: "number", default: -3 })
+
+            _config.set(config2);
+            
+            assert.strictEqual(_config.get("one"), -1);
+            assert.strictEqual(_config.get("two"), -2);
+            assert.strictEqual(_config.get("three"), -3);
+            
+        });
+
         it("definition() should return correctly", function(){
             _config.option("one", { type: "string", default: 1, alias: "1"})
 
@@ -188,6 +210,25 @@ describe("Config", function(){
             assert.strictEqual(_config.get("month"), "feb");
             assert.strictEqual(_config.get("day"), "Sunday");
         });
+        
+        it("mixin(config) should throw on duplicate option or alias");
+        
+        it("should accept 'required', 'defaultOption' and 'fileExists'");
+        // configMaster.add(
+        //     "just-files", 
+        //      new Config()
+        //          .option("files", { 
+        //              type: "array",
+        //              required: true,
+        //              defaultOption: true,
+        //              valid: { pathExists: true }
+        //          })
+        // );
+        // configMaster.add(
+        //     "help", 
+        //     new Config()
+        //         .option("topic", { type: "string", defaultOption: true, valid: "core|handbrake" })
+        // );
     });
         
     describe("validation: ", function(){
