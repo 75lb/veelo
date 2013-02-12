@@ -11,33 +11,6 @@ describe("Config", function(){
     });
 
     describe("basics: ", function(){
-        it("should set/get option", function(){
-            _config.option("archiveDirectory", { type: "string", alias: "d" });
-            _config.set("archiveDirectory", "testset");
-
-            assert.equal(_config.get("archiveDirectory"), "testset");
-        });
-
-        it("should set/get option alias", function(){
-            _config.option("archiveDirectory", { type: "string", alias: "d" });
-            _config.set("d", "testset");
-
-            assert.equal(_config.get("d"), "testset");
-        });
-
-        it("should set/get option within specific group", function(){
-            _config.group("veelo").option("archiveDirectory", {type: "string"});
-            _config.set("archiveDirectory", "testset2");
-
-            assert.equal(_config.get("archiveDirectory"), "testset2");
-        });
-
-        it("should set default option value", function(){
-            _config.option("one", {type: "number", default: 1 });
-            
-            assert.strictEqual(_config.get("one"), 1);
-        });
-
         it("should return group size", function(){
             _config.group("veelo")
                 .option("one", {type: "boolean"})
@@ -134,6 +107,33 @@ describe("Config", function(){
     });
     
     describe("methods: ", function(){
+        it("should set(option, value) and get(option)", function(){
+            _config.option("archiveDirectory", { type: "string", alias: "d" });
+            _config.set("archiveDirectory", "testset");
+
+            assert.equal(_config.get("archiveDirectory"), "testset");
+        });
+
+        it("should set(alias, value) and get(alias)", function(){
+            _config.option("archiveDirectory", { type: "string", alias: "d" });
+            _config.set("d", "testset");
+
+            assert.equal(_config.get("d"), "testset");
+        });
+
+        it("should set(option, value) and get(option) option within specific group", function(){
+            _config.group("veelo").option("archiveDirectory", {type: "string"});
+            _config.set("archiveDirectory", "testset2");
+
+            assert.equal(_config.get("archiveDirectory"), "testset2");
+        });
+
+        it("should set default option() value", function(){
+            _config.option("one", {type: "number", default: 1 });
+            
+            assert.strictEqual(_config.get("one"), 1);
+        });
+        
         it("set(optionsHash) should set options in bulk", function(){
             _config.option("one", { type: "number", alias: "1" })
                 .option("two", { type: "number", alias: "t" })
@@ -174,6 +174,22 @@ describe("Config", function(){
             assert.strictEqual(_config.get("two"), -2);
             assert.strictEqual(_config.get("three"), -3);
             
+        });
+        
+        it("set(optionsArray) should set options in bulk", function(){
+            var argv = ["node", "test.js", "info", "-d", "--recurse", "music", "film", "documentary"];
+            argv.splice(0, 2);
+            var command = argv.shift();
+            _config
+                .option("detailed", { alias: "d", type: "boolean" })
+                .option("recurse", { type: "boolean" })
+                .option("files", { array: true, type: "object", defaultOption: true });
+            
+            _config.set(argv);
+            
+            assert.strictEqual(_config.get("detailed"), true);
+            assert.strictEqual(_config.get("recurse"), true);
+            assert.deepEqual(_config.get("files"), ["music", "film", "documentary"]);
         });
 
         it("definition() should return correctly", function(){
@@ -234,7 +250,8 @@ describe("Config", function(){
     describe("validation: ", function(){
         it("should validate string");
         it("should validate number");
-        it("should validate regex");
+        it("should validate array");
         it("should validate boolean");
+        it("should validate arbitrary class, e.g. type: Config ");
     });
 });

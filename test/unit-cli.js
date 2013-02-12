@@ -24,8 +24,8 @@ describe("cli", function(){
             {
                 command: "encode",
                 config: new Config()
-                    .option("width", { alias: "w", type: "number", default: 400 })
-                    .option("height", { alias: "h", type: "number" })
+                    .option("width", { alias: "w", type: "number", default: 640 })
+                    .option("height", { alias: "h", type: "number", default: 480 })
             }
         ];
         
