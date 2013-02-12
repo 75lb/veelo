@@ -82,72 +82,25 @@ describe("ConfigMaster", function(){
             assert.deepEqual(config.toJSON(), { one: -1, two: -2, three: -3 });
         });
         
-        it("parseCommand([commandNames], commandArray) will parse the command and config from configName)", function(){
-            var helpConfig = new Config()
-                .option("listTopics", { type: "boolean", defaultOption: true })
-                .option("topic", { type: "string" });
-
-            var encodeConfig = new Config()
-                .option("ext", { type: "string", default: "m4v" })
-                .option("width", { type: "number", alias: "w" })
-                .option("height", { type: "number", alias: "h" });
-                
-            _configMaster
-                .add("help", helpConfig)
-                .add("encode", encodeConfig);
-            
-            var command = _configMaster.parseCommand(
-                ["help", "encode"], 
-                {
-                    defaultCommand: "help",
-                    commandArrayToParse: ["node", "test.js"]
-                }
-            );
-            
-            assert.strictEqual(command.command, "help");
-            assert.strictEqual(command.config, helpConfig);
-            assert.strictEqual(command.config.get("listTopics"), true);
-
-            var command = _configMaster.parseCommand(
-                ["help", "encode"], 
-                {
-                    defaultCommand: "help",
-                    commandArrayToParse: ["node", "test.js", "encode", "--width", "300", "-h", "200"]
-                }
-            );
-            
-            assert.strictEqual(command.command, "encode");
-            assert.strictEqual(command.config, encodeConfig);
-            assert.strictEqual(command.config.get("width"), 300);
-            assert.strictEqual(command.config.get("w"), 300);
-            assert.strictEqual(command.config.get("height"), 200);
-            assert.strictEqual(command.config.get("h"), 200);
-            
+        it("get(configName, [valueArray]) should return correct config with array values set", function(){
+            var config = new Config()
+                .option("one", { type: Number, default: -1 })
+                .option("two", { type: Number, default: -2 })
+                .option("three", { type: Number, default: -3 });
+        
+            _configMaster.add("config", config);
+        
+            var config2 = _configMaster.get("config", [ "--one", "5", "--two", "10", "--three", "20", "clive" ]);
+        
+            assert.strictEqual(config, config2);
+            assert.deepEqual(config2.toJSON(), {
+                one: 5,
+                two: 10,
+                three: 20
+            });
         });
     });
-    
-    
-    
-    // var cli = configMaster.parseCli(/*all commands*/);
-    // var cli = configMaster.parseCli(
-    //     ["encode", "info", "help"], 
-    //     { defaultCommand: "encode" }
-    // ); // returns CommandLine
-    // 
-    // veelo[cli.command](cli.options);
-    // 
-    // // or
-    // if (cli.command == "encode"){
-    //     veelo.encode(cli.options);
-    // }
-    // 
-    // // or
-    // veelo.encode({
-    //     files: ["this.txt"],
-    //     preset: "Normal",
-    //     ext: "mkv"
-    // });
-    // 
+
     // //  toConfig()
     // config.group("handbrake").toConfig()
     // 

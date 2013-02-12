@@ -107,6 +107,8 @@ describe("Config", function(){
     });
     
     describe("methods: ", function(){
+        it("option(name, definition) will infer definition.type if not specified");
+        
         it("should set(option, value) and get(option)", function(){
             _config.option("archiveDirectory", { type: "string", alias: "d" });
             _config.set("archiveDirectory", "testset");
@@ -252,6 +254,6 @@ describe("Config", function(){
         it("should validate number");
         it("should validate array");
         it("should validate boolean");
-        it("should validate arbitrary class, e.g. type: Config ");
+        it("should validate type if specifying arbitrary class, e.g. type: Config, Number ");
     });
 });
