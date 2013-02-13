@@ -21,9 +21,10 @@ function stdoutWrite(data){
     process.stdout.write(data);
 }
 
-var cli = veelo.parseCliCommand();
+process.argv.splice(0, 2);
+var command = process.argv.shift();
 
-switch (cli.command){
+switch (command){
     case "encode":
         veelo.encode(cli.config)
             .on("info", function(msg){
@@ -69,5 +70,7 @@ switch (cli.command){
             stdoutWrite(msg);
         });
         break;
+    default:
+    log(false, "pass a fucking command. ");
 }
     
