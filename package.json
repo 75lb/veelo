@@ -17,11 +17,8 @@
     },
     "bin": "./app.js",
     "main": "./lib/veelo",
-    "preferGlobal": true,
     "scripts": {
-        "test": "mocha --timeout 10000 --reporter spec test/unit-*.js test/integration.js",
-        "ubuntu-setup": "scripts/ubuntu-setup.sh",
-        "postinstall": "node scripts/install-handbrakeCLI.js"
+        "test": "mocha --timeout 10000 --reporter spec test/unit-*.js test/integration.js"
     },
     "repository": {
         "type": "git",
@@ -29,10 +26,7 @@
     },
     "dependencies": {
         "underscore": "~1.4.2",
-        "colors": "~0.6.0-1",
         "fs-extra": "~0.3.2",
-        "request": "~2.12.0",
-        "unzip": "~0.1.0",
         "ansi": "~0.1.2"
     },
     "devDependencies": {
