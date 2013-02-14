@@ -4,7 +4,6 @@
 var util = require("util"),
     _ = require("underscore"),
     veelo = require("./lib/veelo"),
-    cli = require("./lib/cli"),
     cursor = require("ansi")(process.stdout);
 
 // standard console writing method
@@ -26,7 +25,7 @@ var command = process.argv.shift();
 
 switch (command){
     case "encode":
-        veelo.encode(cli.config)
+        veelo.encode(process.argv)
             .on("info", function(msg){
                 stdoutWrite(msg);
             })
@@ -60,17 +59,17 @@ switch (command){
             });
         break;
     case "info":
-        veelo.info(cli.config)
+        veelo.info(process.argv)
             .on("info", function(msg){
                 stdoutWrite(msg);
             });
         break;
     case "help":
-        veelo.help(cli.config, function(help){
-            stdoutWrite(msg);
+        veelo.help(process.argv, function(help){
+            stdoutWrite(help);
         });
         break;
     default:
-    log(false, "pass a fucking command. ");
+        log(false, "pass a fucking command. ");
 }
     
