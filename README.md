@@ -14,5 +14,5 @@ To view progress on the upcoming rewrite, please check the [development branch](
 
 License
 =======
-(c) 2012, Lloyd Brookes <75pound@gmail.com>
+(c) 2013, Lloyd Brookes <75pound@gmail.com>
 [MIT License]
