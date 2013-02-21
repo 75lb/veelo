@@ -6,7 +6,7 @@ var assert = require("assert"),
     EventEmitter = require("events").EventEmitter,
 	exec = require("child_process").exec,
 	Job = require("../lib/job"),
-	HandbrakeCLI = require("../lib/handbrake"),
+	HandbrakeCLI = require("../../handbrake-js"),
     shared = require("./shared");
 
 var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
@@ -26,7 +26,7 @@ function run(){
 	var args = Array.prototype.slice.call(arguments),
 		done = args.pop(),
 		formatArgs = args,
-		cmd = "node cli.js " + util.format.apply(this, formatArgs);
+		cmd = "node app.js " + util.format.apply(this, formatArgs);
 	// l(cmd);
 	exec(cmd, function(err, stdout, stderr){
 		if (err) {
@@ -95,14 +95,14 @@ function setupDeepFileFixture(done){
 describe("operations which don't encode files", function(){
 	it("should print help when called without options", function(done){
 		run("", function(output){
-			assert.ok(output.match(/Usage:/));
+			assert.ok(output.match(/Usage:/), output);
 			done();
 		});
 	});
 
 	it("should print Handbrake help output with --hbhelp", function(done){
 		run("--hbhelp", function(output){
-			assert.ok(output.match(/General Handbrake Options/));
+			assert.ok(output.match(/General Handbrake Options/), output);
 			done();
 		});
 	});
@@ -115,7 +115,7 @@ describe("HandbrakeCLI operations", function(){
 	
 	it("should scan title information", function(done){
 		run('-t 0 "%s"', path.join(FIXTURE_DIR, MEDIUM), function(output){
-			assert.ok(output.match(/hb_init: starting libhb/));
+			assert.ok(output.match(/hb_init: starting libhb/), output);
 			done();
 		})
 	});
