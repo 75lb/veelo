@@ -21,10 +21,12 @@ function stdoutWrite(data){
 }
 
 process.argv.splice(0, 2);
-var command = process.argv.shift();
+var command = /encode|help|info/.test(process.argv[0])
+    ? process.argv.shift()
+    : "encode";
 
 switch (command){
-    case "encode":
+    default:
         veelo.encode(process.argv)
             .on("info", function(msg){
                 stdoutWrite(msg);
@@ -69,7 +71,5 @@ switch (command){
             stdoutWrite(help);
         });
         break;
-    default:
-        log(false, "pass a fucking command. ");
 }
     
