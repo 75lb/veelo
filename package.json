@@ -26,7 +26,6 @@
     },
     "dependencies": {
         "underscore": "~1.4.2",
-        "fs-extra": "~0.3.2",
         "ansi": "~0.1.2"
     },
     "devDependencies": {

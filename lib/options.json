@@ -6,7 +6,7 @@
     "ext": "m4v",
     "preserve-dates": true,
     "ignoreList": [".DS_Store"],
-    "archiveDirectory": "veelo-originals",
+    "archive-directory": "veelo-originals",
     "user-defined-presets": {
         "android-compact": {
             "e": "x264",

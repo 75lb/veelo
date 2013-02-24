@@ -73,7 +73,7 @@ switch (command){
         break;
     case "help":
         veelo.help(process.argv, function(help){
-            log(help);
+            log(false, help);
         });
         break;
 }

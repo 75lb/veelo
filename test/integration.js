@@ -1,5 +1,5 @@
 var assert = require("assert"),
-	fs = require("fs-extra"),
+    fs = require("fs-extra"),
 	path = require("path"),
     os = require("os"),
 	util = require("util"),
