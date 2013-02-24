@@ -1,5 +1,7 @@
 Veelo
 ==========
+[![Build Status](https://travis-ci.org/75lb/veelo.png)](https://travis-ci.org/75lb/veelo)
+
 Optimise your video library - consolidate from a mixture of legacy and proprietary formats to a single, modern format which works everywhere (H.264/MPEG-4 AVC).
 
 Veelo, a command-line Video Library Optimisation tool built on top of the outstanding encoder [Handbrake](http://handbrake.fr), was built for this task.
