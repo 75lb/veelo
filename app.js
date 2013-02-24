@@ -21,9 +21,11 @@ function stdoutWrite(data){
 }
 
 process.argv.splice(0, 2);
-var command = /encode|help|info/.test(process.argv[0])
-    ? process.argv.shift()
-    : "encode";
+var command = process.argv.length == 0
+    ? "help"
+    : /encode|help|info/.test(process.argv[0])
+        ? process.argv.shift()
+        : "encode";
 
 switch (command){
     default:
@@ -41,23 +43,26 @@ switch (command){
             })
             .on("starting", function(timer){
                 log(true, "Queue starting");
-                console.log(timer);
             })
             .on("complete", function(timer){
                 log(true, "Queue complete");
-                console.log(timer);
+                console.log(timer.duration);
             })
             .on("job-starting", function(name, timer){
                 log(true, "Job starting: %s", name);
-                console.log(timer);
             })
-            .on("job-progress", function(name, progress){
-                log(true, "Job Progress: %s", name);
-                console.log(progress.percentComplete);
+            .on("job-progress", function(name, encode){
+                var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]",
+                    short = "encode: %d\% complete";
+                if(encode.fps){
+                    log(full, encode.percentComplete, encode.fps, encode.avgFps, encode.eta);
+                } else {
+                    log(short, encode.percentComplete);
+                }
             })
             .on("job-complete", function(name, timer){
                 log(true, "Job Complete: %s", name);
-                console.log(timer);
+                console.log(timer.duration);
             });
         break;
     case "info":
@@ -68,7 +73,7 @@ switch (command){
         break;
     case "help":
         veelo.help(process.argv, function(help){
-            stdoutWrite(help);
+            log(help);
         });
         break;
 }
