@@ -38,8 +38,7 @@ switch (command){
                 log(true, "warning: %s", msg);
             })
             .on("error", function(error){
-                log(true, "Error");
-                console.log(error);
+                log(true, error.stack);
             })
             .on("starting", function(timer){
                 log(true, "Queue starting");
