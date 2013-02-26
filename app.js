@@ -42,10 +42,14 @@ switch (command){
             })
             .on("starting", function(timer){
                 log(true, "Queue starting");
+                log(false, this.jobs);
             })
             .on("complete", function(timer){
                 log(true, "Queue complete");
                 console.log(timer.duration);
+            })
+            .on("terminated", function(){
+                log(true, "Terminated");
             })
             .on("job-starting", function(name, timer){
                 log(true, "Job starting: %s", name);
