@@ -5,9 +5,7 @@ var assert = require("assert"),
 	util = require("util"),
     EventEmitter = require("events").EventEmitter,
 	exec = require("child_process").exec,
-	Job = require("../lib/job"),
-	HandbrakeCLI = require("../../handbrake-js"),
-    shared = require("./shared");
+	HandbrakeCLI = require("../../handbrake-js");
 
 var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
 	VIDEO1_MKV = "clip1.mkv", VIDEO1_MP4 = "clip1.mp4",
@@ -15,7 +13,7 @@ var	VIDEO1 = "clip1.mov", VIDEO1_M4V = "clip1.m4v",
 	VIDEO2 = "music.m4v", VIDEO2_M4V = "music_.m4v",
 	VIDEO2_MKV = "music.mkv", VIDEO2_MP4 = "music.mp4",
 	MEDIUM = "medium.m4v", MEDIUM_M4V = "medium_.m4v",
-	PRESET = "iPod", 
+	PRESET = "iPod",
 	ASSETS_DIR = path.join(__dirname, "assets"),
 	FIXTURE_DIR = path.resolve(__dirname, "fixture"),
 	SUB_DIR = path.join(FIXTURE_DIR, "subdir"),
@@ -91,22 +89,6 @@ function setupDeepFileFixture(done){
 		});
 	});
 }
-
-describe("operations which don't encode files", function(){
-	it("should print help when called without options", function(done){
-		run("", function(output){
-			assert.ok(output.match(/Usage:/), output);
-			done();
-		});
-	});
-
-	it("should print Handbrake help output with --hbhelp", function(done){
-		run("--hbhelp", function(output){
-			assert.ok(output.match(/General Handbrake Options/), output);
-			done();
-		});
-	});
-});
 
 describe("HandbrakeCLI operations", function(){
 	before(function(done){

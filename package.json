@@ -1,34 +1,47 @@
 {
-    "name": "veelo",
-    "author": "Lloyd Brookes",
-    "version": "0.1.0",
-    "description": "Optimise your video library",
-    "keywords": [
-        "veelo", "handbrake", "handbraker", "batch", "encode", "transcode", "video",
-        "mp4", "m4v", "mkv", "avi", "mpg", "divx", "xvid"
-    ],
-    "license": "MIT",
-    "homepage": "http://75lb.github.com/veelo/",
-    "bugs": {
-        "url": "https://github.com/75lb/veelo/issues"
-    },
-    "engines": {
-        "node": "~0.8"
-    },
-    "bin": "./app.js",
-    "main": "./lib/veelo",
-    "scripts": {
-        "test": "mocha --timeout 10000 --reporter spec test/unit-*.js test/integration.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/75lb/veelo.git"
-    },
-    "dependencies": {
-        "underscore": "~1.4.2",
-        "ansi": "~0.1.2"
-    },
-    "devDependencies": {
-        "mocha": "~1.7"
-    }
+  "name": "veelo",
+  "author": "Lloyd Brookes",
+  "version": "0.1.0",
+  "description": "Optimise your video library",
+  "keywords": [
+    "veelo",
+    "handbrake",
+    "handbraker",
+    "batch",
+    "encode",
+    "transcode",
+    "video",
+    "mp4",
+    "m4v",
+    "mkv",
+    "avi",
+    "mpg",
+    "divx",
+    "xvid"
+  ],
+  "license": "MIT",
+  "homepage": "http://75lb.github.com/veelo/",
+  "bugs": {
+    "url": "https://github.com/75lb/veelo/issues"
+  },
+  "engines": {
+    "node": "~0.8"
+  },
+  "bin": "./app.js",
+  "main": "./lib/veelo",
+  "scripts": {
+    "test": "mocha --timeout 10000 --reporter spec test/unit-*.js test/integration.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/75lb/veelo.git"
+  },
+  "dependencies": {
+    "underscore": "~1.4.2",
+    "ansi": "~0.1.2"
+  },
+  "devDependencies": {
+    "mocha": "~1.7",
+    "fs-extra": "~0.5.0"
+  }
 }
