@@ -24,9 +24,9 @@ switch (command){
                 var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]",
                     short = "encode: %d\% complete";
                 if(encode.fps){
-                    log(full, encode.percentComplete, encode.fps, encode.avgFps, encode.eta);
+                    console.log(full, encode.percentComplete, encode.fps, encode.avgFps, encode.eta);
                 } else {
-                    log(short, encode.percentComplete);
+                    console.log(short, encode.percentComplete);
                 }
             })
             .on("job-complete", function(state){ console.log("Job complete: " + state); })
