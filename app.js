@@ -19,6 +19,7 @@ switch (command){
         veelo.encode(process.argv)
             .on("queue-starting", function(state){ console.log("Queue starting: " + state); })
             .on("queue-complete", function(state){ console.log("Queue complete: " + state); })
+            .on("queue-info", function(state, msg){ console.log("Queue info: " + msg); })
             .on("job-starting", function(state){ console.log("Job starting: " + state); })
             .on("job-progress", function(state, encode){ 
                 var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]",
@@ -34,7 +35,10 @@ switch (command){
             .on("job-fail", function(state){ console.log("Job fail: " + state); })
             .on("job-info", function(state, msg){ console.log("Job info: " + msg + state); })
             .on("job-warning", function(state, msg){ console.log("job-warning: " + msg + state); })
-            .on("job-error", function(state, err){ console.log("job-error: " + state + err); })
+            .on("job-error", function(state, err){ 
+                console.log("job-error: " + state); 
+                console.log(err);
+            })
             .on("job-terminated", function(state){ console.log("job-terminated: " + state); })
             .on("error", function(err){ 
                 console.log(err); 
