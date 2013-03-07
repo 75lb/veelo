@@ -17,9 +17,16 @@ var command = process.argv.length == 0
 switch (command){
     default:
         veelo.encode(process.argv)
-            .on("queue-starting", function(state){ console.log("Queue starting: " + state); })
+            .on("queue-starting", function(state){ 
+                console.log("Queue starting: " + state); 
+                if (this.distinctExts){
+                    console.log("File types: " + _.map(this.distinctExts(), function(value, key){
+                		return util.format("%s(%d)", key, value);
+                	}).join(" "));
+                }
+            })
             .on("queue-complete", function(state){ console.log("Queue complete: " + state); })
-            .on("queue-info", function(state, msg){ console.log("Queue info: " + msg); })
+            .on("queue-info", function(state, msg){ console.log(msg); })
             .on("job-starting", function(state){ console.log("Job starting: " + state); })
             .on("job-progress", function(state, encode){ 
                 var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]",
