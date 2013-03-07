@@ -17,31 +17,48 @@ var command = process.argv.length == 0
 switch (command){
     default:
         veelo.encode(process.argv)
-            .on("queue-starting", function(state){ 
-                console.log("Queue starting: " + state); 
-                if (this.distinctExts){
-                    console.log("File types: " + _.map(this.distinctExts(), function(value, key){
+            .on("queue-starting", function(queue){ 
+                if (queue.distinctExts){
+                    console.log("File types: " + _.map(queue.distinctExts(), function(value, key){
                 		return util.format("%s(%d)", key, value);
                 	}).join(" "));
                 }
             })
-            .on("queue-complete", function(state){ console.log("Queue complete: " + state); })
-            .on("queue-info", function(state, msg){ console.log(msg); })
-            .on("job-starting", function(state){ console.log("Job starting: " + state); })
-            .on("job-progress", function(state, encode){ 
-                var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]",
-                    short = "encode: %d\% complete";
-                if(encode.fps){
-                    console.log(full, encode.percentComplete, encode.fps, encode.avgFps, encode.eta);
-                } else {
-                    console.log(short, encode.percentComplete);
+            .on("queue-complete", function(queue){ 
+                if (queue == this){
+                    console.log("Queue complete: " + queue.name); 
                 }
             })
-            .on("job-complete", function(state){ console.log("Job complete: " + state); })
-            .on("job-success", function(state){ console.log("Job success: " + state); })
+            .on("queue-info", function(state, msg){ console.log(msg); })
+            .on("job-starting", function(job){ console.log("Job starting: " + job.name); })
+            .on("job-progress", function(state, encode){ 
+                var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]\n",
+                    short = "encode: %d\% complete\n";
+                // var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]",
+                //     short = "encode: %d\% complete";
+                if(encode.fps){
+                    var line = util.format(full, encode.percentComplete, encode.fps, encode.avgFps, encode.eta);
+                    cursor.eraseLine(2);
+                    cursor.write(line);
+                    cursor.previousLine();
+                } else {
+                    var line = util.format(short, encode.percentComplete);
+                    cursor.eraseLine(2);
+                    cursor.write(line);
+                    cursor.previousLine();
+                }
+            })
+            // .on("job-complete", function(state){ console.log("Job complete: " + state); })
+            // .on("job-success", function(state){ console.log("Job success: " + state); })
             .on("job-fail", function(state){ console.log("Job fail: " + state); })
-            .on("job-info", function(state, msg){ console.log("Job info: " + msg + state); })
-            .on("job-warning", function(state, msg){ console.log("job-warning: " + msg + state); })
+            .on("job-info", function(state, msg){ 
+                if(/\n$/.test(msg)){
+                    cursor.write(msg);
+                } else {
+                    console.log(msg); 
+                }
+            })
+            .on("job-warning", function(state, msg){ console.log(msg); })
             .on("job-error", function(state, err){ 
                 console.log("job-error: " + state); 
                 console.log(err);
