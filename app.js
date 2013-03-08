@@ -71,8 +71,8 @@ switch (command){
         break;
     case "info":
         veelo.info(process.argv)
-            .on("info", function(msg){
-                console.log(help);
+            .on("job-info", function(state, info){
+                console.log(info);
             });
         break;
     case "help":
