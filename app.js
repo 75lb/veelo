@@ -19,18 +19,20 @@ switch (command){
         veelo.encode(process.argv)
             .on("queue-starting", function(queue){ 
                 if (queue.distinctExts){
-                    console.log("File types: " + _.map(queue.distinctExts(), function(value, key){
+                    log("File types: " + _.map(queue.distinctExts(), function(value, key){
                 		return util.format("%s(%d)", key, value);
                 	}).join(" "));
                 }
             })
             .on("queue-complete", function(queue){ 
                 if (queue == this){
-                    console.log("Queue complete: " + queue.name); 
+                    log("Queue complete: " + queue.name); 
                 }
             })
-            .on("queue-info", function(state, msg){ console.log(msg); })
-            .on("job-starting", function(job){ console.log("Job starting: " + job.name); })
+            .on("queue-info", function(state, msg){ log(msg); })
+            .on("job-starting", function(job){
+                log("□ Job starting: " + job.name);
+            })
             .on("job-progress", function(state, encode){ 
                 var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]\n",
                     short = "encode: %d\% complete\n";
@@ -48,37 +50,45 @@ switch (command){
                     cursor.previousLine();
                 }
             })
-            // .on("job-complete", function(state){ console.log("Job complete: " + state); })
-            // .on("job-success", function(state){ console.log("Job success: " + state); })
-            .on("job-fail", function(state){ console.log("Job fail: " + state); })
+            // .on("job-complete", function(state){ log("Job complete: " + state); })
+            .on("job-success", function(job){ 
+                log("■ Job success: " + job.name); 
+            })
+            .on("job-fail", function(state){ log("Job fail: " + state); })
             .on("job-info", function(state, msg){ 
-                if(/\n$/.test(msg)){
-                    cursor.write(msg);
-                } else {
-                    console.log(msg); 
-                }
+                log(msg); 
             })
-            .on("job-warning", function(state, msg){ console.log(msg); })
+            .on("job-warning", function(state, msg){ log(msg); })
             .on("job-error", function(state, err){ 
-                console.log("job-error: " + state); 
-                console.log(err);
+                log("job-error: " + err.msg);
             })
-            .on("job-terminated", function(state){ console.log("job-terminated: " + state); })
+            .on("job-terminated", function(state){ log("job-terminated: " + state); })
             .on("error", function(err){ 
-                console.log(err); 
-                veelo.help(process.argv, console.log);
+                log(err); 
+                veelo.help(process.argv, log);
             });
         break;
     case "info":
         veelo.info(process.argv)
             .on("job-info", function(state, info){
-                console.log(info);
+                log(info);
             });
         break;
     case "help":
         veelo.help(process.argv, function(help){
-            console.log(help);
+            log(help);
         });
         break;
 }
     
+function log(msg){
+    cursor
+        .horizontalAbsolute(0)
+        .eraseLine(2)
+        .write(typeof msg === "string" 
+            ? msg + (/\n$/.test(msg) 
+                ? "" 
+                : "\n")
+            : util.inspect(msg)
+        );
+}
