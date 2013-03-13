@@ -32,15 +32,15 @@ switch (command){
             .on("queue-info", function(queue, msg){ log(msg); })
             // .on("job-starting", function(job){ log(job.name, "starting"); })
             .on("job-progress", function(job, encode){ 
-                var full = "encode: %d\% complete [%d fps, %d average fps, eta: %s]\n",
-                    short = "encode: %d\% complete\n";
+                var full = "%s: %d\% complete [%d fps, %d average fps, eta: %s]\n",
+                    short = "%s: %d\% complete\n";
                 if(encode.fps){
-                    var line = util.format(full, encode.percentComplete, encode.fps, encode.avgFps, encode.eta);
+                    var line = util.format(full, job.data.file, encode.percentComplete, encode.fps, encode.avgFps, encode.eta);
                     cursor.eraseLine(2);
                     cursor.write(line);
                     cursor.previousLine();
                 } else {
-                    var line = util.format(short, encode.percentComplete);
+                    var line = util.format(short, job.data.file, encode.percentComplete);
                     cursor.eraseLine(2);
                     cursor.write(line);
                     cursor.previousLine();
@@ -103,13 +103,14 @@ function log(msg, type, file){
             break;
     }
     
-    msg.replace(/\n$/, "");
-    cursor.write(typeof msg === "string" 
-        ? file 
-            ? msg
-            : msg + "\n"
-        : util.inspect(msg)
-    );
+    
+    if(typeof msg === "string"){
+        msg.replace(/\n$/, "");
+        cursor.write(file ? msg : msg + "\n");
+    } else {
+        cursor.write(util.inspect(msg) + "\n");
+    }
+    
     if (file){
         cursor.bold()
             .write(util.format(" [%s]\n", file))
