@@ -1,4 +1,4 @@
-**Under construction. To view the previous stable release, view the [master branch](https://github.com/75lb/veelo/tree/dev).**
+**Under construction. To view the previous stable release, view the [master branch](https://github.com/75lb/veelo/tree/master).**
 
 Veelo
 =====
@@ -11,7 +11,7 @@ Perform batch optimisations on your video library, e.g.
 * merge video files
 * create a collage incorporating a clip from every video in your library
 
-Works on __Windows__, __Linux__ and __Mac OSX__ as a command-line app, or Node.js library. 
+Works on __Windows__, __Linux__ and __Mac OSX__ as a command-line app or Node.js library. 
 
 License
 =======
