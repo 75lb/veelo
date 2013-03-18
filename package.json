@@ -25,7 +25,7 @@
     "url": "https://github.com/75lb/veelo/issues"
   },
   "engines": {
-    "node": "~0.8"
+    "node": ">=0.8"
   },
   "bin": "./app.js",
   "main": "./lib/veelo",
@@ -38,7 +38,9 @@
   },
   "dependencies": {
     "underscore": "~1.4.2",
-    "ansi": "~0.1.2"
+    "ansi": "~0.1.2",
+    "nature": "~0.0.2",
+    "handbrake-js": "~0.0.3"
   },
   "devDependencies": {
     "mocha": "~1.7",

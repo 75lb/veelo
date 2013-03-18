@@ -1,16 +1,17 @@
+**Under construction. To view the previous stable release, view the [master branch](https://github.com/75lb/veelo/tree/dev).**
+
 Veelo
-==========
-[![Build Status](https://travis-ci.org/75lb/veelo.png)](https://travis-ci.org/75lb/veelo)
+=====
+Perform batch optimisations on your video library, e.g.
 
-Optimise your video library - consolidate a mixture of legacy and proprietary formats to a single, modern format which works everywhere (H.264/MPEG-4 AVC).
+* consolidate a mixture of formats to a single, modern video format which works everywhere (H.264/MPEG-4 AVC).
+* create device-specific encodes (e.g. iPhone, TV, Android etc)
+* embed subtitles from external files
+* split video into chunks (e.g. 15 minute segments for upload to YouTube)
+* merge video files
+* create a collage incorporating a clip from every video in your library
 
-Veelo, a command-line Video Library Optimisation tool built on top of the outstanding encoder [Handbrake](http://handbrake.fr), was built for this task.
-
-Works on __Windows__, __Linux__ and __Mac OSX__. Can be used from the command line or as a library. 
-
-To view progress on the upcoming rewrite, please check the [development branch](https://github.com/75lb/veelo/tree/dev).
-
-<h3><a href="http://75lb.github.com/veelo/">Full Documentation</a></h3>
+Works on __Windows__, __Linux__ and __Mac OSX__ as a command-line app, or Node.js library. 
 
 License
 =======
