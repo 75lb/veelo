@@ -40,7 +40,9 @@
     "underscore": "~1.4.2",
     "ansi": "~0.1.2",
     "nature": "~0.0.2",
-    "handbrake-js": "~0.0.3"
+    "handbrake-js": "~0.0.3",
+    "work": "~0.0.1",
+    "more-fs": "~0.0.0"
   },
   "devDependencies": {
     "mocha": "~1.7",
