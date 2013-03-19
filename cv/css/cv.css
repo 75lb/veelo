@@ -1,7 +1,9 @@
 body {
-   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-   line-height: 1.4;
-   padding: 1em;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    font-size: 14pt;
+    line-height: 1.4;
+    padding: 1em;
 }
 
 h1 { font-size: 1.4em; }
@@ -10,7 +12,7 @@ header h1 { margin: 0.1em 0; }
 header nav { font-size: 0.9em; }
 table { border: 1px solid silver; }
 td { border: 1px dotted silver; padding: 0 0.3em; }
-footer {margin-top: 1em;}
+footer {margin-top: 1em; font-style: italic;}
 #profile {
     border: 1px solid grey;
     margin: 1em 0 0 0;
