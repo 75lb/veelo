@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html">
+    <title>Lloyd Brookes CV</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/cv.css" type="text/css" media="all">
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+    <script src="js/modernizr-2.6.2.min.js"></script>
+</head>
+<body>
+    <article>
+    <header>
+        <h1>Lloyd Brookes</h1>
+        <nav>
+            <a href="http://goo.gl/maps/7zmjs">Middle Rasen, Lincolnshire</a> &#8226;
+            <a href="mailto:lloyd.brookes@gmail.com">Email</a> &#8226;
+            <a href="https://github.com/75lb">Github</a> &#8226;
+            <a href="https://npmjs.org/~75lb">npm</a> &#8226;
+            <a href="http://stackoverflow.com/users/1029644/lloyd">StackOverflow</a> &#8226;
+            <a href="http://www.linkedin.com/in/lloydbrookes">LinkedIn</a>
+        </nav>
+    </header>
+
+    <section id="profile">
+        <p>An accomplished <strong>Javascript Engineer</strong> with a <strong>14 year</strong> history fulfilling Developer, Architect and leadership roles.</p>
+        <p>A <strong>direct</strong> communicator with a <strong>pragmatic</strong> "useful first, elegant later" approach to product development. I specialise in <strong>modern server, web, social</strong> and <strong>mobile applications</strong> built on a <strong>full Javascript stack</strong> (<strong>Node.js, MongoDb, Redis</strong> etc.).</p>
+        <p><strong>Business-focussed</strong> with experience under a diverse range of conditions, from agile start-ups experiencing wild growth (<a href="http://www.bet365.com">bet365.com</a>) to micro-managed, global manufacturers requiring traceability and precision (<a href="http://www.siemens.com">Siemens AG</a>).</p>
+    </section>
+
+    <section id="productHistory">
+    <h1>Product History</h1>
+    <ul>
+        <li>Conceived, pitched and built a <strong>Broadcast Automation</strong> product for Immedia Plc used by <strong>High Street retail and banking</strong> chains to automate the broadcast of branded, "as live", <strong>in-store radio</strong> stations. Clients receive an <strong>Android</strong> device pre-loaded with software and content (music, playlists, presenter reads, branders and commercials) which they plug in and play. The client may accept the station as-is or make live adjustments (schedule, aesthetic, energy level) to suit the atmosphere in-store. New content is pushed to each device overnight. Stations are governed at store, region or estate level. Proved a hit with early adopters with <strong>thousands of sign-ups</strong>.</li>
+        <li>Part of the five-man team development behind the <strong>launch of <a href="http://www.bet365.com">Bet365.com</a></strong>. Principally known for the specialised, <strong>Sportsbook CMS in production use for over a decade</strong> (used internally by management, translators and bookmakers to stock bet365 with structured, template-driven, multi-lingual content). Deployed an "Oddsfeed" Web Service giving 3rd parties controlled access to our data (an innovation, ten years ago). Hired as a junior, grew into the <strong>first choice for important work</strong>.</li>
+        <li>Rebuilt an archaic, crumbling <strong>Industrial Gas Turbine Performance Analysis</strong> solution at <a href="http://www.siemens.com">Siemens</a>. An extremely complex and delicate project owing to a) the many stakeholders and distance between them, b) the scale and prohibitive costs involved (minimum £20k per integration test), c) the ancient equipment involved ('70s measurement instrumentation with obscure APIs), d) old languages to reverse engineer (Fortran, AS/400 CL), e) vast quantities of data to store etc.. There were many challenges and constraints but we got there, going with Oracle (high-volume, high-availability data management, reporting, XML DB), C#, ASP.NET and Matlab (mathematical analysis). Also built a <strong>Sharepoint</strong> solution for the department.</li>
+        <li><strong>Lead Architect</strong> and Developer at Centrinet on a team building a shrink-wrapped product enabling the customer (typically a Data Centre) to extend their offering with <strong>on-demand, Platform As A Service</strong> (PAAS) capabilities (similar to Amazon EC2).</li> 
+        <li>Contracted by Barbon Insurance Group to help integrate an external supplier's quotation product with in-house systems. However, <strong>UML specifications</strong> i produced shedding light on the proposed integration led to project cancellation and supplier prosecution! I was retained as <strong>Technical Architect and LAMP developer</strong>. Also built the company <strong>Sharepoint</strong> solution and mentored the team in areas like design, UML and version control.</li>
+        <li>Led data management on the Jubilee Line Extension Project, one of the Government's high profile Millennium Projects. Produced the tools and systems to collect, organise and distribute Inspection data project-wide. Rapidly outgrew my initial "Technical Admin" role to earn a reputation for above-and-beyond inventiveness. On completion, my services were "passed" to London Underground then Transport for London.</li> 
+        <li>Conceived and built the "Strategic Planning Database" used to plan and manage Engineering Works across the London Underground network.</li>
+        <li>Delivered a similar database solution to help Transport for London organise the "London Bus Lanes Order" implementation of 2001.</li>
+    </ul>
+    </section>
+
+    <section id="currentWork">
+    <h1>Current Work</h1>
+    <p>I took time out to work on some <strong>open source</strong> products, all of which are <strong>100% Javascript WIP</strong>:</p>
+    <ul>
+        <li><a href="https://github.com/75lb/veelo">Veelo</a>: perform a range of video library optimisations, e.g.: 
+            <ul>
+                <li>consolidate a mixture of formats to a single, modern video format which works everywhere (H.264/MPEG-4 AVC)</li>
+                <li>create device-optimised encodes (e.g. iPhone, TV, Android etc)</li>
+                <li>embed subtitles from external files</li>
+                <li>split video files into chunks (e.g. 15 minute segments for upload to YouTube)</li>
+                <li>merge video files</li>
+                <li>create a "library preview" - a collage incorporating a clip from every video specified</li>
+            </ul>
+        </li>
+        <li><a href="https://github.com/75lb/nature">Nature</a> provides a base class (<code>Thing</code>) to enable more accurate classification of the things (<code>DatabaseConfig</code>, <code>VideoFileList</code>, <code>YoungMan</code>, <code>FlammableCar</code> etc.) in your world (function or app). These Things can be reused, subclassed or merged with other Things to create new hybrids. The <code>Thing</code> class, when subclassed/instantiated adds useful features to each object:
+            <ul>
+                <li>Fine-grained type and value validation per property</li>
+                <li>Direct command line, environment, external file or object literal loading capability</li>
+                <li>Merging and cloning</li>
+                <li>property grouping and filtering</li>
+                <li>methods for duck typing</li>
+            </ul>
+        </li>
+        <li>Got a thousand jobs to do? Get an execution plan with <a href="">Work</a>. Create one of more instances of <code>Job</code>, specifying the <code>name</code>, <code>command</code>, <code>arguments</code> and whether the job may run in <code>parallel</code> to others. Add each <code>Job</code> to a <code>Queue</code> for execution in the order provided. Each <code>Job</code> can have a sub-<code>Queue</code> to be executed <code>onSuccess</code>, <code>onProgress</code> or <code>onFailure</code>, each of which containing its own set of <code>Job</code> instances. And so the hierarchy grows! Work can also project a dashboard, providing real-time progress information on any standard Node.js <a href="http://nodejs.org/api/stream.html">Stream</a>.</li>
+        <li><a href="https://github.com/75lb/temple">Temple of Mars</a>: a real-time, multi-player Facebook boxing prediction and scoring game for desktop and mobile. Despite having a solid user base, work has been postponed. Originally built on version 0.3.5 of <a href="http://www.meteor.com">Meteor</a>, a full-stack framework i was forced to abandon due to several fatal flaws. Rewrite planned. </li>
+        <li><a href="https://github.com/75lb/handbrake-js">handbrake-js</a>: An npm distribution of <a href="https://trac.handbrake.fr/wiki/CLIGuide">HandbrakeCLI</a> for either command line or library use.</li>
+        <li>And <a href="https://github.com/75lb?tab=repositories">more</a>.</li>
+    </ul>
+
+    <p>Although still heavily under development, around this portfolio you can find usage of Behaviour Driven Development, Continuous Integration, Design Patterns, ECMAScript 5 features, API design and documentation.</p>
+
+    <p>I contribute to other projects when necessary, most notably <a href="http://www.meteor.com">Meteor</a> who kindly thanked me with a parcel of merchandise and t-shirts (which i won't be wearing in public any time soon!)</p>
+    </section>
+    
+    <section id="employment">
+    <h1>Employment Timeline</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Dates</th>
+                <th>Company</th>
+                <th>Role</th>
+                <th>Principal Techs</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>June '12 - Present</td>
+                <td>Self-employed</td>
+                <td>Javascript Engineer</td>
+                <td>HTML5, CSS3, Javascript, Node.js, MongoDB, Meteor, Redis, Facebook, D3, jQuery, Android SDK, PhoneGap, Express, Connect, Bootstrap, Modernizr, Mocha, Sinon.js, Istanbul, Yuidoc, Backbone, Underscore, Require.js, git</td>
+            </tr>
+            <tr>
+                <td>April '09 - May '12</td>
+                <td>Immedia Group Plc</td>
+                <td>Software Development Manager</td>
+                <td>HTML5, CSS3, Javascript, PhoneGap, jQuery, jQueryUI, jQueryMobile, Android SDK, C#, ASP.NET MVC3, Ruby on Rails, MySQL, SQL Server, LINQ, Bootstrap, UML, Coffeescript, WPF, jPlayer, SCSS, git</td>
+            </tr>
+            <tr>
+                <td>Oct '08 - Feb '09</td>
+                <td>Centrinet Ltd.</td>
+                <td>Lead Architect</td>
+                <td>Java, Linux, Xen Hypervisor, MySQL, UML, git</td>
+            </tr>
+            <tr>
+                <td>Oct '07 - Oct '08</td>
+                <td>Barbon Insurance Group</td>
+                <td>Lead Architect</td>
+                <td>Linux, Perl, PHP, Apache, MySQL, Subversion, C#, UML, TFS, Subversion</td>
+            </tr>
+            <tr>
+                <td>Jun '05 - Oct '07</td>
+                <td>Siemens AG</td>
+                <td>System Architect</td>
+                <td>Oracle, C#, ASP.NET, Matlab, UML, Fortran, Subversion</td>
+            </tr>
+            <tr>
+                <td>Jan '05 - Jun '05</td>
+                <td>Kaleida</td>
+                <td>LAMP Developer</td>
+                <td>C#, .NET, Perl, FoxPro, Linux, Subversion</td>
+            </tr>
+            <tr>
+                <td>Jun '01 - Jan '05</td>
+                <td>Bet365.com</td>
+                <td>.NET Developer</td>
+                <td>VB, VB.NET, SQL Server, AccuRev</td>
+            </tr>
+            <tr>
+                <td>Dec '00 - May '01</td>
+                <td>Transport for London</td>
+                <td>Database / VB Developer</td>
+                <td>VB, Access, SQL Server</td>
+            </tr>
+            <tr>
+                <td>Aug '98 - Dec '00</td>
+                <td>London Underground</td>
+                <td>Database / VB Developer</td>
+                <td>VB, Access</td>
+            </tr>
+        </tbody>
+    </table>
+    </section>
+
+    <section id="approach">
+        <h1>Approach</h1>
+        <ul>
+            <li>Pragmatic - prototype, test the water, absorb feedback and validate demand <em>before</em> committing to a full build.</li>
+            <li>Collaborative - not a fan of 'my project, my business' mentality.</li>
+            <li>Methodical. <strong>Agile</strong> Unified Process or <strong>Scrum</strong> preferred. Don't like 'headless chicken'.</li>
+            <li>Good architectural practice - MVC, loosely coupled (built to an interface), data source agnostic, cross-platform, standards-based.</li> 
+            <li><strong>Mobile First</strong>. The desktop market is not dying but not growing, either. Smartphone and tablet growth is exponential.</li>
+        </ul>
+    </section> 
+
+    <section id="personal">
+        <h1>Personal</h1>
+        <p>I'm a 37 year old father of two that loves coding, culture, cooking, travel, film, music, history, anthropology, nature and just learning in general! I'm drawn to sincere, creative doers that thrive on challenge and strive for improvement.</p>
+    </section>
+
+    <section id="additionalExperience">
+        <h1>Additional experience detail</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Dicipline</th>
+                    <th>Experience</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>UI Design</td>
+                    <td>I endeavour to make the UI as clear, comfortable and useful as possible sticking to <a href="http://bokardo.com/principles-of-user-interface-design/">best practise</a>. </td>
+                </tr>
+                <tr>
+                    <td>Software Design / Architecture</td>
+                    <td>An area of particular interest. Scalable, extensible architecture and efficient database schema have underpinned my most successful work. From years five to ten of my career, Architecture and Architect roles were my main focus. Studied for UML 2.0 certification.</td>
+                </tr>
+                <tr>
+                    <td>Web App Development</td>
+                    <td>Current projects are realtime, Single Page Apps. Built many static and dynamic websites. Progressive Enhancement and Responsive Design important now, with so many mobile and desktop browsers.</td>
+                </tr>
+                <tr>
+                    <td>Desktop App Development</td>
+                    <td>Built Content Management, Performance Analysis, DRM-enabled Media Player and Project/Task Management apps to name a few.</td>
+                </tr>
+                <tr>
+                    <td>Mobile Apps</td>
+                    <td>Built Broadcast Automation software (offline, storage card access, audio playback and recording), a Radio app (similar to TuneIn) and a Boxing scoring and prediction league game.</td>
+                </tr>
+                <tr>
+                    <td>Web Analytics</td>
+                    <td>The prospect of understanding and segmenting an audience, capturing user intent, satisfaction level and conversion rate is very compelling to me. Fascinated by the subject and take the insight harvested very seriously - I much prefer well-informed, insight-driven business decisions to 'finger in the air'. I happily, and often take ownership of this area.</td>
+                </tr>
+                <tr>
+                    <td>Testing &amp; Coverage Analysis</td>
+                    <td>Behaviour-Driven Development (BDD) is not a gimmick, this approach has fundamentally improved my software. When a project survives beyond prototype, I use BDD as standard.</td>
+                </tr>
+                <tr>
+                    <td>Sharepoint</td>
+                    <td>Built three MOSS 2007 Sharepoint installations, all motivated by the prospect of centralised, structured documentation management, sign-off workflow and version control. Bug, issue and source code management  done elsewhere.</td>
+                </tr>
+                <tr>
+                    <td>CLI Apps</td>
+                    <td>Written many command line apps (for reporting and analysis, data transformation, deployment and migration, video processing, web spidering, configuration management, image downsampling etc.)</td>
+                </tr>
+                <tr>
+                    <td>Facebook Integration</td>
+                    <td>Have implemented Facebook Login, Open Graph and Social Plugins (typically "Like"), Scores and Achievements and Custom Tabs.</td>
+                </tr>
+                <tr>
+                    <td>Web Services published</td>
+                    <td>Betting odds, Engine Performance data, Music Library management etc.</td>
+                </tr>
+                <tr>
+                    <td>Web Services Consumed</td>
+                    <td>Facebook Graph, 7Digital, iTunes Search, YouTube, Daily Motion, Google Maps</td>
+                </tr>
+                <tr>
+                    <td>Deployment</td>
+                    <td>NPM, RPM, AppHabor, Heroku</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>This CV is written in HTML 5 and CSS 3 and is available <a href="https://github.com/75lb/veelo/wiki/cv/">here</a>.</footer>
+    </article>
+
+    <script>
+        // var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+        // (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+        // g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+        // s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+</body>
+</html>

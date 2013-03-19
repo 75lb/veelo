@@ -1,0 +1,20 @@
+body {
+   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+   line-height: 1.4;
+   padding: 1em;
+}
+
+h1 { font-size: 1.4em; }
+header { text-align: center; }
+header h1 { margin: 0.1em 0; }
+header nav { font-size: 0.9em; }
+table { border: 1px solid silver; }
+td { border: 1px dotted silver; padding: 0 0.3em; }
+footer {margin-top: 1em;}
+#profile {
+    border: 1px solid grey;
+    margin: 1em 0 0 0;
+    padding: 0 1em;
+}
+
+#employment td:first-child { width: 5em;}
