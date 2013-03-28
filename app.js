@@ -17,9 +17,6 @@ var command = process.argv.length == 0
 switch (command){
     default:
         veelo.encode(process.argv)
-            .on("monitor", function(job){
-                console.log("monitor");
-            })
             .on("starting", function(job){
                 if (job.distinctExts){
                     log("File types: " + _.map(job.distinctExts(), function(value, key){
@@ -27,11 +24,11 @@ switch (command){
                 	}).join(" "));
                 }
             })
-            .on("complete", function(job){ 
-                log("Job complete: " + job.name); 
-            })
-            .on("progress", console.log)
-            .on("info", console.log );
+            .on("monitor", function(job){
+                cursor.eraseData(2);
+                cursor.goto(1, 1);
+                this.print();
+            });
         break;
     case "info":
         veelo.info(process.argv)
