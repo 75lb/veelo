@@ -39,8 +39,8 @@ switch (command){
         break;
     case "info":
         veelo.info(process.argv)
-            .on("job-info", function(job, info){
-                l(info);
+            .on("monitor", function(job, eventName, info){
+                if (eventName == "info") l(info);
             });
         break;
     case "help":

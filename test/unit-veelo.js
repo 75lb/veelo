@@ -4,7 +4,9 @@ var EventEmitter = require("events").EventEmitter,
     veelo = require("../lib/veelo");
 
 describe("Veelo", function(){
-   describe("methods: ", function(){
+    it("should not throw error on --preserve-dates false");
+    
+    describe("methods: ", function(){
        it("encode(options)");
-   });
+    });
 });
