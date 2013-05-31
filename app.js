@@ -8,11 +8,9 @@ var util = require("util"),
 
 process.argv.splice(0, 2);
 
-function l(msg){
-    console.log.apply(this, Array.prototype.slice.call(arguments));
-}
+function l(){ console.log.apply(this, Array.prototype.slice.call(arguments)); }
 
-var command = process.argv.length == 0
+var command = process.argv.length === 0
     ? "help"
     : /^(encode|help|info)$/.test(process.argv[0])
         ? process.argv.shift()
@@ -20,22 +18,10 @@ var command = process.argv.length == 0
 
 switch (command){
     default:
-        veelo.encode(process.argv)
-            .monitor(process.stdout)
-            // .on("monitor", function(job, eventName){
-            //     switch(eventName){
-            //         case "info":
-            //             l(job.info[job.info.length-1]);
-            //             break;
-            //     }
-            // })
-            .on("starting", function(job){
-                if (job.distinctExts){
-                    l("File types: " + _.map(job.distinctExts(), function(value, key){
-                		return util.format("%s(%d)", key, value);
-                	}).join(" "));
-                }
-            });
+        veelo.encode(process.argv).monitor(process.stdout);
+            // .on("monitor", function(job, event, data){
+            //     console.log(job.name, event);
+            // });
         break;
     case "info":
         veelo.info(process.argv)
