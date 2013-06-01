@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+"use strict";
 
 // module dependencies
 var util = require("util"),
