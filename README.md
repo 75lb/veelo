@@ -17,3 +17,5 @@ License
 =======
 (c) 2012-13, Lloyd Brookes <75pound@gmail.com>
 [MIT License]
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/8db86e25b92a02898f5db953a515964c "githalytics.com")](http://githalytics.com/75lb/veelo)

@@ -19,7 +19,7 @@ var command = process.argv.length === 0
 
 switch (command){
     default:
-        veelo.encode(process.argv).monitor(process.stdout);
+        veelo.encode(process.argv).monitor();
             // .on("monitor", function(job, event, data){
             //     console.log(job.name, event);
             // });
