@@ -37,10 +37,10 @@
     "url": "https://github.com/75lb/veelo.git"
   },
   "dependencies": {
-    "underscore": "~1.4.2",
-    "ansi": "~0.1.2",
-    "nature": "~0.0.2",
-    "handbrake-js": "~0.0.3",
+    "underscore": "~1.5.0",
+    "ansi": "~0.2",
+    "nature": "~0.1",
+    "handbrake-js": "~0.1",
     "work": "~0.1",
     "more-fs": "~0.0.0"
   },
