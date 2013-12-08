@@ -5,6 +5,7 @@
 var util = require("util"),
     _ = require("underscore"),
     veelo = require("./lib/veelo"),
+    encode = require("./lib/encode"),
     cursor = require("ansi")(process.stdout),
     l = console.log;
 
@@ -18,7 +19,7 @@ var command = process.argv.length === 0
 
 switch (command){
     default:
-        veelo.encode(process.argv).monitor();
+        encode(process.argv).monitor();
             // .on("monitor", function(job, event, data){
             //     console.log(job.name, event);
             // });

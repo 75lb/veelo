@@ -1,0 +1,12 @@
+{
+    "node": true,
+    "devel": true,
+    "bitwise": true,
+    "camelcase": false,
+    "latedef": false,
+    "newcap": true,
+    "undef": true,
+    "unused": true,
+    "globalstrict": false,
+    "laxbreak": true
+}
