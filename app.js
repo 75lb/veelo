@@ -5,11 +5,10 @@
 var util = require("util"),
     _ = require("underscore"),
     veelo = require("./lib/veelo"),
-    cursor = require("ansi")(process.stdout);
+    cursor = require("ansi")(process.stdout),
+    l = console.log;
 
 process.argv.splice(0, 2);
-
-function l(){ console.log.apply(this, Array.prototype.slice.call(arguments)); }
 
 var command = process.argv.length === 0
     ? "help"
