@@ -1,6 +1,8 @@
-**Under construction. To view the previous stable release, view the [master branch](https://github.com/75lb/veelo/tree/master).**
-
 [![NPM version](https://badge.fury.io/js/veelo.png)](http://badge.fury.io/js/veelo)
+[![Dependency Status](https://david-dm.org/75lb/veelo.png)](https://david-dm.org/75lb/veelo)
+![Analytics](https://ga-beacon.appspot.com/UA-27725889-8/veelo/README.md?pixel)
+
+**Under construction. To view the previous stable release, view the [master branch](https://github.com/75lb/veelo/tree/master).**
 
 Veelo
 =====
@@ -15,10 +17,4 @@ Perform batch optimisations on your video library, e.g.
 
 Works on __Windows__, __Linux__ and __Mac OSX__ as a command-line app or Node.js library. 
 
-License
-=======
-(c) 2012-13, Lloyd Brookes <75pound@gmail.com>
-[MIT License]
-
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/8db86e25b92a02898f5db953a515964c "githalytics.com")](http://githalytics.com/75lb/veelo)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/75lb/veelo/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![NPM](https://nodei.co/npm-dl/veelo.png?months=3)](https://nodei.co/npm/veelo/)

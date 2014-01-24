@@ -4,8 +4,9 @@
 // module dependencies
 var util = require("util"),
     _ = require("underscore"),
-    veelo = require("./lib/veelo"),
     encode = require("./lib/encode"),
+    info = require("./lib/info"),
+    help = require("./lib/help"),
     cursor = require("ansi")(process.stdout),
     l = console.log;
 
@@ -25,13 +26,13 @@ switch (command){
             // });
         break;
     case "info":
-        veelo.info(process.argv)
+        info(process.argv)
             .on("monitor", function(job, eventName, info){
                 if (eventName == "info") l(info);
             });
         break;
     case "help":
-        veelo.help(process.argv, function(help){
+        help(process.argv, function(help){
             l(help);
         });
         break;
