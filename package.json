@@ -35,15 +35,12 @@
   },
   "repository": "https://github.com/75lb/veelo",
   "dependencies": {
-    "underscore": "^1.5.0",
-    "ansi": "~0.3",
     "nature": "~0.4",
     "handbrake-js": "~0.3",
     "work": "~0.1",
     "more-fs": "~0.3"
   },
   "devDependencies": {
-    "mocha": "^1.17",
-    "fs-extra": "~0.8.0"
+    "tape": "^2.12.3"
   }
 }
