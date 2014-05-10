@@ -1,12 +1,18 @@
 {
-    "node": true,
-    "devel": true,
     "bitwise": true,
-    "camelcase": false,
-    "latedef": false,
-    "newcap": true,
-    "undef": true,
-    "unused": true,
+    "browser": true,
+    "camelcase": true,
+    "eqeqeq": true,
+    "globals": { "describe" : false, "it": false, "beforeEach": false },
     "globalstrict": false,
-    "laxbreak": true
+    "indent": 4,
+    "laxbreak": true,
+    "maxparams": 3,
+    "multistr": true,
+    "newcap": true,
+    "node": true,
+    "quotmark": "double",
+    "trailing": true,
+    "undef": true,
+    "unused": true
 }

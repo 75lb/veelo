@@ -27,25 +27,23 @@
   "engines": {
     "node": ">=0.8"
   },
-  "bin": "./app.js",
+  "bin": "bin/cli.js",
   "main": "./lib/veelo",
   "scripts": {
-    "test": "mocha --timeout 10000 --reporter spec test/unit-*.js test/integration.js"
+    "test": "mocha --timeout 10000 --reporter spec test/unit-*.js test/integration.js",
+    "lint": "jshint bin/app.js lib/*.js test/*.js; echo"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/75lb/veelo.git"
-  },
+  "repository": "https://github.com/75lb/veelo",
   "dependencies": {
-    "underscore": "~1.5.0",
-    "ansi": "~0.2",
-    "nature": "~0.2",
-    "handbrake-js": "~0.1",
-    "work": "~0.2",
-    "more-fs": "~0.0.0"
+    "underscore": "^1.5.0",
+    "ansi": "~0.3",
+    "nature": "~0.4",
+    "handbrake-js": "~0.3",
+    "work": "~0.1",
+    "more-fs": "~0.3"
   },
   "devDependencies": {
-    "mocha": "~1.17",
+    "mocha": "^1.17",
     "fs-extra": "~0.8.0"
   }
 }

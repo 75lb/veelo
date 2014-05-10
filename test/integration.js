@@ -24,7 +24,7 @@ function run(){
 	var args = Array.prototype.slice.call(arguments),
 		done = args.pop(),
 		formatArgs = args,
-		cmd = "node app.js " + util.format.apply(this, formatArgs);
+		cmd = "node bin/app.js " + util.format.apply(this, formatArgs);
 	// l(cmd);
 	exec(cmd, function(err, stdout, stderr){
 		if (err) {
