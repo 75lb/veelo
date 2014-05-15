@@ -19,12 +19,13 @@ argv.set(process.argv);
 var commands = veelo.buildCommands(argv);
 
 function spawnCommand(command){
+    if(!command) return;
     hbjs.spawn(command)
         .on("error", function(err){
             dope.red.error(err);
         })
         .on("start", function(){
-            dope.orange.log("let's go");
+            dope.blue.log("let's go");
         })
         .on("progress", function(progress){
             dope.log("%s % complete", progress.percentComplete);
