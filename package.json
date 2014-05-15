@@ -3,6 +3,7 @@
   "author": "Lloyd Brookes",
   "version": "0.1.0",
   "description": "Optimise your video library",
+  "repository": "https://github.com/75lb/veelo",
   "keywords": [
     "handbrake",
     "batch",
@@ -11,22 +12,20 @@
     "video"
   ],
   "license": "MIT",
-  "homepage": "http://75lb.github.com/veelo/",
   "engines": {
-    "node": ">=0.8"
+    "node": ">=0.10"
   },
   "bin": "bin/cli.js",
   "main": "./lib/veelo",
   "scripts": {
     "test": "tape test/*.js",
-    "lint": "jshint bin/app.js lib/*.js test/*.js; echo"
+    "lint": "jshint bin/*.js lib/*.js test/*.js; echo"
   },
-  "repository": "https://github.com/75lb/veelo",
   "dependencies": {
     "nature": "~0.4",
-    "handbrake-js": "~0.3",
-    "work": "~0.1",
-    "more-fs": "~0.3"
+    "handbrake-js": "^1.0",
+    "more-fs": "~0.3",
+    "console-dope": "~0.3"
   },
   "devDependencies": {
     "tape": "^2.12.3"

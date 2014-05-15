@@ -1,8 +1,1 @@
-node_modules
-bin
-test/fixture
-npm-debug.log
-coverage
 tmp
-out
-tmp*.js
