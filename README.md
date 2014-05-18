@@ -1,5 +1,6 @@
 [![view on npm](http://img.shields.io/npm/v/veelo.svg)](https://www.npmjs.org/package/veelo)
 [![npm module downloads per month](http://img.shields.io/npm/dm/veelo.svg)](https://www.npmjs.org/package/veelo)
+[![Build Status](https://travis-ci.org/75lb/veelo.svg)](https://travis-ci.org/75lb/veelo)
 [![Dependency Status](https://david-dm.org/75lb/veelo.svg)](https://david-dm.org/75lb/veelo)
 ![Analytics](https://ga-beacon.appspot.com/UA-27725889-8/veelo/README.md?pixel)
 
