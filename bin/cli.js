@@ -3,10 +3,10 @@
 
 var veelo = require("../lib/veelo"),
     path = require("path"),
-    Model = require("nature").Model,
+    cliArgs = require("command-line-args"),
     hbjs = require("handbrake-js"),
     dope = require("console-dope"),
-    HandbrakeOptions = hbjs.HandbrakeOptions,
+    handbrakeOptions = hbjs.cliOptions,
     mfs = require("more-fs");
 
 var usage =
@@ -20,23 +20,26 @@ var usage =
         --embed-srt            If a matching .srt file exists, embed subtitles into the output video\n\
     -v, --verbose              Show detailed output\n";
 
-var argv = new Model().define("veelo", [
-    { name: "files", type: Array, defaultOption: true, required: true },
-    { name: "dest", type: "string", value: "veelo" },
-    { name: "ext", type: "string", value: "m4v" }
-]);
-argv.mixIn(new HandbrakeOptions(), "handbrake");
-argv.set(process.argv);
+var cliOptions = handbrakeOptions.concat({
+    groups: "veelo",
+    options: [
+        { name: "files", type: Array, defaultOption: true, required: true },
+        { name: "dest", type: String, value: "veelo" },
+        { name: "ext", type: String, value: "m4v" }
+    ]
+});
 
-if (!argv.valid) {
+var argv = cliArgs(cliOptions).parse();
+
+if (!argv.veelo.files) {
     dope.log(usage);
     process.exit(1);
 }
 
-var fileSet = new mfs.FileSet(argv.files);
-argv.files = fileSet.files;
+var fileSet = new mfs.FileSet(argv.veelo.files);
+argv.veelo.files = fileSet.files;
 
-mfs.mkdir(argv.dest);
+mfs.mkdir(argv.veelo.dest);
 
 function spawnCommand(command){
     if(!command) return;
