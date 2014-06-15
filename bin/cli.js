@@ -7,7 +7,8 @@ var veelo = require("../lib/veelo"),
     hbjs = require("handbrake-js"),
     dope = require("console-dope"),
     handbrakeOptions = hbjs.cliOptions,
-    mfs = require("more-fs");
+    mfs = require("more-fs"),
+    FileSet = require("file-set");
 
 var usage =
 "usage: veelo [options] [HandbrakeCLI options] files\n\n\
@@ -36,7 +37,7 @@ if (!argv.veelo.files) {
     process.exit(1);
 }
 
-var fileSet = new mfs.FileSet(argv.veelo.files);
+var fileSet = new FileSet(argv.veelo.files);
 argv.veelo.files = fileSet.files;
 
 mfs.mkdir(argv.veelo.dest);
