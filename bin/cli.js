@@ -1,14 +1,17 @@
 #!/usr/bin/env node
 "use strict";
+var veelo = require("../lib/veelo");
+var path = require("path");
+var cliArgs = require("command-line-args");
+var hbjs = require("handbrake-js");
+var dope = require("console-dope");
+var mfs = require("more-fs");
+var FileSet = require("file-set");
 
-var veelo = require("../lib/veelo"),
-    path = require("path"),
-    cliArgs = require("command-line-args"),
-    hbjs = require("handbrake-js"),
-    dope = require("console-dope"),
-    handbrakeOptions = hbjs.cliOptions,
-    mfs = require("more-fs"),
-    FileSet = require("file-set");
+var handbrakeOptions = hbjs.cliOptions.map(function(def){
+    def.group = [ def.group, "handbrake" ];
+    return def;
+});
 
 var usage =
 "usage: veelo [options] [HandbrakeCLI options] files\n\n\
@@ -21,14 +24,11 @@ var usage =
         --embed-srt            If a matching .srt file exists, embed subtitles into the output video\n\
     -v, --verbose              Show detailed output\n";
 
-var cliOptions = handbrakeOptions.concat({
-    groups: "veelo",
-    options: [
-        { name: "files", type: Array, defaultOption: true, required: true },
-        { name: "dest", type: String, value: "veelo" },
-        { name: "ext", type: String, value: "m4v" }
-    ]
-});
+var cliOptions = handbrakeOptions.concat([
+    { name: "files", type: String, multiple: true, defaultOption: true, required: true, group: "veelo" },
+    { name: "dest", type: String, value: "veelo", group: "veelo" },
+    { name: "ext", type: String, value: "m4v", group: "veelo" }
+]);
 
 var argv = cliArgs(cliOptions).parse();
 
@@ -36,7 +36,6 @@ if (!argv.veelo.files) {
     dope.log(usage);
     process.exit(1);
 }
-
 var fileSet = new FileSet(argv.veelo.files);
 argv.veelo.files = fileSet.files;
 
