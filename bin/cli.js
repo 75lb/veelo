@@ -25,21 +25,21 @@ var usage =
     -v, --verbose              Show detailed output\n";
 
 var cliOptions = handbrakeOptions.concat([
-    { name: "files", type: String, multiple: true, defaultOption: true, required: true, group: "veelo" },
+    { name: "files", type: String, multiple: true, defaultOption: true, group: "veelo" },
     { name: "dest", type: String, value: "veelo", group: "veelo" },
     { name: "ext", type: String, value: "m4v", group: "veelo" }
 ]);
 
-var argv = cliArgs(cliOptions).parse();
+var options = cliArgs(cliOptions).parse();
 
-if (!argv.veelo.files) {
+if (!options.veelo.files) {
     dope.log(usage);
     process.exit(1);
 }
-var fileSet = new FileSet(argv.veelo.files);
-argv.veelo.files = fileSet.files;
+var fileSet = new FileSet(options.veelo.files);
+options.veelo.files = fileSet.files;
 
-mfs.mkdir(argv.veelo.dest);
+mfs.mkdir(options.veelo.dest);
 
 function spawnCommand(command){
     if(!command) return;
@@ -64,5 +64,5 @@ function spawnCommand(command){
         });
 }
 
-var commands = veelo.buildCommands(argv);
+var commands = veelo.buildCommands(options);
 if (commands.length) spawnCommand(commands.shift());
