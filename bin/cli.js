@@ -26,13 +26,13 @@ var usage =
 
 var cliOptions = handbrakeOptions.concat([
     { name: "files", type: String, multiple: true, defaultOption: true, group: "veelo" },
-    { name: "dest", type: String, value: "veelo", group: "veelo" },
-    { name: "ext", type: String, value: "m4v", group: "veelo" }
+    { name: "dest", type: String, defaultValue: "veelo", group: "veelo" },
+    { name: "ext", type: String, defaultValue: "m4v", group: "veelo" }
 ]);
 
 var options = cliArgs(cliOptions).parse();
 
-if (!options.veelo.files) {
+if (!(options.veelo && options.veelo.files)) {
     dope.log(usage);
     process.exit(1);
 }

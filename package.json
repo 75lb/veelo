@@ -22,7 +22,7 @@
     "lint": "jshint bin/*.js lib/*.js test/*.js; echo"
   },
   "dependencies": {
-    "command-line-args": "~0.5.0",
+    "command-line-args": "^1.0.0",
     "console-dope": "~0.3",
     "file-set": "^0.2.7",
     "handbrake-js": "^2.0",
